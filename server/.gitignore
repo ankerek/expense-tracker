@@ -1,0 +1,4 @@
+dist
+pgdata
+node_modules
+.env
