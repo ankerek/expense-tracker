@@ -13,6 +13,9 @@ export class User {
   @Field()
   email: string
 
+  @Column({ type: 'char', length: 60 })
+  password: string
+
   @Field(type => [Account])
   accounts: Account[]
 }

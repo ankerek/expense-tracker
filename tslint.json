@@ -9,6 +9,7 @@
     "member-access": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
-    "ban-types": false
+    "ban-types": false,
+    "interface-name": [true, "never-prefix"]
   }
 }

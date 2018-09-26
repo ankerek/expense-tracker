@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt'
 import { getRepository, Repository } from 'typeorm'
 import {
   Resolver,
@@ -10,6 +11,8 @@ import {
 import { User } from './definitions/User'
 import { UserCreateInput } from './definitions/UserCreateInput'
 import { Account } from '../accounts/definitions/Account'
+
+const SALT_ROUNDS = 10
 
 @Resolver(of => User)
 export class UserResolver {
@@ -35,8 +38,12 @@ export class UserResolver {
   }
 
   @Mutation(returns => User)
-  async createUser(@Arg('data') newUserData: UserCreateInput) {
-    return this.userRepository.save(newUserData)
+  async createUser(@Arg('input') input: UserCreateInput) {
+    const newUser = new User()
+    newUser.email = input.email
+    newUser.password = await bcrypt.hash(input.password, SALT_ROUNDS)
+
+    return this.userRepository.save(newUser)
   }
 }
 
