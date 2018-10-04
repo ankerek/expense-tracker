@@ -21,6 +21,7 @@ module.exports = {
     alias: {
       '@pages': srcPath('pages'),
       '@core-components': srcPath('core-components'),
+      '@utils': srcPath('utils'),
     },
   },
 

@@ -4,6 +4,7 @@ import { ApolloServer } from 'apollo-server-express'
 import { databaseInitializer } from './databaseInitializer'
 import { asyncMiddleware } from './utils/asyncMiddleware'
 import { buildSchema } from './utils/buildSchema'
+import { getCurrentUser } from './utils/authentification'
 
 dotenv.config()
 const port = process.env.API_PORT
@@ -21,6 +22,13 @@ const bootstrap = async () => {
 
   const server = new ApolloServer({
     schema,
+    context: ({ req, ...other }: { req: express.Request }) => {
+      const ctx: Context = {
+        user: getCurrentUser(req),
+      }
+
+      return ctx
+    },
   })
   server.applyMiddleware({ app, path: '/graphql' })
 

@@ -12,7 +12,8 @@
       "*": ["node_modules/*", "src/types/*"],
       "@schema-types": ["schemaTypes.ts"],
       "@pages/*": ["pages/*"],
-      "@core-components/*": ["core-components/*"]
+      "@core-components/*": ["core-components/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["src/**/*"],

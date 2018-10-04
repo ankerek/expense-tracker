@@ -2,16 +2,34 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: UserListQueryProps
+// GraphQL query operation: CurrentUserQuery
 // ====================================================
 
-export interface UserListQueryProps_users {
-  id: string;
+export interface CurrentUserQuery_currentUser {
   email: string;
 }
 
-export interface UserListQueryProps {
-  users: UserListQueryProps_users[];
+export interface CurrentUserQuery {
+  currentUser: CurrentUserQuery_currentUser | null;
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SignInMutation
+// ====================================================
+
+export interface SignInMutation_signIn {
+  token: string;
+}
+
+export interface SignInMutation {
+  signIn: SignInMutation_signIn;
+}
+
+export interface SignInMutationVariables {
+  input: UserCreateInput;
 }
 
 /* tslint:disable */
@@ -22,7 +40,7 @@ export interface UserListQueryProps {
 // ====================================================
 
 export interface CreateUserMutation_createUser {
-  id: string;
+  token: string;
 }
 
 export interface CreateUserMutation {

@@ -12,5 +12,9 @@ export const buildSchema = () => {
 
   return buildFinalSchema({
     resolvers,
+    authChecker: ({ root, args, context, info }) => {
+      return !!context.user
+    },
+    validate: false,
   })
 }
