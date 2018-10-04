@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { CreateUserMutationFn } from '@pages/SignUpPage/controllers/CreateUser'
+import { NormalizedErrorsMap } from '@utils/normalizeErrors'
+import { CreateUserMutationVariables } from '@schema-types'
 import { Field, Form, Formik, FormikErrors, FormikProps } from 'formik'
 import Button from '@material-ui/core/Button'
 import { TextField } from '@core-components/TextField'
-import { ButtonContainer } from './elements'
-import { CreateUserMutationVariables } from '@schema-types'
-import { NormalizedErrorsMap } from '@utils/normalizeErrors'
+import { NavLink } from '@core-components/NavLink'
+import Grid from '@material-ui/core/Grid'
+import { ActionsContainer } from './elements'
 
 export interface SignUpFormProps {
   submit: (
@@ -26,7 +27,7 @@ const initialValues = {
 const validate = (values: SignUpFormValuesProps) => {
   const errors: any = {}
 
-  if (!values.email)      {
+  if (!values.email) {
     errors.email = 'Required'
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address'
@@ -80,17 +81,24 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
                 margin="normal"
                 component={TextField}
               />
-              <ButtonContainer>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="raised"
-                  color="primary"
-                  disabled={!formikBag.isValid}
-                >
-                  Sign up
-                </Button>
-              </ButtonContainer>
+              <ActionsContainer>
+                <Grid container alignItems='center'>
+                  <Grid item xs={4} sm={6}>
+                    <NavLink to="/signin">Sign in instead</NavLink>
+                  </Grid>
+                  <Grid item xs={8} sm={6}>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="raised"
+                      color="primary"
+                      disabled={!formikBag.isValid}
+                    >
+                      Sign up
+                    </Button>
+                  </Grid>
+                </Grid>
+              </ActionsContainer>
             </Form>
           )}
         />

@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import { SidebarDrawer, DRAWER_WIDTH } from '@core-components/SidebarDrawer'
 import { Routes } from '@pages/Routes'
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +47,6 @@ export class MainLayout extends React.Component<{}, State> {
     const { drawerOpen } = this.state
     return (
       <Container>
-        <CssBaseline />
         <AppBar drawerOpen={drawerOpen}>
           <Toolbar>
             <IconButton color="inherit" onClick={this.handleToggleDrawer}>

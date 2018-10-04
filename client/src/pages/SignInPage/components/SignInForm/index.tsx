@@ -1,10 +1,12 @@
 import * as React from 'react'
+import { NormalizedErrorsMap } from '@utils/normalizeErrors'
+import { SignInMutationVariables } from '@schema-types'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
+import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import { TextField } from '@core-components/TextField'
-import { ButtonContainer } from './elements'
-import { SignInMutationVariables } from '@schema-types'
-import { NormalizedErrorsMap } from '@utils/normalizeErrors'
+import { NavLink } from '@core-components/NavLink'
+import { ActionsContainer } from './elements'
 
 export interface SignInFormProps {
   submit: (
@@ -78,17 +80,24 @@ export class SignInForm extends React.PureComponent<SignInFormProps> {
               margin="normal"
               component={TextField}
             />
-            <ButtonContainer>
-              <Button
-                type="submit"
-                fullWidth
-                variant="raised"
-                color="primary"
-                disabled={!formikBag.isValid}
-              >
-                Sign in
-              </Button>
-            </ButtonContainer>
+            <ActionsContainer>
+              <Grid container alignItems="center">
+                <Grid item xs={4} sm={6}>
+                  <NavLink to="/signup">Sign up instead</NavLink>
+                </Grid>
+                <Grid item xs={8} sm={6}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="raised"
+                    color="primary"
+                    disabled={!formikBag.isValid}
+                  >
+                    Sign in
+                  </Button>
+                </Grid>
+              </Grid>
+            </ActionsContainer>
           </Form>
         )}
       />
