@@ -57,7 +57,6 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
 
   render() {
     return (
-      <>
         <Formik
           initialValues={initialValues}
           validate={validate}
@@ -102,7 +101,6 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
             </Form>
           )}
         />
-      </>
     )
   }
 }

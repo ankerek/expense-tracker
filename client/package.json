@@ -11,6 +11,18 @@
     "codegen:generate": "apollo codegen:generate --schema=./schema.json --queries=./src/**/*.tsx --target=typescript --outputFlat ./src/schemaTypes.ts",
     "gen:types": "npm run schema:download && npm run codegen:generate"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "tslint --fix -c ../tslint.json -p tsconfig.json",
+      "git add"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ankerek/expense-tracker.git"
@@ -25,6 +37,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.14.3",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.0",
     "typescript": "^3.0.3",
