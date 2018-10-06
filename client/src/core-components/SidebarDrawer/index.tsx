@@ -26,7 +26,7 @@ const DrawerSidebar = styled(Drawer)`
       position: relative;
       width: 250px;
     }
-    
+
     .${paperClosedClassName} {
       width: 80px;
       overflow-x: hidden;

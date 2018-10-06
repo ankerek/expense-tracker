@@ -8,9 +8,7 @@ export class SignInPage extends React.Component {
     return (
       <div>
         <Typography variant="display1">Sign in</Typography>
-        <SignIn>
-          {({ submit }) => <SignInForm submit={submit} />}
-        </SignIn>
+        <SignIn>{({ submit }) => <SignInForm submit={submit} />}</SignIn>
       </div>
     )
   }

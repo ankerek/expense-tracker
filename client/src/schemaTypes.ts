@@ -6,11 +6,11 @@
 // ====================================================
 
 export interface CurrentUserQuery_currentUser {
-  email: string;
+  email: string
 }
 
 export interface CurrentUserQuery {
-  currentUser: CurrentUserQuery_currentUser | null;
+  currentUser: CurrentUserQuery_currentUser | null
 }
 
 /* tslint:disable */
@@ -21,15 +21,15 @@ export interface CurrentUserQuery {
 // ====================================================
 
 export interface SignInMutation_signIn {
-  token: string;
+  token: string
 }
 
 export interface SignInMutation {
-  signIn: SignInMutation_signIn;
+  signIn: SignInMutation_signIn
 }
 
 export interface SignInMutationVariables {
-  input: UserCreateInput;
+  input: UserCreateInput
 }
 
 /* tslint:disable */
@@ -40,15 +40,15 @@ export interface SignInMutationVariables {
 // ====================================================
 
 export interface CreateUserMutation_createUser {
-  token: string;
+  token: string
 }
 
 export interface CreateUserMutation {
-  createUser: CreateUserMutation_createUser;
+  createUser: CreateUserMutation_createUser
 }
 
 export interface CreateUserMutationVariables {
-  input: UserCreateInput;
+  input: UserCreateInput
 }
 
 /* tslint:disable */
@@ -59,8 +59,8 @@ export interface CreateUserMutationVariables {
 //==============================================================
 
 export interface UserCreateInput {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 //==============================================================

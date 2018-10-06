@@ -1,14 +1,10 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import {
-  graphql,
-  MutationFn,
-  ChildMutateProps,
-} from 'react-apollo'
+import { graphql, MutationFn, ChildMutateProps } from 'react-apollo'
 import { SignInMutation, SignInMutationVariables } from '@schema-types'
 import { normalizeErrors, NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { compose } from "@utils/compose";
+import { compose } from '@utils/compose'
 
 const signInMutation = gql`
   mutation SignInMutation($input: UserCreateInput!) {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import { Query, QueryResult } from "react-apollo";
+import { Query, QueryResult } from 'react-apollo'
 import { CurrentUserQuery } from '@schema-types'
 
 const currentUserQuery = gql`
@@ -12,9 +12,7 @@ const currentUserQuery = gql`
 `
 
 interface CurrentUserProps {
-  children: (
-    result: QueryResult<CurrentUserQuery>
-  ) => JSX.Element | null
+  children: (result: QueryResult<CurrentUserQuery>) => JSX.Element | null
 }
 
 export class CurrentUser extends React.Component<CurrentUserProps> {
@@ -23,7 +21,7 @@ export class CurrentUser extends React.Component<CurrentUserProps> {
     return (
       <Query<CurrentUserQuery>
         query={currentUserQuery}
-        fetchPolicy='cache-and-network'
+        fetchPolicy="cache-and-network"
       >
         {(...args) => children(...args)}
       </Query>
