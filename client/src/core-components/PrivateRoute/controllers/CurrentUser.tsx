@@ -23,6 +23,7 @@ export class CurrentUser extends React.Component<CurrentUserProps> {
     return (
       <Query<CurrentUserQuery>
         query={currentUserQuery}
+        fetchPolicy='cache-and-network'
       >
         {(...args) => children(...args)}
       </Query>
