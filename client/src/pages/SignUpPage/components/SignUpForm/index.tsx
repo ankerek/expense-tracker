@@ -8,8 +8,6 @@ import { NavLink } from '@core-components/NavLink'
 import Grid from '@material-ui/core/Grid'
 import { ActionsContainer } from './elements'
 
-
-
 export interface SignUpFormProps {
   submit: (
     values: CreateUserMutationVariables
@@ -59,50 +57,50 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
 
   render() {
     return (
-        <Formik
-          initialValues={initialValues}
-          validate={validate}
-          onSubmit={this.handleSubmit}
-          render={(formikBag: FormikProps<SignUpFormValuesProps>) => (
-            <Form>
-              <Field
-                name="email"
-                label="E-mail"
-                required
-                fullWidth
-                margin="normal"
-                component={TextField}
-              />
-              <Field
-                name="password"
-                type="password"
-                label="Password"
-                required
-                fullWidth
-                margin="normal"
-                component={TextField}
-              />
-              <ActionsContainer>
-                <Grid container alignItems='center'>
-                  <Grid item xs={4} sm={6}>
-                    <NavLink to="/signin">Sign in instead</NavLink>
-                  </Grid>
-                  <Grid item xs={8} sm={6}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="raised"
-                      color="primary"
-                      disabled={!formikBag.isValid}
-                    >
-                      Sign up
-                    </Button>
-                  </Grid>
+      <Formik
+        initialValues={initialValues}
+        validate={validate}
+        onSubmit={this.handleSubmit}
+        render={(formikBag: FormikProps<SignUpFormValuesProps>) => (
+          <Form>
+            <Field
+              name="email"
+              label="E-mail"
+              required
+              fullWidth
+              margin="normal"
+              component={TextField}
+            />
+            <Field
+              name="password"
+              type="password"
+              label="Password"
+              required
+              fullWidth
+              margin="normal"
+              component={TextField}
+            />
+            <ActionsContainer>
+              <Grid container alignItems="center">
+                <Grid item xs={4} sm={6}>
+                  <NavLink to="/signin">Sign in instead</NavLink>
                 </Grid>
-              </ActionsContainer>
-            </Form>
-          )}
-        />
+                <Grid item xs={8} sm={6}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="raised"
+                    color="primary"
+                    disabled={!formikBag.isValid}
+                  >
+                    Sign up
+                  </Button>
+                </Grid>
+              </Grid>
+            </ActionsContainer>
+          </Form>
+        )}
+      />
     )
   }
 }
