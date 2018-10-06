@@ -3,8 +3,8 @@ import gql from 'graphql-tag'
 import { ChildMutateProps, graphql, Mutation, MutationFn } from 'react-apollo'
 import { CreateUserMutation, CreateUserMutationVariables } from '@schema-types'
 import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
-import compose from '@shopify/react-compose'
 import { RouteComponentProps, withRouter } from 'react-router'
+import { compose } from "@utils/compose";
 
 const createUserMutation = gql`
   mutation CreateUserMutation($input: UserCreateInput!) {

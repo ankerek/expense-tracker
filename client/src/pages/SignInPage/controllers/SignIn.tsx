@@ -8,7 +8,7 @@ import {
 import { SignInMutation, SignInMutationVariables } from '@schema-types'
 import { normalizeErrors, NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import compose from '@shopify/react-compose'
+import { compose } from "@utils/compose";
 
 const signInMutation = gql`
   mutation SignInMutation($input: UserCreateInput!) {
