@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
-import { Account } from '../../accounts/definitions/Account'
+import { Account } from '../../account/definitions/Account'
 
 @Entity()
 @ObjectType()

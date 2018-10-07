@@ -1,4 +1,4 @@
-import { User } from '../modules/users/definitions/User'
+import { User } from '../modules/user/definitions/User'
 
 declare global {
   interface Context {

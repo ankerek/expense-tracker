@@ -6,7 +6,7 @@ import {
   JoinColumn,
 } from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
-import { User } from '../../users/definitions/User'
+import { User } from '../../user/definitions/User'
 
 @Entity()
 @ObjectType()

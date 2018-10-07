@@ -12,7 +12,7 @@ import {
 } from 'type-graphql'
 import { UserInputError } from 'apollo-server'
 import { User } from './definitions/User'
-import { Account } from '../accounts/definitions/Account'
+import { Account } from '../account/definitions/Account'
 import { UserCreateInput } from './definitions/UserCreateInput'
 import { SignInResponse } from './definitions/SignInResponse'
 import { validatePassword, createToken } from '../../utils/authentification'

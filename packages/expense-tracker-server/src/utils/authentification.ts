@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
-import { User } from '../modules/users/definitions/User'
+import { User } from '../modules/user/definitions/User'
 import { Request } from 'express'
 
 export const createToken = (user: User, expiresIn: string | number) => {
