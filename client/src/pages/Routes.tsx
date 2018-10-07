@@ -1,20 +1,22 @@
 import * as React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { PrivateRoute } from '@core-components/PrivateRoute'
 import { HomePage } from '@pages/HomePage'
 import { SignInPage } from '@pages/SignInPage'
 import { SignUpPage } from '@pages/SignUpPage'
+import { AccountsPage } from '@pages/AccountsPage'
+import { CreateAccountPage } from '@pages/CreateAccountPage'
 import { NotFoundPage } from '@pages/NotFoundPage'
 
 export const Routes = () => (
-  <Router>
-    <Switch>
-      <Route path="/signin" component={SignInPage} />
-      <Route path="/signup" component={SignUpPage} />
+  <Switch>
+    <Route path="/signin" component={SignInPage} />
+    <Route path="/signup" component={SignUpPage} />
 
-      <PrivateRoute path="/" exact component={HomePage} />
+    <PrivateRoute path="/" exact component={HomePage} />
+    <PrivateRoute path="/accounts" exact component={AccountsPage} />
+    <PrivateRoute path="/accounts/create" exact component={CreateAccountPage} />
 
-      <Route component={NotFoundPage} />
-    </Switch>
-  </Router>
+    <Route component={NotFoundPage} />
+  </Switch>
 )

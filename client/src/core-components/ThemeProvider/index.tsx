@@ -8,16 +8,23 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import blue from '@material-ui/core/colors/blue'
 import pink from '@material-ui/core/colors/pink'
 
+const textPrimaryColor = 'rgba(0, 0, 0, 0.87)'
+
 injectGlobal`
   body {
     font-family: Roboto;
-  }
+    color: ${textPrimaryColor};
+}
 `
 
 const themeOptions = {
   palette: {
     primary: blue,
     secondary: pink,
+  },
+  text: {
+    primary: textPrimaryColor,
+    secondary: 'rgba(0, 0, 0, 0.54)',
   },
 }
 const theme = createMuiTheme(themeOptions)

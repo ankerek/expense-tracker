@@ -6,6 +6,7 @@ import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from 'react-apollo'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@core-components/ThemeProvider'
 import { MainLayout } from '@core-components/MainLayout'
 
@@ -13,11 +14,6 @@ const API_BASE_URL = '/graphql'
 
 const httpLink = new HttpLink({
   uri: API_BASE_URL,
-  // headers: {
-  //   authorization: `Bearer ${
-  //     process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
-  //     }`,
-  // },
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -38,9 +34,11 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <ThemeProvider>
-      <MainLayout />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider>
+        <MainLayout />
+      </ThemeProvider>
+    </Router>
   </ApolloProvider>
 )
 

@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm'
-import { Resolver, Query, Mutation } from 'type-graphql'
+import { Resolver, Query, Mutation, Arg, Ctx, Authorized } from 'type-graphql'
 import { Account } from './definitions/Account'
+import { CreateAccountInput } from './definitions/CreateAccountInput'
 
 @Resolver()
 export class AccountResolver {
@@ -10,16 +11,23 @@ export class AccountResolver {
     this.accountRepository = getRepository(Account)
   }
 
+  @Authorized()
   @Query(returns => [Account])
-  async accounts() {
-    return this.accountRepository.find()
+  async getAccountList(@Ctx() ctx: Context) {
+    return this.accountRepository.find({
+      where: { userId: ctx.user.id },
+    })
   }
 
+  @Authorized()
   @Mutation(returns => Account)
-  async createAccount(/*@Arg('data') newUserData: UserCreateInput*/) {
+  async createAccount(
+    @Arg('input') input: CreateAccountInput,
+    @Ctx() ctx: Context
+  ) {
     const newAccount = new Account()
-    newAccount.name = 'test'
-    newAccount.userId = 'c15bb2bf-7ca2-445b-85a9-c0d846ae9883'
+    newAccount.name = input.name
+    newAccount.userId = ctx.user.id
     return this.accountRepository.save(newAccount)
   }
 }

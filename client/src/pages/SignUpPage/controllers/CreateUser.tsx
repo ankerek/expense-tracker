@@ -1,17 +1,29 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
-import { ChildMutateProps, graphql, MutationFn } from 'react-apollo'
+import {
+  withApollo,
+  ChildMutateProps,
+  graphql,
+  MutationFn,
+  WithApolloClient,
+} from 'react-apollo'
 import { CreateUserMutation, CreateUserMutationVariables } from '@schema-types'
 import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { compose } from '@utils/compose'
+import { getCurrentUserQuery } from '@controllers/users/GetCurrentUser'
+import { userFragment } from '@controllers/users/fragments'
 
 const createUserMutation = gql`
   mutation CreateUserMutation($input: UserCreateInput!) {
     createUser(input: $input) {
       token
+      user {
+        ...user
+      }
     }
   }
+  ${userFragment}
 `
 
 export type CreateUserMutationFn = MutationFn<
@@ -30,24 +42,29 @@ interface CreateUserProps {
 }
 
 class C extends React.PureComponent<
-  ChildMutateProps<
-    CreateUserProps,
-    CreateUserMutation,
-    CreateUserMutationVariables
-  > &
-    RouteComponentProps
+  RouteComponentProps &
+    ChildMutateProps<
+      WithApolloClient<CreateUserProps>,
+      CreateUserMutation,
+      CreateUserMutationVariables
+    >
 > {
   handleCreateUser = async (values: CreateUserMutationVariables) => {
     try {
       const {
         data: {
-          createUser: { token },
+          createUser: { token, user },
         },
       } = await this.props.mutate({
         variables: values,
       })
 
       localStorage.setItem('jwtToken', token)
+
+      this.props.client.writeQuery({
+        query: getCurrentUserQuery,
+        data: { getCurrentUser: user },
+      })
 
       this.props.history.push('/')
     } catch (res) {
@@ -63,6 +80,7 @@ class C extends React.PureComponent<
 
 export const CreateUser = compose(
   withRouter,
+  withApollo,
   graphql<CreateUserProps, CreateUserMutation, CreateUserMutationVariables>(
     createUserMutation
   )

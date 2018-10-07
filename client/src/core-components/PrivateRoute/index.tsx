@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Redirect, Route, RouteProps } from 'react-router'
-import { CurrentUser } from '@core-components/PrivateRoute/controllers/CurrentUser'
+import { GetCurrentUser } from "@controllers/users/GetCurrentUser";
 
 export class PrivateRoute extends React.Component<RouteProps> {
   render() {
@@ -10,19 +10,18 @@ export class PrivateRoute extends React.Component<RouteProps> {
       <Route
         {...rest}
         render={props => (
-          <CurrentUser>
+          <GetCurrentUser>
             {({ data, loading }) => {
               if (loading) {
                 return <span>loading...</span>
               }
-
-              return data.currentUser ? (
+              return data.getCurrentUser ? (
                 <Component {...this.props} />
               ) : (
                 <Redirect to="/signin" />
               )
             }}
-          </CurrentUser>
+          </GetCurrentUser>
         )}
       />
     )

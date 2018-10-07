@@ -44,7 +44,7 @@ export class UserResolver {
   }
 
   @Query(returns => User, { nullable: true })
-  async currentUser(@Ctx() ctx: Context) {
+  async getCurrentUser(@Ctx() ctx: Context) {
     if (ctx.user) {
       return this.userRepository.findOne({
         where: { id: ctx.user.id },
@@ -76,7 +76,7 @@ export class UserResolver {
     newUser.password = await bcrypt.hash(input.password, SALT_ROUNDS)
     const createdUser = await this.userRepository.save(newUser)
 
-    return { token: createToken(createdUser, '30m') }
+    return { token: createToken(createdUser, '30m'), user: createdUser }
   }
 
   @Mutation(returns => SignInResponse)
@@ -108,7 +108,7 @@ export class UserResolver {
       )
     }
 
-    return { token: createToken(user, '30m') }
+    return { token: createToken(user, '30m'), user }
   }
 }
 
