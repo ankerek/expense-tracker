@@ -5,7 +5,7 @@ import {
   Amount,
   Container,
   Item,
-  OutsideActionsContainer,
+  OutsideActionsWrapper,
 } from './elements'
 import Divider from '@material-ui/core/Divider'
 import { FormattedAmount } from '@core-components/FormattedAmount'
@@ -34,7 +34,7 @@ export class AccountList extends React.PureComponent<AccountListProps> {
             </div>
           ))}
         </Container>
-        <OutsideActionsContainer>
+        <OutsideActionsWrapper>
           <Button.Link
             to={{
               pathname: '/accounts/create',
@@ -45,7 +45,7 @@ export class AccountList extends React.PureComponent<AccountListProps> {
           >
             Create new account
           </Button.Link>
-        </OutsideActionsContainer>
+        </OutsideActionsWrapper>
       </>
     )
   }

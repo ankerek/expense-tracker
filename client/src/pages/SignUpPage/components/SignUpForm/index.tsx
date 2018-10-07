@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import { TextField } from '@core-components/TextField'
 import { NavLink } from '@core-components/NavLink'
 import Grid from '@material-ui/core/Grid'
-import { ActionsContainer } from './elements'
+import { ActionsWrapper } from './elements'
 
 export interface SignUpFormProps {
   submit: (
@@ -80,7 +80,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
               margin="normal"
               component={TextField}
             />
-            <ActionsContainer>
+            <ActionsWrapper>
               <Grid container alignItems="center">
                 <Grid item xs={4} sm={6}>
                   <NavLink to="/signin">Sign in instead</NavLink>
@@ -97,7 +97,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
                   </Button>
                 </Grid>
               </Grid>
-            </ActionsContainer>
+            </ActionsWrapper>
           </Form>
         )}
       />

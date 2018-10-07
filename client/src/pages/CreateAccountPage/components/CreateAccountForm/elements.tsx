@@ -1,5 +1,5 @@
 import styled from 'styled-components'
 
-export const ActionsContainer = styled.div`
+export const ActionsWrapper = styled.div`
   margin-top: 10px;
 `

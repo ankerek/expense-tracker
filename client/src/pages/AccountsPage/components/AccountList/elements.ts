@@ -17,7 +17,7 @@ export const Amount = styled.div`
 export const Actions = styled.div`
 `
 
-export const OutsideActionsContainer = styled.div`
+export const OutsideActionsWrapper = styled.div`
   margin: 10px 0 0 0;
   display: flex;
   justify-content: flex-end;

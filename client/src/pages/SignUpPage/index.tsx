@@ -1,11 +1,10 @@
 import * as React from 'react'
+import { PageLayout } from '@core-components/PageLayout'
 import { CreateUser } from './controllers/CreateUser'
-import Typography from '@material-ui/core/Typography'
-import { SignUpForm } from '@pages/SignUpPage/components/SignUpForm'
+import { SignUpForm } from './components/SignUpForm'
 
 export const SignUpPage = () => (
-  <div>
-    <Typography variant="display1">Sign up</Typography>
+  <PageLayout title="Sign up">
     <CreateUser>{({ submit }) => <SignUpForm submit={submit} />}</CreateUser>
-  </div>
+  </PageLayout>
 )

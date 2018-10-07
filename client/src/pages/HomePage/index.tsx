@@ -1,8 +1,9 @@
 import * as React from 'react'
+import { PageLayout } from "@core-components/PageLayout";
 import Typography from '@material-ui/core/Typography'
 
 export const HomePage = () => (
-  <div>
+  <PageLayout title='Home'>
     <Typography variant="display1">Home</Typography>
-  </div>
+  </PageLayout>
 )

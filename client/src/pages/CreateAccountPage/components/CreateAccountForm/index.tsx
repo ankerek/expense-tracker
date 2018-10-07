@@ -4,7 +4,7 @@ import { CreateAccountMutationVariables } from '@schema-types'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
 import Button from '@material-ui/core/Button'
 import { TextField } from '@core-components/TextField'
-import { ActionsContainer } from './elements'
+import { ActionsWrapper } from './elements'
 
 export interface SignInFormProps {
   submit: (
@@ -61,7 +61,7 @@ export class CreateAccountForm extends React.PureComponent<SignInFormProps> {
               margin="normal"
               component={TextField}
             />
-            <ActionsContainer>
+            <ActionsWrapper>
               <Button
                 type="submit"
                 fullWidth
@@ -71,7 +71,7 @@ export class CreateAccountForm extends React.PureComponent<SignInFormProps> {
               >
                 Create
               </Button>
-            </ActionsContainer>
+            </ActionsWrapper>
           </Form>
         )}
       />
