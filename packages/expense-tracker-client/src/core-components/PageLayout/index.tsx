@@ -23,10 +23,7 @@ export class PageLayout extends React.PureComponent<
   }
 
   handleToggleDrawer = () => {
-    this.setState(({ drawerOpen }) =>
-
-
-      ({ drawerOpen: !drawerOpen }))
+    this.setState(({ drawerOpen }) => ({ drawerOpen: !drawerOpen }))
   }
 
   render() {

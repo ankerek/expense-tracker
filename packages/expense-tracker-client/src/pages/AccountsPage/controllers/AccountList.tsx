@@ -1,7 +1,7 @@
 import * as React from 'react'
 import gql from 'graphql-tag'
 import { Query, QueryResult } from 'react-apollo'
-import { GetAccountListQuery } from "@schema-types";
+import { GetAccountListQuery } from '@schema-types'
 
 const getAccountListQuery = gql`
   query GetAccountListQuery {
@@ -22,7 +22,7 @@ export class GetAccountList extends React.Component<AccountListProps> {
     return (
       <Query<GetAccountListQuery>
         query={getAccountListQuery}
-        fetchPolicy='cache-and-network'
+        fetchPolicy="cache-and-network"
       >
         {(...args) => children(...args)}
       </Query>

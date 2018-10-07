@@ -8,8 +8,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@core-components/ThemeProvider'
-import { PageLayout } from '@core-components/PageLayout'
-import { Routes } from "@pages/Routes";
+import { Routes } from '@pages/Routes'
 
 const API_BASE_URL = '/graphql'
 

@@ -6,12 +6,12 @@
 // ====================================================
 
 export interface GetCurrentUserQuery_getCurrentUser {
-  id: string;
-  email: string;
+  id: string
+  email: string
 }
 
 export interface GetCurrentUserQuery {
-  getCurrentUser: GetCurrentUserQuery_getCurrentUser | null;
+  getCurrentUser: GetCurrentUserQuery_getCurrentUser | null
 }
 
 /* tslint:disable */
@@ -22,12 +22,12 @@ export interface GetCurrentUserQuery {
 // ====================================================
 
 export interface GetAccountListQuery_getAccountList {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }
 
 export interface GetAccountListQuery {
-  getAccountList: GetAccountListQuery_getAccountList[];
+  getAccountList: GetAccountListQuery_getAccountList[]
 }
 
 /* tslint:disable */
@@ -38,16 +38,16 @@ export interface GetAccountListQuery {
 // ====================================================
 
 export interface CreateAccountMutation_createAccount {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }
 
 export interface CreateAccountMutation {
-  createAccount: CreateAccountMutation_createAccount;
+  createAccount: CreateAccountMutation_createAccount
 }
 
 export interface CreateAccountMutationVariables {
-  input: CreateAccountInput;
+  input: CreateAccountInput
 }
 
 /* tslint:disable */
@@ -58,21 +58,21 @@ export interface CreateAccountMutationVariables {
 // ====================================================
 
 export interface SignInMutation_signIn_user {
-  id: string;
-  email: string;
+  id: string
+  email: string
 }
 
 export interface SignInMutation_signIn {
-  token: string;
-  user: SignInMutation_signIn_user;
+  token: string
+  user: SignInMutation_signIn_user
 }
 
 export interface SignInMutation {
-  signIn: SignInMutation_signIn;
+  signIn: SignInMutation_signIn
 }
 
 export interface SignInMutationVariables {
-  input: UserCreateInput;
+  input: UserCreateInput
 }
 
 /* tslint:disable */
@@ -83,21 +83,21 @@ export interface SignInMutationVariables {
 // ====================================================
 
 export interface CreateUserMutation_createUser_user {
-  id: string;
-  email: string;
+  id: string
+  email: string
 }
 
 export interface CreateUserMutation_createUser {
-  token: string;
-  user: CreateUserMutation_createUser_user;
+  token: string
+  user: CreateUserMutation_createUser_user
 }
 
 export interface CreateUserMutation {
-  createUser: CreateUserMutation_createUser;
+  createUser: CreateUserMutation_createUser
 }
 
 export interface CreateUserMutationVariables {
-  input: UserCreateInput;
+  input: UserCreateInput
 }
 
 /* tslint:disable */
@@ -108,8 +108,8 @@ export interface CreateUserMutationVariables {
 // ====================================================
 
 export interface account {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }
 
 /* tslint:disable */
@@ -120,8 +120,8 @@ export interface account {
 // ====================================================
 
 export interface user {
-  id: string;
-  email: string;
+  id: string
+  email: string
 }
 
 /* tslint:disable */
@@ -132,12 +132,12 @@ export interface user {
 //==============================================================
 
 export interface CreateAccountInput {
-  name: string;
+  name: string
 }
 
 export interface UserCreateInput {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 //==============================================================

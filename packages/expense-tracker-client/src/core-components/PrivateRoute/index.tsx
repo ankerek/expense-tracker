@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Redirect, Route, RouteProps } from 'react-router'
-import { GetCurrentUser } from "@controllers/users/GetCurrentUser";
+import { GetCurrentUser } from '@controllers/users/GetCurrentUser'
 
 export class PrivateRoute extends React.Component<RouteProps> {
   render() {

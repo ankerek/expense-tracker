@@ -9,17 +9,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "schema:download": "apollo schema:download --endpoint=http://localhost:3000/graphql",
     "codegen:generate": "apollo codegen:generate --schema=./schema.json --queries=\"./src/**/*.{ts,tsx}\" --target=typescript --outputFlat ./src/schemaTypes.ts",
-    "gen:types": "npm run schema:download && npm run codegen:generate"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "gen:types": "npm run schema:download && npm run codegen:generate",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "tslint --fix -c ../tslint.json -p tsconfig.json",
+      "tslint --fix -c ../../tslint.json -p tsconfig.json",
       "git add"
     ]
   },

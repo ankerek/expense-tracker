@@ -1,5 +1,5 @@
 {
-  "name": "expense-tracker-be",
+  "name": "expense-tracker-server",
   "version": "0.0.1",
   "description": "",
   "main": "src/index.ts",
@@ -8,17 +8,13 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint -c ../tslint.json -p tsconfig.json",
-    "tsc": "tsc"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "tsc": "tsc",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "tslint --fix -c ../tslint.json -p tsconfig.json",
+      "tslint --fix -c ../../tslint.json -p tsconfig.json",
       "git add"
     ]
   },
