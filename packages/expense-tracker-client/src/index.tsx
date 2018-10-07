@@ -13,11 +13,6 @@ const App = () => (
         <Routes />
       </ThemeProvider>
     </Router>
-
-
-
-
-
   </ApolloProvider>
 )
 

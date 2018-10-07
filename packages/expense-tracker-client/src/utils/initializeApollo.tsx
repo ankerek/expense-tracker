@@ -8,7 +8,7 @@ const API_BASE_URL = '/graphql'
 
 const httpLink = new HttpLink({
   uri: API_BASE_URL,
-}                 )
+})
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('jwtToken')
