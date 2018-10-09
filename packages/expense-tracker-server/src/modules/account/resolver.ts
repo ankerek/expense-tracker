@@ -3,7 +3,7 @@ import { Resolver, Query, Mutation, Arg, Ctx, Authorized } from 'type-graphql'
 import { Account } from './definitions/Account'
 import { CreateAccountInput } from './definitions/CreateAccountInput'
 
-@Resolver()
+@Resolver(of => Account)
 export class AccountResolver {
   private accountRepository: Repository<Account>
 
@@ -27,6 +27,7 @@ export class AccountResolver {
   ) {
     const newAccount = new Account()
     newAccount.name = input.name
+    newAccount.currency = input.currency
     newAccount.userId = ctx.user.id
     return this.accountRepository.save(newAccount)
   }

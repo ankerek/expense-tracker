@@ -26,7 +26,7 @@ export class AccountList extends React.PureComponent<AccountListProps> {
               <Item key={account.id}>
                 <span>{account.name}</span>
                 <Amount>
-                  <FormattedAmount>10 000</FormattedAmount>
+                  <FormattedAmount>10 000 {account.currency}</FormattedAmount>
                 </Amount>
                 <Actions>Actions</Actions>
               </Item>

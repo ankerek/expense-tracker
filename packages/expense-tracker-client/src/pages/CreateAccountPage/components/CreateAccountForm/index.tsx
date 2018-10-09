@@ -5,6 +5,8 @@ import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
 import Button from '@material-ui/core/Button'
 import { TextField } from '@core-components/TextField'
 import { ActionsWrapper } from './elements'
+import { GetCurrencyList } from '@controllers/currency/GetCurrencyList'
+import MenuItem from '@material-ui/core/MenuItem'
 
 export interface SignInFormProps {
   submit: (
@@ -14,10 +16,12 @@ export interface SignInFormProps {
 
 export interface CreateAccountFormValues {
   name: string
+  currency: string
 }
 
 const initialValues = {
   name: '',
+  currency: '',
 }
 
 const validate = (values: CreateAccountFormValues) => {
@@ -25,6 +29,9 @@ const validate = (values: CreateAccountFormValues) => {
 
   if (!values.name) {
     errors.name = 'Required'
+  }
+  if (!values.currency) {
+    errors.currency = 'Required'
   }
 
   return errors
@@ -61,6 +68,27 @@ export class CreateAccountForm extends React.PureComponent<SignInFormProps> {
               margin="normal"
               component={TextField}
             />
+            <GetCurrencyList>
+              {({ data }) => (
+                <Field
+                  name="currency"
+                  label="Currency"
+                  select
+                  required
+                  fullWidth
+                  margin="normal"
+                  component={TextField}
+                >
+                  {data &&
+                    data.getCurrencyList &&
+                    data.getCurrencyList.map(currency => (
+                      <MenuItem key={currency.id} value={currency.id}>
+                        {currency.id}
+                      </MenuItem>
+                    ))}
+                </Field>
+              )}
+            </GetCurrencyList>
             <ActionsWrapper>
               <Button
                 type="submit"

@@ -11,8 +11,8 @@ import { CreateUserMutation, CreateUserMutationVariables } from '@schema-types'
 import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { compose } from '@utils/compose'
-import { getCurrentUserQuery } from '@controllers/users/GetCurrentUser'
-import { userFragment } from '@controllers/users/fragments'
+import { getCurrentUserQuery } from '@controllers/user/GetCurrentUser'
+import { userFragment } from '@controllers/user/fragments'
 
 const createUserMutation = gql`
   mutation CreateUserMutation($input: UserCreateInput!) {

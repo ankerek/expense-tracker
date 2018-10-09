@@ -8,6 +8,7 @@ const getAccountListQuery = gql`
     getAccountList {
       id
       name
+      currency
     }
   }
 `

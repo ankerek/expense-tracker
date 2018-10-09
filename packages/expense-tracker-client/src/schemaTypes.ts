@@ -2,6 +2,21 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetCurrencyListQuery
+// ====================================================
+
+export interface GetCurrencyListQuery_getCurrencyList {
+  id: string
+}
+
+export interface GetCurrencyListQuery {
+  getCurrencyList: GetCurrencyListQuery_getCurrencyList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetCurrentUserQuery
 // ====================================================
 
@@ -24,6 +39,7 @@ export interface GetCurrentUserQuery {
 export interface GetAccountListQuery_getAccountList {
   id: string
   name: string
+  currency: string
 }
 
 export interface GetAccountListQuery {
@@ -133,6 +149,7 @@ export interface user {
 
 export interface CreateAccountInput {
   name: string
+  currency: string
 }
 
 export interface UserCreateInput {

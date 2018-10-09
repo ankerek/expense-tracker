@@ -7,4 +7,8 @@ export class CreateAccountInput implements Partial<Account> {
   @Field()
   @MinLength(1)
   name: string
+
+  @Field()
+  @MinLength(3)
+  currency: string
 }

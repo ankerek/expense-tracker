@@ -13,8 +13,7 @@ import {
 import { normalizeErrors, NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { accountFragment } from '@controllers/accounts/fragments'
-import { nextTick } from 'async'
+import { accountFragment } from '@controllers/account/fragments'
 
 const createAccountMutation = gql`
   mutation CreateAccountMutation($input: CreateAccountInput!) {

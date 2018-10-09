@@ -22,4 +22,10 @@ export class Account {
   @ManyToOne(type => User, { cascade: true })
   @JoinColumn({ name: 'user_id' })
   userId: string
+
+  // @ManyToOne(type => Currency, { cascade: true })
+  // @JoinColumn({ name: 'currency_id' })
+  @Column({ name: 'currency_id' })
+  @Field()
+  currency: string
 }
