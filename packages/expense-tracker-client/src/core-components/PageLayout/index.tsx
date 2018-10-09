@@ -37,7 +37,7 @@ export class PageLayout extends React.PureComponent<
             <IconButton color="inherit" onClick={this.handleToggleDrawer}>
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit">
+            <Typography variant="h6" color="inherit">
               {title}
             </Typography>
           </Toolbar>

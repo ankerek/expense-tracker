@@ -26,6 +26,9 @@ const themeOptions = {
     primary: textPrimaryColor,
     secondary: 'rgba(0, 0, 0, 0.54)',
   },
+  typography: {
+    useNextVariants: true,
+  },
 }
 const theme = createMuiTheme(themeOptions)
 

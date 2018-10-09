@@ -4,6 +4,6 @@ import Typography from '@material-ui/core/Typography'
 
 export const HomePage = () => (
   <PageLayout title="Home">
-    <Typography variant="display1">Home</Typography>
+    <Typography variant="h4">Home</Typography>
   </PageLayout>
 )
