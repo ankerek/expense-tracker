@@ -89,7 +89,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
                   <Button
                     type="submit"
                     fullWidth
-                    variant="raised"
+                    variant="contained"
                     color="primary"
                     disabled={!formikBag.isValid}
                   >

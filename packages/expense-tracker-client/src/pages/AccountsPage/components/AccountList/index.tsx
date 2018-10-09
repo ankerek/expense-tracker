@@ -40,7 +40,7 @@ export class AccountList extends React.PureComponent<AccountListProps> {
               pathname: '/accounts/create',
               state: { next: '/accounts' },
             }}
-            variant="raised"
+            variant="contained"
             color="primary"
           >
             Create new account

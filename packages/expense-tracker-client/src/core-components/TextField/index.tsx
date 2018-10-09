@@ -1,6 +1,6 @@
 import * as React from 'react'
 import MuiTextField, {
-  TextFieldProps as MuiTextFieldProps,
+  BaseTextFieldProps as MuiTextFieldProps,
 } from '@material-ui/core/TextField'
 import { FieldProps } from 'formik'
 

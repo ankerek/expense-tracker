@@ -93,7 +93,7 @@ export class CreateAccountForm extends React.PureComponent<SignInFormProps> {
               <Button
                 type="submit"
                 fullWidth
-                variant="raised"
+                variant="contained"
                 color="primary"
                 disabled={!formikBag.isValid}
               >
