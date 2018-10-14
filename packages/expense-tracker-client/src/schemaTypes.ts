@@ -2,6 +2,70 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateAccountMutation
+// ====================================================
+
+export interface CreateAccountMutation_createAccount {
+  id: string
+  name: string
+  currency: string
+}
+
+export interface CreateAccountMutation {
+  createAccount: CreateAccountMutation_createAccount
+}
+
+export interface CreateAccountMutationVariables {
+  input: SaveAccountInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetAccountQuery
+// ====================================================
+
+export interface GetAccountQuery_getAccount {
+  id: string
+  name: string
+  currency: string
+}
+
+export interface GetAccountQuery {
+  getAccount: GetAccountQuery_getAccount
+}
+
+export interface GetAccountQueryVariables {
+  id: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: UpdateAccountMutation
+// ====================================================
+
+export interface UpdateAccountMutation_updateAccount {
+  id: string
+  name: string
+  currency: string
+}
+
+export interface UpdateAccountMutation {
+  updateAccount: UpdateAccountMutation_updateAccount
+}
+
+export interface UpdateAccountMutationVariables {
+  id: string
+  input: SaveAccountInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetCurrencyListQuery
 // ====================================================
 
@@ -44,26 +108,6 @@ export interface GetAccountListQuery_getAccountList {
 
 export interface GetAccountListQuery {
   getAccountList: GetAccountListQuery_getAccountList[]
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: CreateAccountMutation
-// ====================================================
-
-export interface CreateAccountMutation_createAccount {
-  id: string
-  name: string
-}
-
-export interface CreateAccountMutation {
-  createAccount: CreateAccountMutation_createAccount
-}
-
-export interface CreateAccountMutationVariables {
-  input: CreateAccountInput
 }
 
 /* tslint:disable */
@@ -126,6 +170,7 @@ export interface CreateUserMutationVariables {
 export interface account {
   id: string
   name: string
+  currency: string
 }
 
 /* tslint:disable */
@@ -147,7 +192,7 @@ export interface user {
 // START Enums and Input Objects
 //==============================================================
 
-export interface CreateAccountInput {
+export interface SaveAccountInput {
   name: string
   currency: string
 }

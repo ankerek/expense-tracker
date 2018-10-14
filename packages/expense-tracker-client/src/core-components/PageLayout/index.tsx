@@ -3,21 +3,21 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { SidebarDrawer } from '@core-components/SidebarDrawer'
 import { AppBar, MainContent, Wrapper } from './elements'
+import { withRouter, RouteComponentProps } from 'react-router'
 
-interface PageLayoutProps {
+interface PageLayoutProps extends RouteComponentProps {
   title: React.ReactNode
+  hasGoBack?: boolean
 }
 
 interface PageLayoutState {
   drawerOpen: boolean
 }
 
-export class PageLayout extends React.PureComponent<
-  PageLayoutProps,
-  PageLayoutState
-> {
+class C extends React.PureComponent<PageLayoutProps, PageLayoutState> {
   state = {
     drawerOpen: false,
   }
@@ -26,17 +26,27 @@ export class PageLayout extends React.PureComponent<
     this.setState(({ drawerOpen }) => ({ drawerOpen: !drawerOpen }))
   }
 
+  goBack = () => {
+    this.props.history.goBack()
+  }
+
   render() {
-    const { title, children } = this.props
+    const { title, hasGoBack, children } = this.props
     const { drawerOpen } = this.state
 
     return (
       <Wrapper>
         <AppBar drawerOpen={drawerOpen}>
           <Toolbar>
-            <IconButton color="inherit" onClick={this.handleToggleDrawer}>
-              <MenuIcon />
-            </IconButton>
+            {hasGoBack ? (
+              <IconButton color="inherit" onClick={this.goBack}>
+                <ChevronLeftIcon />
+              </IconButton>
+            ) : (
+              <IconButton color="inherit" onClick={this.handleToggleDrawer}>
+                <MenuIcon />
+              </IconButton>
+            )}
             <Typography variant="h6" color="inherit">
               {title}
             </Typography>
@@ -51,3 +61,5 @@ export class PageLayout extends React.PureComponent<
     )
   }
 }
+
+export const PageLayout = withRouter(C)

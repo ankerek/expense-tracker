@@ -3,7 +3,7 @@ import { MinLength } from 'class-validator'
 import { Account } from './Account'
 
 @InputType()
-export class CreateAccountInput implements Partial<Account> {
+export class SaveAccountInput implements Partial<Account> {
   @Field()
   @MinLength(1)
   name: string

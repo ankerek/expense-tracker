@@ -1,30 +1,30 @@
 import * as React from 'react'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
-import { CreateAccountMutationVariables } from '@schema-types'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
 import Button from '@material-ui/core/Button'
-import { TextField } from '@core-components/TextField'
+import { TextField } from '../TextField/index'
 import { ActionsWrapper } from './elements'
 import { GetCurrencyList } from '@controllers/currency/GetCurrencyList'
 import MenuItem from '@material-ui/core/MenuItem'
 
-export interface SignInFormProps {
+export interface AccountFormProps {
+  initialValues?: AccountFormValues
   submit: (
-    values: CreateAccountMutationVariables
+    values: { input: AccountFormValues }
   ) => Promise<NormalizedErrorsMap | null>
 }
 
-export interface CreateAccountFormValues {
+export interface AccountFormValues {
   name: string
   currency: string
 }
 
-const initialValues = {
+const initialEmptyValues = {
   name: '',
   currency: '',
 }
 
-const validate = (values: CreateAccountFormValues) => {
+const validate = (values: AccountFormValues) => {
   const errors: any = {}
 
   if (!values.name) {
@@ -37,28 +37,29 @@ const validate = (values: CreateAccountFormValues) => {
   return errors
 }
 
-export class CreateAccountForm extends React.PureComponent<SignInFormProps> {
+export class AccountForm<MutationVariables> extends React.PureComponent<
+  AccountFormProps
+> {
   handleSubmit = async (
-    values: CreateAccountFormValues,
-    formikBag: FormikProps<CreateAccountFormValues>
+    values: AccountFormValues,
+    formikBag: FormikProps<AccountFormValues>
   ) => {
     const response = await this.props.submit({ input: values })
 
     if (response && response.errors) {
-      formikBag.setErrors(response.errors as FormikErrors<
-        CreateAccountFormValues
-      >)
+      formikBag.setErrors(response.errors as FormikErrors<AccountFormValues>)
       formikBag.setSubmitting(false)
     }
   }
 
   render() {
+    const { initialValues } = this.props
     return (
       <Formik
-        initialValues={initialValues}
+        initialValues={initialValues || initialEmptyValues}
         validate={validate}
         onSubmit={this.handleSubmit}
-        render={(formikBag: FormikProps<CreateAccountFormValues>) => (
+        render={(formikBag: FormikProps<AccountFormValues>) => (
           <Form>
             <Field
               name="name"
@@ -97,7 +98,7 @@ export class CreateAccountForm extends React.PureComponent<SignInFormProps> {
                 color="primary"
                 disabled={!formikBag.isValid}
               >
-                Create
+                Save account
               </Button>
             </ActionsWrapper>
           </Form>

@@ -2,15 +2,15 @@ import * as React from 'react'
 import gql from 'graphql-tag'
 import { Query, QueryResult } from 'react-apollo'
 import { GetAccountListQuery } from '@schema-types'
+import { accountFragment } from '@controllers/account/fragments'
 
 const getAccountListQuery = gql`
   query GetAccountListQuery {
     getAccountList {
-      id
-      name
-      currency
+      ...account
     }
   }
+  ${accountFragment}
 `
 
 interface AccountListProps {

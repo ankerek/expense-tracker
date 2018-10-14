@@ -10,6 +10,7 @@ import {
 import Divider from '@material-ui/core/Divider'
 import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
+import { NavLink } from '@core-components/NavLink'
 
 interface AccountListProps {
   accounts: GetAccountListQuery_getAccountList[]
@@ -24,7 +25,14 @@ export class AccountList extends React.PureComponent<AccountListProps> {
           {accounts.map(account => (
             <div key={account.id}>
               <Item key={account.id}>
-                <span>{account.name}</span>
+                <NavLink
+                  to={{
+                    pathname: `/accounts/${account.id}`,
+                    state: { next: '/accounts' },
+                  }}
+                >
+                  {account.name}
+                </NavLink>
                 <Amount>
                   <FormattedAmount>10 000 {account.currency}</FormattedAmount>
                 </Amount>

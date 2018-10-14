@@ -6,6 +6,7 @@ import { SignInPage } from '@pages/SignInPage'
 import { SignUpPage } from '@pages/SignUpPage'
 import { AccountsPage } from '@pages/AccountsPage'
 import { CreateAccountPage } from '@pages/CreateAccountPage'
+import { AccountPage } from '@pages/AccountPage'
 import { NotFoundPage } from '@pages/NotFoundPage'
 
 export const Routes = () => (
@@ -16,6 +17,7 @@ export const Routes = () => (
     <PrivateRoute path="/" exact component={HomePage} />
     <PrivateRoute path="/accounts" exact component={AccountsPage} />
     <PrivateRoute path="/accounts/create" exact component={CreateAccountPage} />
+    <PrivateRoute path="/accounts/:id" exact component={AccountPage} />
 
     <Route component={NotFoundPage} />
   </Switch>
