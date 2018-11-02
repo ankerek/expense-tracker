@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { SidebarDrawer } from '@core-components/SidebarDrawer'
-import { AppBar, MainContent, Wrapper } from './elements'
+import { AppBar, MainContent, ToolbarLeftIcon, Wrapper } from './elements'
 import { withRouter, RouteComponentProps } from 'react-router'
 
 interface PageLayoutProps extends RouteComponentProps {
@@ -39,13 +39,13 @@ class C extends React.PureComponent<PageLayoutProps, PageLayoutState> {
         <AppBar drawerOpen={drawerOpen}>
           <Toolbar>
             {hasGoBack ? (
-              <IconButton color="inherit" onClick={this.goBack}>
+              <ToolbarLeftIcon onClick={this.goBack}>
                 <ChevronLeftIcon />
-              </IconButton>
+              </ToolbarLeftIcon>
             ) : (
-              <IconButton color="inherit" onClick={this.handleToggleDrawer}>
+              <ToolbarLeftIcon onClick={this.handleToggleDrawer}>
                 <MenuIcon />
-              </IconButton>
+              </ToolbarLeftIcon>
             )}
             <Typography variant="h6" color="inherit">
               {title}
