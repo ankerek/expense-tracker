@@ -1,10 +1,10 @@
 import * as React from 'react'
 import MuiTextField, {
-  BaseTextFieldProps as MuiTextFieldProps,
+  TextFieldProps as MuiTextFieldProps,
 } from '@material-ui/core/TextField'
 import { FieldProps } from 'formik'
 
-export interface TextFieldProps extends FieldProps, MuiTextFieldProps {}
+export type TextFieldProps = FieldProps & MuiTextFieldProps
 
 export const TextField: React.ComponentType<TextFieldProps> = ({
   field,

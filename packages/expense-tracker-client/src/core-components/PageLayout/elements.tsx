@@ -1,7 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { AppBarProps } from '@material-ui/core/AppBar'
-import MUAppBar from '@material-ui/core/AppBar/AppBar'
+import MUAppBar, { AppBarProps } from '@material-ui/core/AppBar/AppBar'
 import { DRAWER_WIDTH } from '@core-components/SidebarDrawer'
 import IconButton from '@material-ui/core/IconButton'
 
@@ -9,9 +8,9 @@ export const Wrapper = styled.div`
   display: flex;
 `
 
-export const AppBar = styled<{ drawerOpen: boolean } & AppBarProps>(
-  ({ drawerOpen, ...rest }) => <MUAppBar {...rest} />
-)`
+export const AppBar = styled((({ drawerOpen, ...rest }) => (
+  <MUAppBar {...rest} />
+)) as React.FunctionComponent<{ drawerOpen: boolean } & AppBarProps>)`
   && {
     z-index: 1300;
     margin-left: ${props => (props.drawerOpen ? DRAWER_WIDTH : 0)};

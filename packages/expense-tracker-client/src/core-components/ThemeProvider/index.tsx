@@ -2,7 +2,7 @@ import * as React from 'react'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import {
   ThemeProvider as StyledThemeProvider,
-  injectGlobal,
+  createGlobalStyle,
 } from 'styled-components'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import blue from '@material-ui/core/colors/blue'
@@ -10,7 +10,7 @@ import pink from '@material-ui/core/colors/pink'
 
 const textPrimaryColor = 'rgba(0, 0, 0, 0.87)'
 
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   body {
     font-family: Roboto;
     color: ${textPrimaryColor};
@@ -39,6 +39,7 @@ export class ThemeProvider extends React.Component {
         <StyledThemeProvider theme={themeOptions}>
           <>
             <CssBaseline />
+            <GlobalStyle />
             {this.props.children}
           </>
         </StyledThemeProvider>

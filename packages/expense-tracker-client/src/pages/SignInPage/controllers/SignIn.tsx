@@ -51,22 +51,26 @@ class C extends React.PureComponent<
 > {
   handleSignIn = async (values: SignInMutationVariables) => {
     try {
-      const {
-        data: {
-          signIn: { token, user },
-        },
-      } = await this.props.mutate({
+      const res = await this.props.mutate({
         variables: values,
       })
 
-      localStorage.setItem('jwtToken', token)
+      if (res) {
+        const {
+          data: {
+            signIn: { token, user },
+          },
+        } = res
 
-      this.props.client.writeQuery({
-        query: getCurrentUserQuery,
-        data: { getCurrentUser: user },
-      })
+        localStorage.setItem('jwtToken', token)
 
-      this.props.history.push('/')
+        this.props.client.writeQuery({
+          query: getCurrentUserQuery,
+          data: { getCurrentUser: user },
+        })
+
+        this.props.history.push('/')
+      }
     } catch (res) {
       const errors = normalizeErrors(res.graphQLErrors)
       return { errors }
