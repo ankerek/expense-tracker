@@ -23,6 +23,7 @@ export const databaseInitializer = async () => {
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     entities: getEntities(),
+    synchronize: true,
   })
     .then(async connection => {
       console.log('Connection has been established successfully.')

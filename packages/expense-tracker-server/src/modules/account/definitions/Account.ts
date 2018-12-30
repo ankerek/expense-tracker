@@ -11,7 +11,7 @@ import { User } from '../../user/definitions/User'
 @Entity()
 @ObjectType()
 export class Account {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)
   readonly id: string
 

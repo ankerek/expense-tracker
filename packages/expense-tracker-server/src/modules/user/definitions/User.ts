@@ -5,7 +5,7 @@ import { Account } from '../../account/definitions/Account'
 @Entity()
 @ObjectType()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)
   readonly id: string
 
