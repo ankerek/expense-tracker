@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { PageLayout } from '@core-components/PageLayout'
 import { AccountForm } from '@core-components/AccountForm'
 import { GetAccount } from '@controllers/account/GetAccount'
@@ -11,17 +11,16 @@ export class AccountPage extends React.Component {
         <GetAccount>
           {({ data }) => (
             <>
-              {data &&
-                data.getAccount && (
-                  <UpdateAccount>
-                    {({ submit }) => (
-                      <AccountForm
-                        initialValues={data.getAccount}
-                        submit={submit}
-                      />
-                    )}
-                  </UpdateAccount>
-                )}
+              {data && data.getAccount && (
+                <UpdateAccount>
+                  {({ submit }) => (
+                    <AccountForm
+                      initialValues={data.getAccount}
+                      submit={submit}
+                    />
+                  )}
+                </UpdateAccount>
+              )}
             </>
           )}
         </GetAccount>

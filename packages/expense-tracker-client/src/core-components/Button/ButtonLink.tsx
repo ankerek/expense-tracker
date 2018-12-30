@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import MuiButton, { ButtonProps } from '@material-ui/core/Button'
 import { NavLink } from '@core-components/NavLink'
 import { LocationDescriptor } from 'history'

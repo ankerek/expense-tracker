@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { PageLayout } from '@core-components/PageLayout'
 import { CreateUser } from './controllers/CreateUser'
 import { SignUpForm } from './components/SignUpForm'

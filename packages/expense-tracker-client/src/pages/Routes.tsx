@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { PrivateRoute } from '@core-components/PrivateRoute'
 import { HomePage } from '@pages/HomePage'

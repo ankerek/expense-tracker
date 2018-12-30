@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import gql from 'graphql-tag'
 import { Query, QueryResult } from 'react-apollo'
 import { GetAccountListQuery } from '@schema-types'

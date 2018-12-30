@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { GetAccountListQuery_getAccountList } from '@schema-types'
 import {
   Actions,

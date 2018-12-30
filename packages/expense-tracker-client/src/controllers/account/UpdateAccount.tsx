@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { compose } from '@utils/compose'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { graphql } from 'react-apollo'

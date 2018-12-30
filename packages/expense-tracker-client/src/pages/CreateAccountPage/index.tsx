@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { PageLayout } from '@core-components/PageLayout'
 import { CreateAccount } from '@controllers/account/CreateAccount'
 import { AccountForm } from '@core-components/AccountForm'

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import cn from 'classnames'
 import Drawer, { DrawerProps } from '@material-ui/core/Drawer/Drawer'
 import Toolbar from '@material-ui/core/Toolbar'

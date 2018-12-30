@@ -1,5 +1,5 @@
-import * as express from 'express'
-import * as dotenv from 'dotenv'
+import express from 'express'
+import dotenv from 'dotenv'
 import { ApolloServer } from 'apollo-server-express'
 import { databaseInitializer } from './databaseInitializer'
 import { asyncMiddleware } from './utils/asyncMiddleware'

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { SignInMutationVariables } from '@schema-types'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'

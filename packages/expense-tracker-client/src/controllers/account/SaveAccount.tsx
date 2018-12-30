@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { ChildMutateProps, withApollo, WithApolloClient } from 'react-apollo'
 import { normalizeErrors, NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { RouteComponentProps, withRouter } from 'react-router-dom'

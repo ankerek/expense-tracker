@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import MUAppBar, { AppBarProps } from '@material-ui/core/AppBar/AppBar'
 import { DRAWER_WIDTH } from '@core-components/SidebarDrawer'

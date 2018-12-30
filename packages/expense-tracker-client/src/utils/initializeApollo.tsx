@@ -1,5 +1,5 @@
 import ApolloClient from 'apollo-client'
-import * as ApolloLink from 'apollo-link'
+import { from as apolloLinkFrom } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -17,7 +17,7 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const link = ApolloLink.from([authLink, httpLink])
+const link = apolloLinkFrom([authLink, httpLink])
 
 const cache = new InMemoryCache()
 
