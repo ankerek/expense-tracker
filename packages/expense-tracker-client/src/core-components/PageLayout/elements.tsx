@@ -28,7 +28,7 @@ export const MainContent = styled.main`
 
 export const ToolbarLeftIcon = styled(IconButton)`
   && {
-    margin-left: -10px;
+    margin-left: -20px;
     color: inherit;
   }
 `
