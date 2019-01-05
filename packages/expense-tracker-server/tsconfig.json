@@ -1,14 +1,9 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
     "target": "es6",
-    "noImplicitAny": true,
-    "sourceMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "lib": ["es2015", "esnext.asynciterable"],
     "outDir": "dist",
     "baseUrl": "src",
