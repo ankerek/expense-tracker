@@ -3,6 +3,7 @@ import { from as apolloLinkFrom } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { persistCache } from 'apollo-cache-persist'
 
 const API_BASE_URL = '/graphql'
 
@@ -20,6 +21,12 @@ const authLink = setContext((_, { headers }) => {
 const link = apolloLinkFrom([authLink, httpLink])
 
 const cache = new InMemoryCache()
+
+// tslint:disable-next-line:no-floating-promises
+persistCache({
+  cache,
+  storage: window.localStorage,
+})
 
 export const client = new ApolloClient({
   link,
