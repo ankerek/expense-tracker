@@ -20,7 +20,14 @@ const authLink = setContext((_, { headers }) => {
 
 const link = apolloLinkFrom([authLink, httpLink])
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache({
+  cacheRedirects: {
+    Query: {
+      getAccount: (_, args, { getCacheKey }) =>
+        getCacheKey({ __typename: 'Account', id: args.id }),
+    },
+  },
+})
 
 // tslint:disable-next-line:no-floating-promises
 persistCache({

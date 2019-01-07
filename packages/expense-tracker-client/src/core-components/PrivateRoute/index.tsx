@@ -15,7 +15,7 @@ export class PrivateRoute extends React.Component<RouteProps> {
               if (loading) {
                 return <span>loading...</span>
               }
-              return data.getCurrentUser ? (
+              return data && data.getCurrentUser ? (
                 <Component {...this.props} />
               ) : (
                 <Redirect to="/signin" />
