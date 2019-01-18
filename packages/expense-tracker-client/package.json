@@ -58,6 +58,7 @@
     "apollo-link": "^1.2.6",
     "apollo-link-context": "^1.0.12",
     "apollo-link-http": "^1.5.9",
+    "apollo-link-retry": "^2.2.8",
     "classnames": "^2.2.6",
     "formik": "^1.4.1",
     "graphql": "^14.0.2",
