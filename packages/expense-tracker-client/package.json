@@ -8,7 +8,7 @@
     "build": "webpack --config ./webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "schema:download": "apollo schema:download --endpoint=http://localhost:3000/graphql",
-    "codegen:generate": "apollo codegen:generate --schema=./schema.json --queries=\"./src/**/*.{ts,tsx}\" --target=typescript --outputFlat ./src/schemaTypes.ts",
+    "codegen:generate": "apollo codegen:generate --localSchemaFile=./schema.json --queries=\"./src/**/*.{ts,tsx}\" --target=typescript --outputFlat ./src/schemaTypes.ts",
     "gen:types": "npm run schema:download && npm run codegen:generate",
     "precommit": "lint-staged"
   },
