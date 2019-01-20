@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import InboxIcon from '@material-ui/icons/Inbox'
 import DnsIcon from '@material-ui/icons/Dns'
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import styled from 'styled-components'
 import { NavLink } from '@core-components/NavLink'
 
@@ -69,6 +70,17 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
             <DnsIcon />
           </ListItemIcon>
           <ListItemText primary="Accounts" />
+        </ListItem>
+        <ListItem
+          button
+          component={({ innerRef, ...props }) => (
+            <NavLink {...props} to="/transactions" />
+          )}
+        >
+          <ListItemIcon>
+            <MonetizationOnIcon />
+          </ListItemIcon>
+          <ListItemText primary="Transactions" />
         </ListItem>
       </DrawerSidebar>
     )

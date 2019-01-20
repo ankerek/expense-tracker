@@ -2,10 +2,29 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetAccountListQuery
+// ====================================================
+
+export interface GetAccountListQuery_getAccountList {
+  __typename: 'Account'
+  id: string
+  name: string
+  currency: string
+}
+
+export interface GetAccountListQuery {
+  getAccountList: GetAccountListQuery_getAccountList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateAccountMutation
 // ====================================================
 
 export interface CreateAccountMutation_createAccount {
+  __typename: 'Account'
   id: string
   name: string
   currency: string
@@ -27,6 +46,7 @@ export interface CreateAccountMutationVariables {
 // ====================================================
 
 export interface GetAccountQuery_getAccount {
+  __typename: 'Account'
   id: string
   name: string
   currency: string
@@ -48,6 +68,7 @@ export interface GetAccountQueryVariables {
 // ====================================================
 
 export interface UpdateAccountMutation_updateAccount {
+  __typename: 'Account'
   id: string
   name: string
   currency: string
@@ -70,6 +91,7 @@ export interface UpdateAccountMutationVariables {
 // ====================================================
 
 export interface GetCurrencyListQuery_getCurrencyList {
+  __typename: 'Currency'
   id: string
 }
 
@@ -81,10 +103,37 @@ export interface GetCurrencyListQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetTransactionListQuery
+// ====================================================
+
+export interface GetTransactionListQuery_getTransactionList_account {
+  __typename: 'Account'
+  id: string
+  name: string
+  currency: string
+}
+
+export interface GetTransactionListQuery_getTransactionList {
+  __typename: 'Transaction'
+  id: string
+  description: string | null
+  amount: number
+  account: GetTransactionListQuery_getTransactionList_account
+}
+
+export interface GetTransactionListQuery {
+  getTransactionList: GetTransactionListQuery_getTransactionList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetCurrentUserQuery
 // ====================================================
 
 export interface GetCurrentUserQuery_getCurrentUser {
+  __typename: 'User'
   id: string
   email: string
 }
@@ -97,32 +146,17 @@ export interface GetCurrentUserQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetAccountListQuery
-// ====================================================
-
-export interface GetAccountListQuery_getAccountList {
-  id: string
-  name: string
-  currency: string
-}
-
-export interface GetAccountListQuery {
-  getAccountList: GetAccountListQuery_getAccountList[]
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: SignInMutation
 // ====================================================
 
 export interface SignInMutation_signIn_user {
+  __typename: 'User'
   id: string
   email: string
 }
 
 export interface SignInMutation_signIn {
+  __typename: 'SignInResponse'
   token: string
   user: SignInMutation_signIn_user
 }
@@ -143,11 +177,13 @@ export interface SignInMutationVariables {
 // ====================================================
 
 export interface CreateUserMutation_createUser_user {
+  __typename: 'User'
   id: string
   email: string
 }
 
 export interface CreateUserMutation_createUser {
+  __typename: 'SignInResponse'
   token: string
   user: CreateUserMutation_createUser_user
 }
@@ -168,9 +204,32 @@ export interface CreateUserMutationVariables {
 // ====================================================
 
 export interface account {
+  __typename: 'Account'
   id: string
   name: string
   currency: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: transaction
+// ====================================================
+
+export interface transaction_account {
+  __typename: 'Account'
+  id: string
+  name: string
+  currency: string
+}
+
+export interface transaction {
+  __typename: 'Transaction'
+  id: string
+  description: string | null
+  amount: number
+  account: transaction_account
 }
 
 /* tslint:disable */
@@ -181,6 +240,7 @@ export interface account {
 // ====================================================
 
 export interface user {
+  __typename: 'User'
   id: string
   email: string
 }

@@ -108,7 +108,7 @@ export class UserResolver {
       )
     }
 
-    return { token: createToken(user, '30m'), user }
+    return { token: createToken(user, '2h'), user }
   }
 }
 
