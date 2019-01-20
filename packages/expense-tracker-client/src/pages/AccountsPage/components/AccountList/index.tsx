@@ -34,7 +34,9 @@ export class AccountList extends React.PureComponent<AccountListProps> {
                   {account.name}
                 </NavLink>
                 <Amount>
-                  <FormattedAmount>10 000 {account.currency}</FormattedAmount>
+                  <FormattedAmount>
+                    10 000 {account.currency.id}
+                  </FormattedAmount>
                 </Amount>
                 <Actions>Actions</Actions>
               </Item>

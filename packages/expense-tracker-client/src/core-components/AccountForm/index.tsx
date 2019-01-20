@@ -1,8 +1,9 @@
 import React from 'react'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
+import { GetCurrencyListQuery_getCurrencyList } from '@schema-types'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
 import Button from '@material-ui/core/Button'
-import { TextField } from '../TextField/index'
+import { TextField } from '../TextField'
 import { ActionsWrapper } from './elements'
 import { GetCurrencyList } from '@controllers/currency/GetCurrencyList'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -16,7 +17,7 @@ export interface AccountFormProps {
 
 export interface AccountFormValues {
   name: string
-  currency: string
+  currency: GetCurrencyListQuery_getCurrencyList
 }
 
 const initialEmptyValues = {
@@ -59,7 +60,10 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
         initialValues={initialValues || initialEmptyValues}
         validate={validate}
         onSubmit={this.handleSubmit}
-        render={(formikBag: FormikProps<AccountFormValues>) => (
+        render={({
+          isValid,
+          setFieldValue,
+        }: FormikProps<AccountFormValues>) => (
           <Form>
             <Field
               name="name"
@@ -79,6 +83,17 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
                   fullWidth
                   margin="normal"
                   component={TextField}
+                  parseValue={(
+                    currency: GetCurrencyListQuery_getCurrencyList
+                  ) => currency.id}
+                  onChange={(e: React.ChangeEvent<any>) =>
+                    setFieldValue(
+                      'currency',
+                      data.getCurrencyList.find(
+                        currency => currency.id === e.target.value
+                      )
+                    )
+                  }
                 >
                   {data &&
                     data.getCurrencyList &&
@@ -96,7 +111,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
                 fullWidth
                 variant="contained"
                 color="primary"
-                disabled={!formikBag.isValid}
+                disabled={!isValid}
               >
                 Save account
               </Button>

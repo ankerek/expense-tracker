@@ -5,11 +5,17 @@
 // GraphQL query operation: GetAccountListQuery
 // ====================================================
 
+export interface GetAccountListQuery_getAccountList_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface GetAccountListQuery_getAccountList {
   __typename: 'Account'
   id: string
   name: string
-  currency: string
+  currency: GetAccountListQuery_getAccountList_currency
 }
 
 export interface GetAccountListQuery {
@@ -23,11 +29,17 @@ export interface GetAccountListQuery {
 // GraphQL mutation operation: CreateAccountMutation
 // ====================================================
 
+export interface CreateAccountMutation_createAccount_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface CreateAccountMutation_createAccount {
   __typename: 'Account'
   id: string
   name: string
-  currency: string
+  currency: CreateAccountMutation_createAccount_currency
 }
 
 export interface CreateAccountMutation {
@@ -45,11 +57,17 @@ export interface CreateAccountMutationVariables {
 // GraphQL query operation: GetAccountQuery
 // ====================================================
 
+export interface GetAccountQuery_getAccount_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface GetAccountQuery_getAccount {
   __typename: 'Account'
   id: string
   name: string
-  currency: string
+  currency: GetAccountQuery_getAccount_currency
 }
 
 export interface GetAccountQuery {
@@ -67,11 +85,17 @@ export interface GetAccountQueryVariables {
 // GraphQL mutation operation: UpdateAccountMutation
 // ====================================================
 
+export interface UpdateAccountMutation_updateAccount_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface UpdateAccountMutation_updateAccount {
   __typename: 'Account'
   id: string
   name: string
-  currency: string
+  currency: UpdateAccountMutation_updateAccount_currency
 }
 
 export interface UpdateAccountMutation {
@@ -93,6 +117,7 @@ export interface UpdateAccountMutationVariables {
 export interface GetCurrencyListQuery_getCurrencyList {
   __typename: 'Currency'
   id: string
+  symbol: string
 }
 
 export interface GetCurrencyListQuery {
@@ -106,11 +131,17 @@ export interface GetCurrencyListQuery {
 // GraphQL query operation: GetTransactionListQuery
 // ====================================================
 
+export interface GetTransactionListQuery_getTransactionList_account_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface GetTransactionListQuery_getTransactionList_account {
   __typename: 'Account'
   id: string
   name: string
-  currency: string
+  currency: GetTransactionListQuery_getTransactionList_account_currency
 }
 
 export interface GetTransactionListQuery_getTransactionList {
@@ -203,11 +234,30 @@ export interface CreateUserMutationVariables {
 // GraphQL fragment: account
 // ====================================================
 
+export interface account_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface account {
   __typename: 'Account'
   id: string
   name: string
-  currency: string
+  currency: account_currency
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: currency
+// ====================================================
+
+export interface currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
 }
 
 /* tslint:disable */
@@ -217,11 +267,17 @@ export interface account {
 // GraphQL fragment: transaction
 // ====================================================
 
+export interface transaction_account_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface transaction_account {
   __typename: 'Account'
   id: string
   name: string
-  currency: string
+  currency: transaction_account_currency
 }
 
 export interface transaction {
@@ -253,8 +309,14 @@ export interface user {
 //==============================================================
 
 export interface SaveAccountInput {
+  id: string
   name: string
-  currency: string
+  currency: SaveCurrencyInput
+}
+
+export interface SaveCurrencyInput {
+  id: string
+  symbol: string
 }
 
 export interface UserCreateInput {

@@ -7,6 +7,7 @@ import {
 } from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
 import { User } from '../../user/definitions/User'
+import { Currency } from '../../currency/definitions/Currency'
 
 @Entity()
 @ObjectType()
@@ -23,9 +24,10 @@ export class Account {
   @JoinColumn({ name: 'user_id' })
   userId: string
 
-  // @ManyToOne(type => Currency, { cascade: true })
-  // @JoinColumn({ name: 'currency_id' })
+  @ManyToOne(type => Currency, { cascade: true })
+  @JoinColumn({ name: 'currency_id' })
+  @Field(type => Currency)
+  currency: Currency
   @Column({ name: 'currency_id' })
-  @Field()
-  currency: string
+  currencyId: string
 }

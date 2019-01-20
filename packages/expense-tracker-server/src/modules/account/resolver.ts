@@ -7,16 +7,26 @@ import {
   Ctx,
   Authorized,
   ID,
+  FieldResolver,
+  Root,
 } from 'type-graphql'
 import { Account } from './definitions/Account'
+import { Currency } from '../currency/definitions/Currency'
 import { SaveAccountInput } from './definitions/SaveAccountInput'
 
 @Resolver(of => Account)
 export class AccountResolver {
   private accountRepository: Repository<Account>
+  private currencyRepository: Repository<Currency>
 
   constructor() {
     this.accountRepository = getRepository(Account)
+    this.currencyRepository = getRepository(Currency)
+  }
+
+  @FieldResolver(returns => Account)
+  async currency(@Root() account: Account) {
+    return this.currencyRepository.findOne(account.currencyId)
   }
 
   @Authorized()
@@ -41,7 +51,7 @@ export class AccountResolver {
   ) {
     const newAccount = new Account()
     newAccount.name = input.name
-    newAccount.currency = input.currency
+    newAccount.currency = new Currency(input.currency)
     newAccount.userId = ctx.user.id
     return this.accountRepository.save(newAccount)
   }

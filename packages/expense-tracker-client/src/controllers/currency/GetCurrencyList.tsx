@@ -2,13 +2,15 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { Query, QueryResult } from 'react-apollo'
 import { GetCurrencyListQuery } from '@schema-types'
+import { currencyFragment } from './fragments'
 
 export const getCurrencyListQuery = gql`
   query GetCurrencyListQuery {
     getCurrencyList {
-      id
+      ...currency
     }
   }
+  ${currencyFragment}
 `
 
 interface GetCurrencyListProps {
