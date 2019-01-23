@@ -9,6 +9,7 @@ import { CreateAccountPage } from '@pages/CreateAccountPage'
 import { AccountPage } from '@pages/AccountPage'
 import { TransactionsPage } from '@pages/TransactionsPage'
 import { CreateTransactionPage } from '@pages/CreateTransactionPage'
+import { TransactionPage } from '@pages/TransactionPage'
 import { NotFoundPage } from '@pages/NotFoundPage'
 
 export const Routes = () => (
@@ -26,6 +27,7 @@ export const Routes = () => (
       exact
       component={CreateTransactionPage}
     />
+    <PrivateRoute path="/transactions/:id" exact component={TransactionPage} />
 
     <Route component={NotFoundPage} />
   </Switch>

@@ -164,6 +164,42 @@ export interface CreateTransactionMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetTransactionQuery
+// ====================================================
+
+export interface GetTransactionQuery_getTransaction_account_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
+export interface GetTransactionQuery_getTransaction_account {
+  __typename: 'Account'
+  id: string
+  name: string
+  currency: GetTransactionQuery_getTransaction_account_currency
+}
+
+export interface GetTransactionQuery_getTransaction {
+  __typename: 'Transaction'
+  id: string
+  description: string | null
+  amount: number
+  account: GetTransactionQuery_getTransaction_account
+}
+
+export interface GetTransactionQuery {
+  getTransaction: GetTransactionQuery_getTransaction
+}
+
+export interface GetTransactionQueryVariables {
+  id: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetTransactionListQuery
 // ====================================================
 
@@ -190,6 +226,43 @@ export interface GetTransactionListQuery_getTransactionList {
 
 export interface GetTransactionListQuery {
   getTransactionList: GetTransactionListQuery_getTransactionList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: UpdateTransactionMutation
+// ====================================================
+
+export interface UpdateTransactionMutation_updateTransaction_account_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
+export interface UpdateTransactionMutation_updateTransaction_account {
+  __typename: 'Account'
+  id: string
+  name: string
+  currency: UpdateTransactionMutation_updateTransaction_account_currency
+}
+
+export interface UpdateTransactionMutation_updateTransaction {
+  __typename: 'Transaction'
+  id: string
+  description: string | null
+  amount: number
+  account: UpdateTransactionMutation_updateTransaction_account
+}
+
+export interface UpdateTransactionMutation {
+  updateTransaction: UpdateTransactionMutation_updateTransaction
+}
+
+export interface UpdateTransactionMutationVariables {
+  id: string
+  input: SaveTransactionInput
 }
 
 /* tslint:disable */

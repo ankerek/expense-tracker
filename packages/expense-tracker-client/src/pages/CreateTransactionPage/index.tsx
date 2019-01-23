@@ -9,14 +9,11 @@ export class CreateTransactionPage extends React.Component {
     return (
       <PageLayout title="Create new transaction" hasGoBack>
         <GetAccountList>
-          {({ data }) =>
-            data && data.getAccountList ? (
+          {({ data: { getAccountList } }) =>
+            getAccountList ? (
               <CreateTransaction>
                 {({ submit }) => (
-                  <TransactionForm
-                    submit={submit}
-                    accounts={data.getAccountList}
-                  />
+                  <TransactionForm submit={submit} accounts={getAccountList} />
                 )}
               </CreateTransaction>
             ) : (

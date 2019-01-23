@@ -6,6 +6,7 @@ import { RetryLink } from 'apollo-link-retry'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { persistCache } from 'apollo-cache-persist'
 import { CreateTransactionMutationName } from '@controllers/transaction/CreateTransaction'
+import { UpdateTransactionMutationName } from '@controllers/transaction/UpdateTransaction'
 
 const API_BASE_URL = '/graphql'
 
@@ -21,7 +22,10 @@ const authLink = setContext((_, { headers }) => {
 })
 
 // TODO: move to other file
-const offlineOperations = [CreateTransactionMutationName]
+const offlineOperations = [
+  CreateTransactionMutationName,
+  UpdateTransactionMutationName,
+]
 
 const retryLink = new RetryLink({
   attempts: (count, operation, error) => {

@@ -7,8 +7,8 @@ import {
   WithApolloClient,
 } from 'react-apollo'
 import {
-  CreateTransactionMutation,
-  CreateTransactionMutationVariables,
+  UpdateTransactionMutation,
+  UpdateTransactionMutationVariables,
   SaveTransactionInput,
   GetTransactionListQuery,
 } from '@schema-types'
@@ -18,18 +18,18 @@ import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 
-export const CreateTransactionMutationName = 'CreateTransactionMutation'
+export const UpdateTransactionMutationName = 'UpdateTransactionMutation'
 
-const createTransactionMutation = gql`
-  mutation CreateTransactionMutation($input: SaveTransactionInput!) {
-    createTransaction(input: $input) {
+const updateTransactionMutation = gql`
+  mutation UpdateTransactionMutation($id: ID!, $input: SaveTransactionInput!) {
+    updateTransaction(id: $id, input: $input) {
       ...transaction
     }
   }
   ${transactionFragment}
 `
 
-interface CreateTransactionProps {
+interface UpdateTransactionProps {
   children: (
     data: {
       submit: (values: SaveTransactionInput) => void
@@ -38,11 +38,11 @@ interface CreateTransactionProps {
 }
 
 class C extends React.Component<
-  RouteComponentProps &
+  RouteComponentProps<{ id: string }> &
     ChildMutateProps<
-      WithApolloClient<CreateTransactionProps>,
-      CreateTransactionMutation,
-      CreateTransactionMutationVariables
+      WithApolloClient<UpdateTransactionProps>,
+      UpdateTransactionMutation,
+      UpdateTransactionMutationVariables
     >
 > {
   render() {
@@ -53,6 +53,9 @@ class C extends React.Component<
     const {
       mutate,
       history,
+      match: {
+        params: { id },
+      },
       location: { state },
     } = this.props
 
@@ -62,17 +65,20 @@ class C extends React.Component<
     }
 
     mutate({
-      variables: cleanPropertiesBeforeMutation({ input: values }),
+      variables: {
+        id,
+        ...cleanPropertiesBeforeMutation({ input: values }),
+      },
       optimisticResponse: {
-        createTransaction: optimisticResponse,
+        updateTransaction: optimisticResponse,
       },
-      update: (client, { data: { createTransaction } }) => {
-        const data: GetTransactionListQuery = client.readQuery({
-          query: getTransactionListQuery,
-        })
-        data.getTransactionList.push(createTransaction)
-        client.writeQuery({ query: getTransactionListQuery, data })
-      },
+      // update: (client, { data: { updateTransaction } }) => {
+      //   const data: GetTransactionListQuery = client.readQuery({
+      //     query: getTransactionListQuery,
+      //   })
+      //   data.getTransactionList.push(updateTransaction)
+      //   client.writeQuery({ query: getTransactionListQuery, data })
+      // },
     })
 
     if (state && state.next) {
@@ -83,12 +89,12 @@ class C extends React.Component<
   }
 }
 
-export const CreateTransaction = compose(
+export const UpdateTransaction = compose(
   withRouter,
   withApollo,
   graphql<
-    CreateTransactionProps,
-    CreateTransactionMutation,
-    CreateTransactionMutationVariables
-  >(createTransactionMutation)
+    UpdateTransactionProps,
+    UpdateTransactionMutation,
+    UpdateTransactionMutationVariables
+  >(updateTransactionMutation)
 )(C)

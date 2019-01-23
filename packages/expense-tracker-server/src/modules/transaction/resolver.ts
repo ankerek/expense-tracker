@@ -30,6 +30,12 @@ export class AccountResolver {
   }
 
   @Authorized()
+  @Query(returns => Transaction)
+  async getTransaction(@Arg('id', type => ID) id: string) {
+    return this.transactionRepository.findOne(id)
+  }
+
+  @Authorized()
   @Query(returns => [Transaction])
   async getTransactionList(
     @Ctx() ctx: Context,
@@ -50,6 +56,17 @@ export class AccountResolver {
     newTransaction.userId = ctx.user.id
 
     return this.transactionRepository.save(newTransaction)
+  }
+
+  @Authorized()
+  @Mutation(returns => Transaction)
+  async updateTransaction(
+    @Arg('id', type => ID) id: string,
+    @Arg('input') input: SaveTransactionInput,
+    @Ctx() ctx: Context
+  ) {
+    const transaction = await this.transactionRepository.findOne(id)
+    return this.transactionRepository.save({ ...transaction, ...input })
   }
 }
 
