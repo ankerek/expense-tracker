@@ -49,6 +49,7 @@
     "webpack-merge": "^4.1.5"
   },
   "dependencies": {
+    "@date-io/date-fns": "^1.0.1",
     "@material-ui/core": "^3.7.1",
     "@material-ui/icons": "^3.0.1",
     "@shopify/react-compose": "^0.1.8",
@@ -62,10 +63,12 @@
     "apollo-link-http": "^1.5.9",
     "apollo-link-retry": "^2.2.8",
     "classnames": "^2.2.6",
+    "date-fns": "^2.0.0-alpha.21",
     "formik": "^1.4.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "lodash": "^4.17.11",
+    "material-ui-pickers": "^2.1.1",
     "react": "^16.7.0",
     "react-apollo": "^2.3.3",
     "react-dom": "^16.7.0",
