@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  GetAccountListQuery_getAccountList,
-  GetTransactionListQuery_getTransactionList,
-} from '@schema-types'
+import { GetTransactionListQuery_getTransactionList } from '@schema-types'
 import {
   Actions,
   Amount,
@@ -39,7 +36,7 @@ export class TransactionList extends React.PureComponent<AccountListProps> {
                 <Amount>
                   <FormattedAmount>{transaction.amount}</FormattedAmount>
                   &nbsp;
-                  {transaction.account.currency}
+                  {transaction.account.currency.id}
                 </Amount>
                 <Actions>Actions</Actions>
               </Item>
@@ -47,6 +44,18 @@ export class TransactionList extends React.PureComponent<AccountListProps> {
             </div>
           ))}
         </Wrapper>
+        <OutsideActionsWrapper>
+          <Button.Link
+            to={{
+              pathname: '/transactions/create',
+              state: { next: '/transactions' },
+            }}
+            variant="contained"
+            color="primary"
+          >
+            Create new transaction
+          </Button.Link>
+        </OutsideActionsWrapper>
       </>
     )
   }

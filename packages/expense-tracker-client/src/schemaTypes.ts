@@ -128,6 +128,42 @@ export interface GetCurrencyListQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateTransactionMutation
+// ====================================================
+
+export interface CreateTransactionMutation_createTransaction_account_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
+export interface CreateTransactionMutation_createTransaction_account {
+  __typename: 'Account'
+  id: string
+  name: string
+  currency: CreateTransactionMutation_createTransaction_account_currency
+}
+
+export interface CreateTransactionMutation_createTransaction {
+  __typename: 'Transaction'
+  id: string
+  description: string | null
+  amount: number
+  account: CreateTransactionMutation_createTransaction_account
+}
+
+export interface CreateTransactionMutation {
+  createTransaction: CreateTransactionMutation_createTransaction
+}
+
+export interface CreateTransactionMutationVariables {
+  input: SaveTransactionInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetTransactionListQuery
 // ====================================================
 
@@ -309,7 +345,7 @@ export interface user {
 //==============================================================
 
 export interface SaveAccountInput {
-  id: string
+  id?: string | null
   name: string
   currency: SaveCurrencyInput
 }
@@ -317,6 +353,14 @@ export interface SaveAccountInput {
 export interface SaveCurrencyInput {
   id: string
   symbol: string
+}
+
+export interface SaveTransactionInput {
+  id: string
+  createdAt: string
+  description?: string | null
+  amount: number
+  account: SaveAccountInput
 }
 
 export interface UserCreateInput {

@@ -2,8 +2,10 @@ import ApolloClient from 'apollo-client'
 import { from as apolloLinkFrom } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
+import { RetryLink } from 'apollo-link-retry'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { persistCache } from 'apollo-cache-persist'
+import { CreateTransactionMutationName } from '@controllers/transaction/CreateTransaction'
 
 const API_BASE_URL = '/graphql'
 
@@ -18,7 +20,16 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const link = apolloLinkFrom([authLink, httpLink])
+// TODO: move to other file
+const offlineOperations = [CreateTransactionMutationName]
+
+const retryLink = new RetryLink({
+  attempts: (count, operation, error) => {
+    return offlineOperations.includes(operation.operationName)
+  },
+})
+
+const link = apolloLinkFrom([authLink, retryLink, httpLink])
 
 const cache = new InMemoryCache({
   cacheRedirects: {
@@ -29,8 +40,7 @@ const cache = new InMemoryCache({
   },
 })
 
-// tslint:disable-next-line:no-floating-promises
-persistCache({
+export const waitForCache = persistCache({
   cache,
   storage: window.localStorage,
 })

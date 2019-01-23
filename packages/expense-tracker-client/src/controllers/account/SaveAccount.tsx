@@ -39,10 +39,6 @@ class C<AccountMutation, AccountMutationVariables> extends React.PureComponent<
         ),
       })
 
-      // this.props.client.writeQuery({
-      //   query: getCurrentUserQuery,
-      //   data: { getCurrentUser: user },
-      // })
       if (state && state.next) {
         history.push(state.next)
       } else {

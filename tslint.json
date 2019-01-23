@@ -11,6 +11,7 @@
     "object-literal-sort-keys": false,
     "no-string-literal": false,
     "ban-types": false,
+    "no-floating-promises": false,
     "max-classes-per-file": false,
     "interface-name": [true, "never-prefix"]
   }

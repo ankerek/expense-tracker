@@ -12,8 +12,7 @@ import {
 } from 'type-graphql'
 import { Transaction } from './definitions/Transaction'
 import { Account } from '../account/definitions/Account'
-import { User } from '../user/definitions/User'
-// import { SaveAccountInput } from './definitions/SaveAccountInput'
+import { SaveTransactionInput } from './definitions/SaveTransactionInput'
 
 @Resolver(of => Transaction)
 export class AccountResolver {
@@ -39,6 +38,18 @@ export class AccountResolver {
     return this.transactionRepository.find({
       where: { userId: ctx.user.id },
     })
+  }
+
+  @Authorized()
+  @Mutation(returns => Transaction)
+  async createTransaction(
+    @Arg('input') input: SaveTransactionInput,
+    @Ctx() ctx: Context
+  ) {
+    const newTransaction = new Transaction(input)
+    newTransaction.userId = ctx.user.id
+
+    return this.transactionRepository.save(newTransaction)
   }
 }
 

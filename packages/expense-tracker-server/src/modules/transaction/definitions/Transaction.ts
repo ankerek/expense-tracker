@@ -8,6 +8,9 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql'
 import { User } from '../../user/definitions/User'
 import { Account } from '../../account/definitions/Account'
+import { SaveAccountInput } from '../../account/definitions/SaveAccountInput'
+import { Currency } from '../../currency/definitions/Currency'
+import { SaveTransactionInput } from './SaveTransactionInput'
 
 @Entity()
 @ObjectType()
@@ -36,12 +39,22 @@ export class Transaction {
 
   @ManyToOne(type => User, { cascade: true })
   @JoinColumn({ name: 'user_id' })
-  userId: string
+  userId?: string
 
   @ManyToOne(type => Account, { cascade: true })
   @JoinColumn({ name: 'account_id' })
   @Field(type => Account)
   account: Account
   @Column({ name: 'account_id' })
-  accountId: Account
+  accountId?: string
+
+  constructor(input?: SaveTransactionInput) {
+    if (input) {
+      this.id = input.id
+      this.createdAt = input.createdAt
+      this.description = input.description
+      this.amount = input.amount
+      this.account = new Account(input.account)
+    }
+  }
 }

@@ -8,13 +8,14 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql'
 import { User } from '../../user/definitions/User'
 import { Currency } from '../../currency/definitions/Currency'
+import { SaveAccountInput } from './SaveAccountInput'
 
 @Entity()
 @ObjectType()
 export class Account {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)
-  readonly id: string
+  id: string
 
   @Column({ type: 'varchar' })
   @Field()
@@ -30,4 +31,12 @@ export class Account {
   currency: Currency
   @Column({ name: 'currency_id' })
   currencyId: string
+
+  constructor(input?: SaveAccountInput) {
+    if (input) {
+      this.id = input.id
+      this.name = input.name
+      this.currency = new Currency(input.currency)
+    }
+  }
 }

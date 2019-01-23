@@ -1,8 +1,8 @@
 import React from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { client } from '@utils/initializeApollo'
+import { client, waitForCache } from '@utils/initializeApollo'
 import { ThemeProvider } from '@core-components/ThemeProvider'
 import { OfflineIndicator } from '@core-components/OfflineIndicator'
 import { Routes } from '@pages/Routes'
@@ -18,4 +18,6 @@ const App = () => (
   </ApolloProvider>
 )
 
-render(<App />, document.getElementById('root'))
+waitForCache.then(() => {
+  ReactDOM.render(<App />, document.getElementById('root'))
+})
