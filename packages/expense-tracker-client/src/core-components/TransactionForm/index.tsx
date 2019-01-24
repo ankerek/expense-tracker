@@ -33,12 +33,15 @@ const getEmptyInitialValues = (
 const validate = (values: SaveTransactionInput) => {
   const errors: any = {}
 
-  // if (!values.name) {
-  //   errors.name = 'Required'
-  // }
-  // if (!values.currency) {
-  //   errors.currency = 'Required'
-  // }
+  if (!values.createdAt) {
+    errors.createdAt = 'Required'
+  }
+  if (!values.amount) {
+    errors.amount = 'Required'
+  }
+  if (!values.account) {
+    errors.account = 'Required'
+  }
 
   return errors
 }
@@ -65,6 +68,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
             <Field
               name="createdAt"
               label="Created"
+              required
               fullWidth
               margin="normal"
               component={DatePickerField}
@@ -80,6 +84,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
               name="amount"
               label="Amount"
               type="number"
+              required
               fullWidth
               margin="normal"
               component={TextField}
