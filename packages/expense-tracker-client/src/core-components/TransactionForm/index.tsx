@@ -1,5 +1,6 @@
 import React from 'react'
 import uuid from 'uuid/v4'
+import format from 'date-fns/format'
 import {
   GetAccountListQuery_getAccountList,
   SaveTransactionInput,
@@ -8,6 +9,7 @@ import { Field, Form, Formik, FormikProps } from 'formik'
 import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
 import { TextField } from '../TextField'
+import { DATE_FORMAT, DatePickerField } from '@core-components/DatePickerField'
 import { ActionsWrapper } from './elements'
 
 type TransactionFormValues = SaveTransactionInput
@@ -22,7 +24,7 @@ const getEmptyInitialValues = (
   accounts: GetAccountListQuery_getAccountList[]
 ) => ({
   id: uuid(),
-  createdAt: '2019-01-20 19:44:00',
+  createdAt: format(new Date(), DATE_FORMAT),
   description: '',
   amount: 0,
   account: accounts[0],
@@ -60,6 +62,13 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
           setFieldValue,
         }: FormikProps<TransactionFormValues>) => (
           <Form>
+            <Field
+              name="createdAt"
+              label="Created"
+              fullWidth
+              margin="normal"
+              component={DatePickerField}
+            />
             <Field
               name="description"
               label="Description"

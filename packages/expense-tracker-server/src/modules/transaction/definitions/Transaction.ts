@@ -4,12 +4,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
 } from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
 import { User } from '../../user/definitions/User'
 import { Account } from '../../account/definitions/Account'
-import { SaveAccountInput } from '../../account/definitions/SaveAccountInput'
-import { Currency } from '../../currency/definitions/Currency'
 import { SaveTransactionInput } from './SaveTransactionInput'
 
 @Entity()
@@ -21,11 +20,9 @@ export class Transaction {
 
   @Column({
     name: 'created_at',
-    type: 'timestamp',
-    precision: 0,
-    default: () => 'CURRENT_TIMESTAMP',
+    type: 'date',
+    default: () => 'CURRENT_DATE',
   })
-  // precision: 0 to discard fractional seconds
   @Field()
   createdAt: string
 

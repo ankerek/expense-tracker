@@ -1,9 +1,11 @@
 import React from 'react'
+import DateFnsUtils from '@date-io/date-fns'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import {
   ThemeProvider as StyledThemeProvider,
   createGlobalStyle,
 } from 'styled-components'
+import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import blue from '@material-ui/core/colors/blue'
 import pink from '@material-ui/core/colors/pink'
@@ -37,11 +39,13 @@ export class ThemeProvider extends React.Component {
     return (
       <MuiThemeProvider theme={theme}>
         <StyledThemeProvider theme={themeOptions}>
-          <>
-            <CssBaseline />
-            <GlobalStyle />
-            {this.props.children}
-          </>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <>
+              <CssBaseline />
+              <GlobalStyle />
+              {this.props.children}
+            </>
+          </MuiPickersUtilsProvider>
         </StyledThemeProvider>
       </MuiThemeProvider>
     )
