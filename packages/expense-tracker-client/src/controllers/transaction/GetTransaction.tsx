@@ -8,7 +8,7 @@ import { transactionFragment } from './fragments'
 export const getTransactionQuery = gql`
   query GetTransactionQuery($id: ID!) {
     getTransaction(id: $id) {
-      ...transaction
+      ...Transaction
     }
   }
   ${transactionFragment}

@@ -11,7 +11,7 @@ import { SaveAccount } from './SaveAccount'
 const createAccountMutation = gql`
   mutation CreateAccountMutation($input: SaveAccountInput!) {
     createAccount(input: $input) {
-      ...account
+      ...Account
     }
   }
   ${accountFragment}

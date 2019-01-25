@@ -7,7 +7,7 @@ import { currencyFragment } from './fragments'
 export const getCurrencyListQuery = gql`
   query GetCurrencyListQuery {
     getCurrencyList {
-      ...currency
+      ...Currency
     }
   }
   ${currencyFragment}

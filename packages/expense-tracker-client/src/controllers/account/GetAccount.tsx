@@ -8,7 +8,7 @@ import { accountFragment } from './fragments'
 export const getAccountQuery = gql`
   query GetAccountQuery($id: ID!) {
     getAccount(id: $id) {
-      ...account
+      ...Account
     }
   }
   ${accountFragment}

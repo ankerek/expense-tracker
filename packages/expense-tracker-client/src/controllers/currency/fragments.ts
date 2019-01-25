@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const currencyFragment = gql`
-  fragment currency on Currency {
+  fragment Currency on Currency {
     id
     symbol
   }

@@ -23,7 +23,7 @@ export const UpdateTransactionMutationName = 'UpdateTransactionMutation'
 const updateTransactionMutation = gql`
   mutation UpdateTransactionMutation($id: ID!, $input: SaveTransactionInput!) {
     updateTransaction(id: $id, input: $input) {
-      ...transaction
+      ...Transaction
     }
   }
   ${transactionFragment}

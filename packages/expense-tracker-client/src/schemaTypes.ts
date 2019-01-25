@@ -352,31 +352,31 @@ export interface CreateUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: account
+// GraphQL fragment: Account
 // ====================================================
 
-export interface account_currency {
+export interface Account_currency {
   __typename: 'Currency'
   id: string
   symbol: string
 }
 
-export interface account {
+export interface Account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: account_currency
+  currency: Account_currency
 }
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: currency
+// GraphQL fragment: Currency
 // ====================================================
 
-export interface currency {
+export interface Currency {
   __typename: 'Currency'
   id: string
   symbol: string
@@ -386,30 +386,30 @@ export interface currency {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: transaction
+// GraphQL fragment: Transaction
 // ====================================================
 
-export interface transaction_account_currency {
+export interface Transaction_account_currency {
   __typename: 'Currency'
   id: string
   symbol: string
 }
 
-export interface transaction_account {
+export interface Transaction_account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: transaction_account_currency
+  currency: Transaction_account_currency
 }
 
-export interface transaction {
+export interface Transaction {
   __typename: 'Transaction'
   id: string
   createdAt: string
   description: string | null
   amount: number
-  account: transaction_account
+  account: Transaction_account
 }
 
 /* tslint:disable */
@@ -436,6 +436,7 @@ export interface SaveAccountInput {
   id?: string | null
   name: string
   currency: SaveCurrencyInput
+  amount: number
 }
 
 export interface SaveCurrencyInput {
