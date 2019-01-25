@@ -14,8 +14,6 @@ export const Amount = styled.div`
   margin-left: auto;
 `
 
-export const Actions = styled.div``
-
 export const OutsideActionsWrapper = styled.div`
   margin: 10px 0 0 0;
   display: flex;

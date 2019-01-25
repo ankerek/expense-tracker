@@ -1,12 +1,6 @@
 import React from 'react'
 import { GetAccountListQuery_getAccountList } from '@schema-types'
-import {
-  Actions,
-  Amount,
-  Container,
-  Item,
-  OutsideActionsWrapper,
-} from './elements'
+import { Amount, Container, Item, OutsideActionsWrapper } from './elements'
 import Divider from '@material-ui/core/Divider'
 import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
@@ -34,11 +28,10 @@ export class AccountList extends React.PureComponent<AccountListProps> {
                   {account.name}
                 </NavLink>
                 <Amount>
-                  <FormattedAmount>
-                    10 000 {account.currency.id}
+                  <FormattedAmount currency={account.currency.symbol}>
+                    {account.amount}
                   </FormattedAmount>
                 </Amount>
-                <Actions>Actions</Actions>
               </Item>
               <Divider light />
             </div>

@@ -1,7 +1,17 @@
 import React from 'react'
 
-export class FormattedAmount extends React.PureComponent {
+interface FormattedAmountProps {
+  currency?: string
+  children: number
+}
+
+export class FormattedAmount extends React.PureComponent<FormattedAmountProps> {
   render() {
-    return this.props.children
+    const { currency, children } = this.props
+    return (
+      <>
+        {children}&nbsp;{currency}
+      </>
+    )
   }
 }

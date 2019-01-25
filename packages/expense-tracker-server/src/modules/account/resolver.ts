@@ -9,24 +9,44 @@ import {
   ID,
   FieldResolver,
   Root,
+  Float,
 } from 'type-graphql'
 import { Account } from './definitions/Account'
 import { Currency } from '../currency/definitions/Currency'
+import { Transaction } from '../transaction/definitions/Transaction'
 import { SaveAccountInput } from './definitions/SaveAccountInput'
 
 @Resolver(of => Account)
 export class AccountResolver {
   private accountRepository: Repository<Account>
   private currencyRepository: Repository<Currency>
+  private transactionRepository: Repository<Transaction>
 
   constructor() {
     this.accountRepository = getRepository(Account)
     this.currencyRepository = getRepository(Currency)
+    this.transactionRepository = getRepository(Transaction)
   }
 
   @FieldResolver(returns => Account)
   async currency(@Root() account: Account) {
     return this.currencyRepository.findOne(account.currencyId)
+  }
+
+  @FieldResolver(returns => [Transaction])
+  async transactions(@Root() account: Account) {
+    return this.transactionRepository.find({ where: { accountId: account.id } })
+  }
+
+  @FieldResolver(type => Float)
+  async amount(@Root() account: Account) {
+    const { sum } = await this.transactionRepository
+      .createQueryBuilder('transaction')
+      .select('SUM(transaction.amount)', 'sum')
+      .where('transaction.accountId = :id', { id: account.id })
+      .getRawOne()
+
+    return sum || 0
   }
 
   @Authorized()

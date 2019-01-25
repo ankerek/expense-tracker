@@ -29,7 +29,10 @@ const offlineOperations = [
 
 const retryLink = new RetryLink({
   attempts: (count, operation, error) => {
-    return offlineOperations.includes(operation.operationName)
+    return (
+      error.toString() === 'TypeError: Failed to fetch' &&
+      offlineOperations.includes(operation.operationName)
+    )
   },
 })
 

@@ -15,6 +15,7 @@ export interface GetAccountListQuery_getAccountList {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: GetAccountListQuery_getAccountList_currency
 }
 
@@ -39,6 +40,7 @@ export interface CreateAccountMutation_createAccount {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: CreateAccountMutation_createAccount_currency
 }
 
@@ -67,6 +69,7 @@ export interface GetAccountQuery_getAccount {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: GetAccountQuery_getAccount_currency
 }
 
@@ -95,6 +98,7 @@ export interface UpdateAccountMutation_updateAccount {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: UpdateAccountMutation_updateAccount_currency
 }
 
@@ -141,12 +145,14 @@ export interface CreateTransactionMutation_createTransaction_account {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: CreateTransactionMutation_createTransaction_account_currency
 }
 
 export interface CreateTransactionMutation_createTransaction {
   __typename: 'Transaction'
   id: string
+  createdAt: string
   description: string | null
   amount: number
   account: CreateTransactionMutation_createTransaction_account
@@ -177,12 +183,14 @@ export interface GetTransactionQuery_getTransaction_account {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: GetTransactionQuery_getTransaction_account_currency
 }
 
 export interface GetTransactionQuery_getTransaction {
   __typename: 'Transaction'
   id: string
+  createdAt: string
   description: string | null
   amount: number
   account: GetTransactionQuery_getTransaction_account
@@ -213,12 +221,14 @@ export interface GetTransactionListQuery_getTransactionList_account {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: GetTransactionListQuery_getTransactionList_account_currency
 }
 
 export interface GetTransactionListQuery_getTransactionList {
   __typename: 'Transaction'
   id: string
+  createdAt: string
   description: string | null
   amount: number
   account: GetTransactionListQuery_getTransactionList_account
@@ -245,12 +255,14 @@ export interface UpdateTransactionMutation_updateTransaction_account {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: UpdateTransactionMutation_updateTransaction_account_currency
 }
 
 export interface UpdateTransactionMutation_updateTransaction {
   __typename: 'Transaction'
   id: string
+  createdAt: string
   description: string | null
   amount: number
   account: UpdateTransactionMutation_updateTransaction_account
@@ -353,6 +365,7 @@ export interface account {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: account_currency
 }
 
@@ -386,12 +399,14 @@ export interface transaction_account {
   __typename: 'Account'
   id: string
   name: string
+  amount: number
   currency: transaction_account_currency
 }
 
 export interface transaction {
   __typename: 'Transaction'
   id: string
+  createdAt: string
   description: string | null
   amount: number
   account: transaction_account

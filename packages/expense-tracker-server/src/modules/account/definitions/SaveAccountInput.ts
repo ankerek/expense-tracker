@@ -13,4 +13,7 @@ export class SaveAccountInput {
 
   @Field()
   currency: SaveCurrencyInput
+
+  @Field()
+  amount: number
 }

@@ -5,9 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm'
-import { ObjectType, Field, ID } from 'type-graphql'
+import { ObjectType, Field, ID, Float } from 'type-graphql'
 import { User } from '../../user/definitions/User'
 import { Currency } from '../../currency/definitions/Currency'
+import { Transaction } from '../../transaction/definitions/Transaction'
 import { SaveAccountInput } from './SaveAccountInput'
 
 @Entity()
@@ -31,6 +32,12 @@ export class Account {
   currency: Currency
   @Column({ name: 'currency_id' })
   currencyId: string
+
+  // @Field(type => [Transaction])
+  // transactions: Transaction[]
+  //
+  // @Field(type => Float)
+  // amount: number
 
   constructor(input?: SaveAccountInput) {
     if (input) {
