@@ -7,6 +7,7 @@ import {
   WithApolloClient,
 } from 'react-apollo'
 import {
+  Account,
   CreateTransactionMutation,
   CreateTransactionMutationVariables,
   SaveTransactionInput,
@@ -14,9 +15,11 @@ import {
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
+import { sum } from '@utils/math'
 import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
+import { accountFragment } from '@controllers/account/fragments'
 
 export const CreateTransactionMutationName = 'CreateTransactionMutation'
 
@@ -67,11 +70,28 @@ class C extends React.Component<
         createTransaction: optimisticResponse,
       },
       update: (client, { data: { createTransaction } }) => {
+        // push new transaction to Transaction list
         const data: GetTransactionListQuery = client.readQuery({
           query: getTransactionListQuery,
         })
         data.getTransactionList.push(createTransaction)
         client.writeQuery({ query: getTransactionListQuery, data })
+
+        // update amount of the corresponding account
+        const account: Account = client.readFragment({
+          id: `Account:${createTransaction.account.id}`,
+          fragment: accountFragment,
+          fragmentName: 'Account',
+        })
+
+        account.amount = sum(account.amount, createTransaction.amount)
+
+        client.writeFragment({
+          id: `Account:${createTransaction.account.id}`,
+          fragment: accountFragment,
+          fragmentName: 'Account',
+          data: account,
+        })
       },
     })
 

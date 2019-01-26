@@ -10,13 +10,15 @@ import {
   UpdateTransactionMutation,
   UpdateTransactionMutationVariables,
   SaveTransactionInput,
-  GetTransactionListQuery,
+  Account,
+  Transaction,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
 import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
+import { accountFragment } from '@controllers/account/fragments'
+import { sum } from '@utils/math'
 
 export const UpdateTransactionMutationName = 'UpdateTransactionMutation'
 
@@ -51,6 +53,7 @@ class C extends React.Component<
 
   private submit = (values: SaveTransactionInput) => {
     const {
+      client,
       mutate,
       history,
       match: {
@@ -58,6 +61,13 @@ class C extends React.Component<
       },
       location: { state },
     } = this.props
+
+    // first stash away a current transaction before the update
+    const prevTransaction: Transaction = client.readFragment({
+      id: `Transaction:${id}`,
+      fragment: transactionFragment,
+      fragmentName: 'Transaction',
+    })
 
     const optimisticResponse: any = {
       __typename: 'Transaction',
@@ -72,13 +82,56 @@ class C extends React.Component<
       optimisticResponse: {
         updateTransaction: optimisticResponse,
       },
-      // update: (client, { data: { updateTransaction } }) => {
-      //   const data: GetTransactionListQuery = client.readQuery({
-      //     query: getTransactionListQuery,
-      //   })
-      //   data.getTransactionList.push(updateTransaction)
-      //   client.writeQuery({ query: getTransactionListQuery, data })
-      // },
+      update: (_, { data: { updateTransaction } }) => {
+        // account where the updated transaction belongs to
+        const account: Account = client.readFragment({
+          id: `Account:${updateTransaction.account.id}`,
+          fragment: accountFragment,
+          fragmentName: 'Account',
+        })
+
+        // this num will be added to the account
+        let newAccountAmountDifference = 0
+
+        if (prevTransaction.account.id !== updateTransaction.account.id) {
+          // transaction has moved to different account
+          // it's needed to deduct the amount from the prev account
+          const prevAccount: Account = client.readFragment({
+            id: `Account:${prevTransaction.account.id}`,
+            fragment: accountFragment,
+            fragmentName: 'Account',
+          })
+
+          console.log(
+            prevAccount.amount,
+            sum(prevAccount.amount, -prevTransaction.amount)
+          )
+          prevAccount.amount = sum(prevAccount.amount, -prevTransaction.amount)
+
+          client.writeFragment({
+            id: `Account:${prevAccount.id}`,
+            fragment: accountFragment,
+            fragmentName: 'Account',
+            data: prevAccount,
+          })
+
+          newAccountAmountDifference = updateTransaction.amount
+        } else if (prevTransaction.amount !== updateTransaction.amount) {
+          newAccountAmountDifference = sum(
+            updateTransaction.amount,
+            -prevTransaction.amount
+          )
+        }
+
+        account.amount = sum(account.amount, newAccountAmountDifference)
+
+        client.writeFragment({
+          id: `Account:${updateTransaction.account.id}`,
+          fragment: accountFragment,
+          fragmentName: 'Account',
+          data: account,
+        })
+      },
     })
 
     if (state && state.next) {
