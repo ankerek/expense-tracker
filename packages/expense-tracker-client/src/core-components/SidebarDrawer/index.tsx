@@ -1,6 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
-import Drawer, { DrawerProps } from '@material-ui/core/Drawer/Drawer'
+import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
+import Drawer from '@material-ui/core/Drawer/Drawer'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Divider from '@material-ui/core/Divider'
@@ -11,6 +12,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import InboxIcon from '@material-ui/icons/Inbox'
 import DnsIcon from '@material-ui/icons/Dns'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import styled from 'styled-components'
 import { NavLink } from '@core-components/NavLink'
 
@@ -82,6 +84,23 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
           </ListItemIcon>
           <ListItemText primary="Transactions" />
         </ListItem>
+        <GetCurrentUser fetchPolicy="cache-first">
+          {({ data: { getCurrentUser } }) =>
+            getCurrentUser ? (
+              <ListItem
+                button
+                component={({ innerRef, ...props }) => (
+                  <NavLink {...props} to="/signout" />
+                )}
+              >
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText primary="Sign out" />
+              </ListItem>
+            ) : null
+          }
+        </GetCurrentUser>
       </DrawerSidebar>
     )
   }
