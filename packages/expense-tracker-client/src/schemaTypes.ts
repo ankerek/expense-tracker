@@ -170,6 +170,21 @@ export interface CreateTransactionMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeleteTransactionMutation
+// ====================================================
+
+export interface DeleteTransactionMutation {
+  deleteTransaction: boolean
+}
+
+export interface DeleteTransactionMutationVariables {
+  id: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetTransactionQuery
 // ====================================================
 

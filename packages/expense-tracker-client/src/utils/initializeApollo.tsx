@@ -7,6 +7,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { persistCache } from 'apollo-cache-persist'
 import { CreateTransactionMutationName } from '@controllers/transaction/CreateTransaction'
 import { UpdateTransactionMutationName } from '@controllers/transaction/UpdateTransaction'
+import { DeleteTransactionMutationName } from '@controllers/transaction/DeleteTransaction'
 
 const API_BASE_URL = '/graphql'
 
@@ -25,6 +26,7 @@ const authLink = setContext((_, { headers }) => {
 const offlineOperations = [
   CreateTransactionMutationName,
   UpdateTransactionMutationName,
+  DeleteTransactionMutationName,
 ]
 
 const retryLink = new RetryLink({

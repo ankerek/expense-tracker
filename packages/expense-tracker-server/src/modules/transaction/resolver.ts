@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm'
+import { getRepository, Repository, DeleteResult } from 'typeorm'
 import {
   Resolver,
   Query,
@@ -15,7 +15,7 @@ import { Account } from '../account/definitions/Account'
 import { SaveTransactionInput } from './definitions/SaveTransactionInput'
 
 @Resolver(of => Transaction)
-export class AccountResolver {
+export class TransactionResolver {
   private transactionRepository: Repository<Transaction>
   private accountRepository: Repository<Account>
 
@@ -68,6 +68,13 @@ export class AccountResolver {
     const transaction = await this.transactionRepository.findOne(id)
     return this.transactionRepository.save({ ...transaction, ...input })
   }
+
+  @Authorized()
+  @Mutation(returns => Boolean)
+  async deleteTransaction(@Arg('id', type => ID) id: string) {
+    await this.transactionRepository.delete(id)
+    return true
+  }
 }
 
-export default AccountResolver
+export default TransactionResolver

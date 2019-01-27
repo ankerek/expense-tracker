@@ -6,6 +6,7 @@ import {
   SaveTransactionInput,
 } from '@schema-types'
 import { Field, Form, Formik, FormikProps } from 'formik'
+import { DeleteTransaction } from '@controllers/transaction/DeleteTransaction'
 import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
 import { TextField } from '../TextField'
@@ -18,6 +19,7 @@ export interface TransactionFormProps {
   accounts: GetAccountListQuery_getAccountList[]
   initialValues?: Partial<TransactionFormValues>
   submit: (values: TransactionFormValues) => void
+  hasDelete?: boolean
 }
 
 const getEmptyInitialValues = (
@@ -54,7 +56,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
   }
 
   render() {
-    const { initialValues, accounts } = this.props
+    const { initialValues, accounts, hasDelete } = this.props
     return (
       <Formik
         initialValues={initialValues || getEmptyInitialValues(accounts)}
@@ -125,6 +127,20 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
               >
                 Save transaction
               </Button>
+              {hasDelete && (
+                <DeleteTransaction>
+                  {({ deleteTransaction }) => (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="secondary"
+                      onClick={deleteTransaction}
+                    >
+                      Delete transaction
+                    </Button>
+                  )}
+                </DeleteTransaction>
+              )}
             </ActionsWrapper>
           </Form>
         )}

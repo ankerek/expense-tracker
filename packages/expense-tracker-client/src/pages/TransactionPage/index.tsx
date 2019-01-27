@@ -21,6 +21,7 @@ export class TransactionPage extends React.Component {
                           initialValues={getTransaction}
                           submit={submit}
                           accounts={getAccountList}
+                          hasDelete
                         />
                       )}
                     </UpdateTransaction>
