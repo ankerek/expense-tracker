@@ -13,11 +13,12 @@ export class AccountPage extends React.Component {
             <>
               {data && data.getAccount && (
                 <UpdateAccount>
-                  {({ submit }) => (
+                  {(submit, { loading }) => (
                     <AccountForm
                       initialValues={data.getAccount}
                       submit={submit}
                       hasDelete
+                      loading={loading}
                     />
                   )}
                 </UpdateAccount>

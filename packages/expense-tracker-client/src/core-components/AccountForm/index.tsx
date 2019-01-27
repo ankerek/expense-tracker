@@ -3,7 +3,7 @@ import { NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { GetCurrencyListQuery_getCurrencyList } from '@schema-types'
 import { DeleteAccount } from '@controllers/account/DeleteAccount'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
-import Button from '@material-ui/core/Button'
+import { Button } from '@core-components/Button'
 import { TextField } from '../TextField'
 import { ActionsWrapper } from './elements'
 import { GetCurrencyList } from '@controllers/currency/GetCurrencyList'
@@ -15,6 +15,7 @@ export interface AccountFormProps {
     values: { input: AccountFormValues }
   ) => Promise<NormalizedErrorsMap | null>
   hasDelete?: boolean
+  loading?: boolean
 }
 
 export interface AccountFormValues {
@@ -56,7 +57,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
   }
 
   render() {
-    const { initialValues, hasDelete } = this.props
+    const { initialValues, hasDelete, loading } = this.props
     return (
       <Formik
         initialValues={initialValues || initialEmptyValues}
@@ -68,7 +69,6 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
           setFieldValue,
         }: FormikProps<AccountFormValues>) => (
           <Form>
-            {console.log(values)}
             <Field
               name="name"
               label="Name"
@@ -116,17 +116,19 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
                 variant="contained"
                 color="primary"
                 disabled={!isValid}
+                progress={loading}
               >
                 Save account
               </Button>
               {hasDelete && (
                 <DeleteAccount>
-                  {({ deleteAccount }) => (
+                  {(deleteAccount, { loading: deleteLoading }) => (
                     <Button
                       fullWidth
                       variant="contained"
                       color="secondary"
-                      onClick={deleteAccount}
+                      onClick={deleteAccount as any}
+                      progress={deleteLoading}
                     >
                       Delete account
                     </Button>

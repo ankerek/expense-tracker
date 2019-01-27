@@ -1,11 +1,6 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import {
-  graphql,
-  ChildMutateProps,
-  withApollo,
-  WithApolloClient,
-} from 'react-apollo'
+import { Mutation, MutationFn, MutationResult } from 'react-apollo'
 import {
   DeleteAccountMutation,
   DeleteAccountMutationVariables,
@@ -23,52 +18,40 @@ const deleteAccountMutation = gql`
 
 interface DeleteAccountProps {
   children: (
-    data: {
-      deleteAccount: () => void
-    }
+    mutateFn: MutationFn<DeleteAccountMutation, DeleteAccountMutationVariables>,
+    result: MutationResult<DeleteAccountMutation>
   ) => JSX.Element | null
 }
 
 class C extends React.Component<
-  RouteComponentProps<{ id: string }> &
-    ChildMutateProps<
-      WithApolloClient<DeleteAccountProps>,
-      DeleteAccountMutation,
-      DeleteAccountMutationVariables
-    >
+  DeleteAccountProps & RouteComponentProps<{ id: string }>
 > {
   render() {
-    return this.props.children({ deleteAccount: this.deleteAccount })
-  }
-
-  private deleteAccount = async () => {
     const {
-      mutate,
+      children,
       history,
+      location: { state },
       match: {
         params: { id },
       },
-      location: { state },
     } = this.props
 
-    await mutate({
-      variables: { id },
-    })
-
-    if (state && state.next) {
-      history.push(state.next)
-    } else {
-      history.push('/')
-    }
+    return (
+      <Mutation<DeleteAccountMutation, DeleteAccountMutationVariables>
+        mutation={deleteAccountMutation}
+        variables={{ id }}
+        onCompleted={() => {
+          if (state && state.next) {
+            history.push(state.next)
+          } else {
+            history.push('/')
+          }
+        }}
+      >
+        {(...args) => children(...args)}
+      </Mutation>
+    )
   }
 }
 
-export const DeleteAccount = compose(
-  withRouter,
-  withApollo,
-  graphql<
-    DeleteAccountProps,
-    DeleteAccountMutation,
-    DeleteAccountMutationVariables
-  >(deleteAccountMutation)
-)(C)
+export const DeleteAccount = compose(withRouter)(C)

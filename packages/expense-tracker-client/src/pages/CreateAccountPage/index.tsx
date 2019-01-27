@@ -8,7 +8,9 @@ export class CreateAccountPage extends React.Component {
     return (
       <PageLayout title="Create new account" hasGoBack>
         <CreateAccount>
-          {({ submit }) => <AccountForm submit={submit} />}
+          {(submit, { loading }) => (
+            <AccountForm submit={submit} loading={loading} />
+          )}
         </CreateAccount>
       </PageLayout>
     )
