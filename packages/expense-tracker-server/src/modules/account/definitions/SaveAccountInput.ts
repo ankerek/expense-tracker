@@ -14,6 +14,6 @@ export class SaveAccountInput {
   @Field()
   currency: SaveCurrencyInput
 
-  @Field()
+  @Field({ nullable: true })
   amount: number
 }

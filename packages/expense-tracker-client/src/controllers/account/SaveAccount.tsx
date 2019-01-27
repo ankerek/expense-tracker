@@ -33,7 +33,7 @@ class C<AccountMutation, AccountMutationVariables> extends React.PureComponent<
         location: { state },
       } = this.props
 
-      await mutate({
+      const response = await mutate({
         variables: cleanPropertiesBeforeMutation(
           Object.assign(variables, values)
         ),

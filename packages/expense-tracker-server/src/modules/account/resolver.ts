@@ -86,6 +86,13 @@ export class AccountResolver {
     const account = await this.accountRepository.findOne(id)
     return this.accountRepository.save({ ...account, ...input })
   }
+
+  @Authorized()
+  @Mutation(returns => Boolean)
+  async deleteAccount(@Arg('id', type => ID) id: string) {
+    await this.accountRepository.delete(id)
+    return true
+  }
 }
 
 export default AccountResolver

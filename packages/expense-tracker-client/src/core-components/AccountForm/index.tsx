@@ -1,6 +1,7 @@
 import React from 'react'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { GetCurrencyListQuery_getCurrencyList } from '@schema-types'
+import { DeleteAccount } from '@controllers/account/DeleteAccount'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
 import Button from '@material-ui/core/Button'
 import { TextField } from '../TextField'
@@ -13,6 +14,7 @@ export interface AccountFormProps {
   submit: (
     values: { input: AccountFormValues }
   ) => Promise<NormalizedErrorsMap | null>
+  hasDelete?: boolean
 }
 
 export interface AccountFormValues {
@@ -54,17 +56,19 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
   }
 
   render() {
-    const { initialValues } = this.props
+    const { initialValues, hasDelete } = this.props
     return (
       <Formik
         initialValues={initialValues || initialEmptyValues}
         validate={validate}
         onSubmit={this.handleSubmit}
         render={({
+          values,
           isValid,
           setFieldValue,
         }: FormikProps<AccountFormValues>) => (
           <Form>
+            {console.log(values)}
             <Field
               name="name"
               label="Name"
@@ -115,6 +119,20 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
               >
                 Save account
               </Button>
+              {hasDelete && (
+                <DeleteAccount>
+                  {({ deleteAccount }) => (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="secondary"
+                      onClick={deleteAccount}
+                    >
+                      Delete account
+                    </Button>
+                  )}
+                </DeleteAccount>
+              )}
             </ActionsWrapper>
           </Form>
         )}

@@ -17,6 +17,7 @@ export class AccountPage extends React.Component {
                     <AccountForm
                       initialValues={data.getAccount}
                       submit={submit}
+                      hasDelete
                     />
                   )}
                 </UpdateAccount>

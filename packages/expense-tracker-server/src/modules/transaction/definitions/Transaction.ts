@@ -34,11 +34,11 @@ export class Transaction {
   @Field()
   amount: number
 
-  @ManyToOne(type => User, { cascade: true })
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   userId?: string
 
-  @ManyToOne(type => Account, { cascade: true })
+  @ManyToOne(type => Account, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'account_id' })
   @Field(type => Account)
   account: Account

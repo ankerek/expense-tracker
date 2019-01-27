@@ -22,22 +22,16 @@ export class Account {
   @Field()
   name: string
 
-  @ManyToOne(type => User, { cascade: true })
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   userId: string
 
-  @ManyToOne(type => Currency, { cascade: true })
+  @ManyToOne(type => Currency, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'currency_id' })
   @Field(type => Currency)
   currency: Currency
   @Column({ name: 'currency_id' })
   currencyId: string
-
-  // @Field(type => [Transaction])
-  // transactions: Transaction[]
-  //
-  // @Field(type => Float)
-  // amount: number
 
   constructor(input?: SaveAccountInput) {
     if (input) {

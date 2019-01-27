@@ -56,6 +56,21 @@ export interface CreateAccountMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeleteAccountMutation
+// ====================================================
+
+export interface DeleteAccountMutation {
+  deleteAccount: boolean
+}
+
+export interface DeleteAccountMutationVariables {
+  id: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetAccountQuery
 // ====================================================
 
@@ -451,7 +466,7 @@ export interface SaveAccountInput {
   id?: string | null
   name: string
   currency: SaveCurrencyInput
-  amount: number
+  amount?: number | null
 }
 
 export interface SaveCurrencyInput {
