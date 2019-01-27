@@ -15,11 +15,11 @@ import { getCurrentUserQuery } from '@controllers/user/GetCurrentUser'
 import { userFragment } from '@controllers/user/fragments'
 
 const signInMutation = gql`
-  mutation SignInMutation($input: UserCreateInput!) {
+  mutation SignInMutation($input: SignInInput!) {
     signIn(input: $input) {
       token
       user {
-        ...user
+        ...User
       }
     }
   }

@@ -13,23 +13,19 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import { compose } from '@utils/compose'
 import { getCurrentUserQuery } from '@controllers/user/GetCurrentUser'
 import { userFragment } from '@controllers/user/fragments'
+import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
 
 const createUserMutation = gql`
   mutation CreateUserMutation($input: UserCreateInput!) {
     createUser(input: $input) {
       token
       user {
-        ...user
+        ...User
       }
     }
   }
   ${userFragment}
 `
-
-export type CreateUserMutationFn = MutationFn<
-  CreateUserMutation,
-  CreateUserMutationVariables
->
 
 interface CreateUserProps {
   children: (
@@ -52,7 +48,7 @@ class C extends React.PureComponent<
   handleCreateUser = async (values: CreateUserMutationVariables) => {
     try {
       const res = await this.props.mutate({
-        variables: values,
+        variables: cleanPropertiesBeforeMutation(values),
       })
 
       if (res) {

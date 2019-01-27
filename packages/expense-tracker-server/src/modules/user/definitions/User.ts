@@ -1,6 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
-import { Account } from '../../account/definitions/Account'
+import { Currency } from '../../currency/definitions/Currency'
 
 @Entity()
 @ObjectType()
@@ -16,6 +22,10 @@ export class User {
   @Column({ type: 'char', length: 60 })
   password: string
 
-  @Field(type => [Account])
-  accounts: Account[]
+  @ManyToOne(type => Currency)
+  @JoinColumn({ name: 'currency_id' })
+  @Field(type => Currency)
+  currency: Currency
+  @Column({ name: 'currency_id' })
+  currencyId: string
 }

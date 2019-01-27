@@ -5,18 +5,11 @@
 // GraphQL query operation: GetAccountListQuery
 // ====================================================
 
-export interface GetAccountListQuery_getAccountList_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface GetAccountListQuery_getAccountList {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: GetAccountListQuery_getAccountList_currency
 }
 
 export interface GetAccountListQuery {
@@ -30,18 +23,11 @@ export interface GetAccountListQuery {
 // GraphQL mutation operation: CreateAccountMutation
 // ====================================================
 
-export interface CreateAccountMutation_createAccount_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface CreateAccountMutation_createAccount {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: CreateAccountMutation_createAccount_currency
 }
 
 export interface CreateAccountMutation {
@@ -74,18 +60,11 @@ export interface DeleteAccountMutationVariables {
 // GraphQL query operation: GetAccountQuery
 // ====================================================
 
-export interface GetAccountQuery_getAccount_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface GetAccountQuery_getAccount {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: GetAccountQuery_getAccount_currency
 }
 
 export interface GetAccountQuery {
@@ -103,18 +82,11 @@ export interface GetAccountQueryVariables {
 // GraphQL mutation operation: UpdateAccountMutation
 // ====================================================
 
-export interface UpdateAccountMutation_updateAccount_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface UpdateAccountMutation_updateAccount {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: UpdateAccountMutation_updateAccount_currency
 }
 
 export interface UpdateAccountMutation {
@@ -150,18 +122,11 @@ export interface GetCurrencyListQuery {
 // GraphQL mutation operation: CreateTransactionMutation
 // ====================================================
 
-export interface CreateTransactionMutation_createTransaction_account_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface CreateTransactionMutation_createTransaction_account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: CreateTransactionMutation_createTransaction_account_currency
 }
 
 export interface CreateTransactionMutation_createTransaction {
@@ -203,18 +168,11 @@ export interface DeleteTransactionMutationVariables {
 // GraphQL query operation: GetTransactionQuery
 // ====================================================
 
-export interface GetTransactionQuery_getTransaction_account_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface GetTransactionQuery_getTransaction_account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: GetTransactionQuery_getTransaction_account_currency
 }
 
 export interface GetTransactionQuery_getTransaction {
@@ -241,18 +199,11 @@ export interface GetTransactionQueryVariables {
 // GraphQL query operation: GetTransactionListQuery
 // ====================================================
 
-export interface GetTransactionListQuery_getTransactionList_account_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface GetTransactionListQuery_getTransactionList_account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: GetTransactionListQuery_getTransactionList_account_currency
 }
 
 export interface GetTransactionListQuery_getTransactionList {
@@ -275,18 +226,11 @@ export interface GetTransactionListQuery {
 // GraphQL mutation operation: UpdateTransactionMutation
 // ====================================================
 
-export interface UpdateTransactionMutation_updateTransaction_account_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface UpdateTransactionMutation_updateTransaction_account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: UpdateTransactionMutation_updateTransaction_account_currency
 }
 
 export interface UpdateTransactionMutation_updateTransaction {
@@ -314,10 +258,17 @@ export interface UpdateTransactionMutationVariables {
 // GraphQL query operation: GetCurrentUserQuery
 // ====================================================
 
+export interface GetCurrentUserQuery_getCurrentUser_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface GetCurrentUserQuery_getCurrentUser {
   __typename: 'User'
   id: string
   email: string
+  currency: GetCurrentUserQuery_getCurrentUser_currency
 }
 
 export interface GetCurrentUserQuery {
@@ -331,10 +282,17 @@ export interface GetCurrentUserQuery {
 // GraphQL mutation operation: SignInMutation
 // ====================================================
 
+export interface SignInMutation_signIn_user_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface SignInMutation_signIn_user {
   __typename: 'User'
   id: string
   email: string
+  currency: SignInMutation_signIn_user_currency
 }
 
 export interface SignInMutation_signIn {
@@ -348,7 +306,7 @@ export interface SignInMutation {
 }
 
 export interface SignInMutationVariables {
-  input: UserCreateInput
+  input: SignInInput
 }
 
 /* tslint:disable */
@@ -358,10 +316,17 @@ export interface SignInMutationVariables {
 // GraphQL mutation operation: CreateUserMutation
 // ====================================================
 
+export interface CreateUserMutation_createUser_user_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
 export interface CreateUserMutation_createUser_user {
   __typename: 'User'
   id: string
   email: string
+  currency: CreateUserMutation_createUser_user_currency
 }
 
 export interface CreateUserMutation_createUser {
@@ -385,18 +350,11 @@ export interface CreateUserMutationVariables {
 // GraphQL fragment: Account
 // ====================================================
 
-export interface Account_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface Account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: Account_currency
 }
 
 /* tslint:disable */
@@ -419,18 +377,11 @@ export interface Currency {
 // GraphQL fragment: Transaction
 // ====================================================
 
-export interface Transaction_account_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
-}
-
 export interface Transaction_account {
   __typename: 'Account'
   id: string
   name: string
   amount: number
-  currency: Transaction_account_currency
 }
 
 export interface Transaction {
@@ -446,13 +397,20 @@ export interface Transaction {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: user
+// GraphQL fragment: User
 // ====================================================
 
-export interface user {
+export interface User_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
+export interface User {
   __typename: 'User'
   id: string
   email: string
+  currency: User_currency
 }
 
 /* tslint:disable */
@@ -465,7 +423,6 @@ export interface user {
 export interface SaveAccountInput {
   id?: string | null
   name: string
-  currency: SaveCurrencyInput
   amount?: number | null
 }
 
@@ -482,9 +439,15 @@ export interface SaveTransactionInput {
   account: SaveAccountInput
 }
 
+export interface SignInInput {
+  email: string
+  password: string
+}
+
 export interface UserCreateInput {
   email: string
   password: string
+  currency: SaveCurrencyInput
 }
 
 //==============================================================

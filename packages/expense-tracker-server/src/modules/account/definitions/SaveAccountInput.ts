@@ -1,6 +1,5 @@
 import { InputType, Field } from 'type-graphql'
 import { MinLength } from 'class-validator'
-import { SaveCurrencyInput } from '../../currency/definitions/SaveCurrencyInput'
 
 @InputType()
 export class SaveAccountInput {
@@ -10,9 +9,6 @@ export class SaveAccountInput {
   @Field()
   @MinLength(1)
   name: string
-
-  @Field()
-  currency: SaveCurrencyInput
 
   @Field({ nullable: true })
   amount: number

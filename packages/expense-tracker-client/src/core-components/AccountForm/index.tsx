@@ -1,13 +1,10 @@
 import React from 'react'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
-import { GetCurrencyListQuery_getCurrencyList } from '@schema-types'
 import { DeleteAccount } from '@controllers/account/DeleteAccount'
 import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
 import { Button } from '@core-components/Button'
 import { TextField } from '../TextField'
 import { ActionsWrapper } from './elements'
-import { GetCurrencyList } from '@controllers/currency/GetCurrencyList'
-import MenuItem from '@material-ui/core/MenuItem'
 
 export interface AccountFormProps {
   initialValues?: AccountFormValues
@@ -20,12 +17,10 @@ export interface AccountFormProps {
 
 export interface AccountFormValues {
   name: string
-  currency: GetCurrencyListQuery_getCurrencyList
 }
 
 const initialEmptyValues = {
   name: '',
-  currency: '',
 }
 
 const validate = (values: AccountFormValues) => {
@@ -33,9 +28,6 @@ const validate = (values: AccountFormValues) => {
 
   if (!values.name) {
     errors.name = 'Required'
-  }
-  if (!values.currency) {
-    errors.currency = 'Required'
   }
 
   return errors
@@ -63,11 +55,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
         initialValues={initialValues || initialEmptyValues}
         validate={validate}
         onSubmit={this.handleSubmit}
-        render={({
-          values,
-          isValid,
-          setFieldValue,
-        }: FormikProps<AccountFormValues>) => (
+        render={({ isValid }: FormikProps<AccountFormValues>) => (
           <Form>
             <Field
               name="name"
@@ -77,38 +65,6 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
               margin="normal"
               component={TextField}
             />
-            <GetCurrencyList>
-              {({ data }) => (
-                <Field
-                  name="currency"
-                  label="Currency"
-                  select
-                  required
-                  fullWidth
-                  margin="normal"
-                  component={TextField}
-                  parseValue={(
-                    currency: GetCurrencyListQuery_getCurrencyList
-                  ) => currency.id}
-                  onChange={(e: React.ChangeEvent<any>) =>
-                    setFieldValue(
-                      'currency',
-                      data.getCurrencyList.find(
-                        currency => currency.id === e.target.value
-                      )
-                    )
-                  }
-                >
-                  {data &&
-                    data.getCurrencyList &&
-                    data.getCurrencyList.map(currency => (
-                      <MenuItem key={currency.id} value={currency.id}>
-                        {currency.id}
-                      </MenuItem>
-                    ))}
-                </Field>
-              )}
-            </GetCurrencyList>
             <ActionsWrapper>
               <Button
                 type="submit"

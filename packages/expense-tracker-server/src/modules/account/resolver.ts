@@ -19,18 +19,11 @@ import { SaveAccountInput } from './definitions/SaveAccountInput'
 @Resolver(of => Account)
 export class AccountResolver {
   private accountRepository: Repository<Account>
-  private currencyRepository: Repository<Currency>
   private transactionRepository: Repository<Transaction>
 
   constructor() {
     this.accountRepository = getRepository(Account)
-    this.currencyRepository = getRepository(Currency)
     this.transactionRepository = getRepository(Transaction)
-  }
-
-  @FieldResolver(returns => Account)
-  async currency(@Root() account: Account) {
-    return this.currencyRepository.findOne(account.currencyId)
   }
 
   @FieldResolver(returns => [Transaction])
@@ -71,7 +64,6 @@ export class AccountResolver {
   ) {
     const newAccount = new Account()
     newAccount.name = input.name
-    newAccount.currency = new Currency(input.currency)
     newAccount.userId = ctx.user.id
     return this.accountRepository.save(newAccount)
   }

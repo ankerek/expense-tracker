@@ -1,5 +1,6 @@
 import { InputType, Field } from 'type-graphql'
 import { User } from './User'
+import { SaveCurrencyInput } from '../../currency/definitions/SaveCurrencyInput'
 
 @InputType()
 export class UserCreateInput implements Partial<User> {
@@ -8,4 +9,7 @@ export class UserCreateInput implements Partial<User> {
 
   @Field()
   password: string
+
+  @Field()
+  currency: SaveCurrencyInput
 }

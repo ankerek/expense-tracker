@@ -1,29 +1,31 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Query, QueryResult } from 'react-apollo'
+import { FetchPolicy } from 'apollo-client'
 import { GetCurrentUserQuery } from '@schema-types'
 import { userFragment } from './fragments'
 
 export const getCurrentUserQuery = gql`
   query GetCurrentUserQuery {
     getCurrentUser {
-      ...user
+      ...User
     }
   }
   ${userFragment}
 `
 
 interface CurrentUserProps {
-  children: (result: QueryResult<GetCurrentUserQuery>) => JSX.Element | null
+  fetchPolicy?: FetchPolicy
+  children: (result: QueryResult<GetCurrentUserQuery>) => React.ReactNode | null
 }
 
 export class GetCurrentUser extends React.Component<CurrentUserProps> {
   render() {
-    const { children } = this.props
+    const { fetchPolicy = 'cache-and-network', children } = this.props
     return (
       <Query<GetCurrentUserQuery>
         query={getCurrentUserQuery}
-        fetchPolicy="cache-and-network"
+        fetchPolicy={fetchPolicy}
       >
         {(...args) => children(...args)}
       </Query>

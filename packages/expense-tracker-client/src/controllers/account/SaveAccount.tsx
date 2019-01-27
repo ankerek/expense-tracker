@@ -31,7 +31,7 @@ class C<AccountMutation, AccountMutationVariables> extends React.PureComponent<
       AccountMutationVariables
     >
 > {
-  readonly state = initialState
+  readonly state: State = initialState
 
   render() {
     return this.props.children(this.submit, {
@@ -50,7 +50,7 @@ class C<AccountMutation, AccountMutationVariables> extends React.PureComponent<
 
       this.setState({ loading: true })
 
-      const response = await mutate({
+      await mutate({
         variables: cleanPropertiesBeforeMutation(
           Object.assign(variables, values)
         ),

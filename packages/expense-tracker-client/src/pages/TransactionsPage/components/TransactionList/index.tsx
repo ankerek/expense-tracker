@@ -34,11 +34,7 @@ export class TransactionList extends React.PureComponent<AccountListProps> {
                   {transaction.id}
                 </NavLink>
                 <Amount>
-                  <FormattedAmount
-                    currency={transaction.account.currency.symbol}
-                  >
-                    {transaction.amount}
-                  </FormattedAmount>
+                  <FormattedAmount>{transaction.amount}</FormattedAmount>
                 </Amount>
                 <Actions>Actions</Actions>
               </Item>

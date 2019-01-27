@@ -1,4 +1,5 @@
 import React from 'react'
+import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
 
 interface FormattedAmountProps {
   currency?: string
@@ -10,7 +11,12 @@ export class FormattedAmount extends React.PureComponent<FormattedAmountProps> {
     const { currency, children } = this.props
     return (
       <>
-        {children}&nbsp;{currency}
+        {children}
+        <GetCurrentUser fetchPolicy="cache-first">
+          {({ data: { getCurrentUser } }) =>
+            getCurrentUser ? <>&nbsp;{getCurrentUser.currency.symbol}</> : null
+          }
+        </GetCurrentUser>
       </>
     )
   }

@@ -1,28 +1,32 @@
 import React from 'react'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
-import { CreateUserMutationVariables } from '@schema-types'
+import { CreateUserMutationVariables, Currency } from '@schema-types'
 import { Field, Form, Formik, FormikErrors, FormikProps } from 'formik'
 import Button from '@material-ui/core/Button'
 import { TextField } from '@core-components/TextField'
 import { NavLink } from '@core-components/NavLink'
 import Grid from '@material-ui/core/Grid'
 import { ActionsWrapper } from './elements'
+import MenuItem from '@material-ui/core/MenuItem'
 
 export interface SignUpFormProps {
   submit: (
     values: CreateUserMutationVariables
   ) => Promise<NormalizedErrorsMap | null>
+  currencies: Currency[]
 }
 
 export interface SignUpFormValuesProps {
   email: string
   password: string
+  currency: Currency
 }
 
-const initialValues = {
+const getInitialValues = (currencies: Currency[]) => ({
   email: '',
   password: '',
-}
+  currency: currencies[0],
+})
 
 const validate = (values: SignUpFormValuesProps) => {
   const errors: any = {}
@@ -56,12 +60,16 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
   }
 
   render() {
+    const { currencies } = this.props
     return (
       <Formik
-        initialValues={initialValues}
+        initialValues={getInitialValues(currencies)}
         validate={validate}
         onSubmit={this.handleSubmit}
-        render={(formikBag: FormikProps<SignUpFormValuesProps>) => (
+        render={({
+          isValid,
+          setFieldValue,
+        }: FormikProps<SignUpFormValuesProps>) => (
           <Form>
             <Field
               name="email"
@@ -80,6 +88,29 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
               margin="normal"
               component={TextField}
             />
+
+            <Field
+              name="currency"
+              label="Currency"
+              select
+              required
+              fullWidth
+              margin="normal"
+              component={TextField}
+              parseValue={(currency: Currency) => currency.id}
+              onChange={(e: React.ChangeEvent<any>) =>
+                setFieldValue(
+                  'currency',
+                  currencies.find(currency => currency.id === e.target.value)
+                )
+              }
+            >
+              {currencies.map(currency => (
+                <MenuItem key={currency.id} value={currency.id}>
+                  {currency.id}
+                </MenuItem>
+              ))}
+            </Field>
             <ActionsWrapper>
               <Grid container alignItems="center">
                 <Grid item xs={4} sm={6}>
@@ -91,7 +122,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    disabled={!formikBag.isValid}
+                    disabled={!isValid}
                   >
                     Sign up
                   </Button>

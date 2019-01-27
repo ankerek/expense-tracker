@@ -11,9 +11,10 @@ import {
   Ctx,
 } from 'type-graphql'
 import { UserInputError } from 'apollo-server'
+import { Currency } from '../currency/definitions/Currency'
 import { User } from './definitions/User'
-import { Account } from '../account/definitions/Account'
 import { UserCreateInput } from './definitions/UserCreateInput'
+import { SignInInput } from './definitions/SignInInput'
 import { SignInResponse } from './definitions/SignInResponse'
 import { validatePassword, createToken } from '../../utils/authentification'
 
@@ -22,25 +23,22 @@ const SALT_ROUNDS = 10
 @Resolver(of => User)
 export class UserResolver {
   private userRepository: Repository<User>
-  private accountRepository: Repository<Account>
+  private currencyRepository: Repository<Currency>
 
   constructor() {
     this.userRepository = getRepository(User)
-    this.accountRepository = getRepository(Account)
+    this.currencyRepository = getRepository(Currency)
+  }
+
+  @FieldResolver(returns => Currency)
+  async currency(@Root() user: User) {
+    return this.currencyRepository.findOne(user.currencyId)
   }
 
   @Authorized()
   @Query(returns => [User])
   async users() {
     return this.userRepository.find()
-  }
-
-  @FieldResolver(returns => [Account])
-  async accounts(@Root() user: User) {
-    const accounts = await this.accountRepository.find({
-      where: { userId: user.id },
-    })
-    return accounts
   }
 
   @Query(returns => User, { nullable: true })
@@ -74,13 +72,14 @@ export class UserResolver {
     const newUser = new User()
     newUser.email = input.email
     newUser.password = await bcrypt.hash(input.password, SALT_ROUNDS)
+    newUser.currency = new Currency(input.currency)
     const createdUser = await this.userRepository.save(newUser)
 
     return { token: createToken(createdUser, '30m'), user: createdUser }
   }
 
   @Mutation(returns => SignInResponse)
-  async signIn(@Arg('input') input: UserCreateInput) {
+  async signIn(@Arg('input') input: SignInInput) {
     if (!input.email || !input.password) {
       throw new UserInputError('Missing input.')
     }
