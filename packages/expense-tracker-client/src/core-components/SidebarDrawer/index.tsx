@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import cn from 'classnames'
 import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
 import Drawer from '@material-ui/core/Drawer/Drawer'
@@ -7,13 +8,12 @@ import IconButton from '@material-ui/core/IconButton'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import InboxIcon from '@material-ui/icons/Inbox'
 import DnsIcon from '@material-ui/icons/Dns'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import styled from 'styled-components'
+import { SidebarItemText } from './elements'
 import { NavLink } from '@core-components/NavLink'
 
 interface SidebarDrawerProps {
@@ -23,18 +23,23 @@ interface SidebarDrawerProps {
 
 const paperClassName = 'paper'
 const paperClosedClassName = 'paperClosed'
-export const DRAWER_WIDTH = '250px'
 
 const DrawerSidebar = styled(Drawer)`
   && {
     .${paperClassName} {
-      position: relative;
       width: 250px;
+
+      @media (min-width: ${props => props.theme.breakpoints.values.md}px) {
+        position: relative;
+      }
     }
 
     .${paperClosedClassName} {
-      width: 60px;
-      overflow-x: hidden;
+      display: none;
+
+      @media (min-width: ${props => props.theme.breakpoints.values.md}px) {
+        display: block;
+      }
     }
   }
 `
@@ -60,7 +65,7 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="Inbox" />
+          <SidebarItemText primary="Inbox" />
         </ListItem>
         <ListItem
           button
@@ -71,7 +76,7 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
           <ListItemIcon>
             <DnsIcon />
           </ListItemIcon>
-          <ListItemText primary="Accounts" />
+          <SidebarItemText primary="Accounts" />
         </ListItem>
         <ListItem
           button
@@ -82,7 +87,7 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
           <ListItemIcon>
             <MonetizationOnIcon />
           </ListItemIcon>
-          <ListItemText primary="Transactions" />
+          <SidebarItemText primary="Transactions" />
         </ListItem>
         <GetCurrentUser fetchPolicy="cache-first">
           {({ data: { getCurrentUser } }) =>
@@ -96,7 +101,7 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
                 <ListItemIcon>
                   <ExitToAppIcon />
                 </ListItemIcon>
-                <ListItemText primary="Sign out" />
+                <SidebarItemText primary="Sign out" />
               </ListItem>
             ) : null
           }

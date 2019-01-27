@@ -10,7 +10,6 @@ export class CurrencyResolver {
     this.currencyRepository = getRepository(Currency)
   }
 
-  @Authorized()
   @Query(returns => [Currency])
   async getCurrencyList(@Ctx() ctx: Context) {
     return this.currencyRepository.find()

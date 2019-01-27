@@ -5,10 +5,13 @@ import {
   GetAccountListQuery_getAccountList,
   SaveTransactionInput,
 } from '@schema-types'
-import { Field, Form, Formik, FormikProps } from 'formik'
+import { Field, Formik, FormikProps } from 'formik'
+import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
 import { DeleteTransaction } from '@controllers/transaction/DeleteTransaction'
-import Button from '@material-ui/core/Button'
+import { Button } from '@core-components/Button'
+import { Form } from '@core-components/Form'
 import MenuItem from '@material-ui/core/MenuItem'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import { TextField } from '../TextField'
 import { DATE_FORMAT, DatePickerField } from '@core-components/DatePickerField'
 import { ActionsWrapper } from './elements'
@@ -90,6 +93,19 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
               fullWidth
               margin="normal"
               component={TextField}
+              InputProps={{
+                startAdornment: (
+                  <GetCurrentUser fetchPolicy="cache-first">
+                    {({ data: { getCurrentUser } }) =>
+                      getCurrentUser ? (
+                        <InputAdornment position="start">
+                          {getCurrentUser.currency.symbol}
+                        </InputAdornment>
+                      ) : null
+                    }
+                  </GetCurrentUser>
+                ),
+              }}
             />
 
             <Field

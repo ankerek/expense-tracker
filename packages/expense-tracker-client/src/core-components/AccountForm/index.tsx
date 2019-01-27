@@ -1,8 +1,9 @@
 import React from 'react'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
 import { DeleteAccount } from '@controllers/account/DeleteAccount'
-import { Field, Form, Formik, FormikProps, FormikErrors } from 'formik'
+import { Field, Formik, FormikProps, FormikErrors } from 'formik'
 import { Button } from '@core-components/Button'
+import { Form } from '@core-components/Form'
 import { TextField } from '../TextField'
 import { ActionsWrapper } from './elements'
 
