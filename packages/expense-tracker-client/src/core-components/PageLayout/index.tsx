@@ -5,12 +5,19 @@ import {
   withCurrentUser,
   WithCurrentUserInjectedProps,
 } from '@controllers/user/withCurrentUser'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { SidebarDrawer } from '@core-components/SidebarDrawer'
-import { AppBar, MainContent, ToolbarLeftIcon, Wrapper } from './elements'
+import {
+  AppBar,
+  Toolbar,
+  MainContent,
+  ToolbarLeftIcon,
+  Wrapper,
+  ToolbarLeftIconEmpty,
+} from './elements'
+import { WithWidth } from '@core-components/WithWidth'
 
 interface PageLayoutProps {
   title: React.ReactNode
@@ -52,12 +59,21 @@ class C extends React.PureComponent<
                     <ChevronLeftIcon />
                   </ToolbarLeftIcon>
                 ) : (
-                  <ToolbarLeftIcon onClick={this.handleToggleDrawer}>
-                    <MenuIcon />
-                  </ToolbarLeftIcon>
+                  <WithWidth>
+                    {({ width }) =>
+                      width === 'sm' || width === 'xs' ? (
+                        <ToolbarLeftIcon onClick={this.handleToggleDrawer}>
+                          <MenuIcon />
+                        </ToolbarLeftIcon>
+                      ) : (
+                        <ToolbarLeftIconEmpty />
+                      )
+                    }
+                  </WithWidth>
                 )}
               </>
             )}
+
             <Typography variant="h6" color="inherit">
               {title}
             </Typography>
@@ -69,7 +85,7 @@ class C extends React.PureComponent<
             handleToggleDrawer={this.handleToggleDrawer}
           />
         )}
-        <MainContent>{children}</MainContent>
+        <MainContent hasSidebar={!!currentUser}>{children}</MainContent>
       </Wrapper>
     )
   }
