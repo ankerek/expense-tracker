@@ -10,17 +10,17 @@ export class TransactionPage extends React.Component {
     return (
       <PageLayout title="Transaction" hasGoBack>
         <GetAccountList>
-          {({ data: { getAccountList } }) =>
-            getAccountList ? (
+          {({ data }) =>
+            data && data.getAccountList ? (
               <GetTransaction>
-                {({ data: { getTransaction } }) =>
-                  getTransaction ? (
+                {({ data: transactionData }) =>
+                  transactionData && transactionData.getTransaction ? (
                     <UpdateTransaction>
                       {({ submit }) => (
                         <TransactionForm
-                          initialValues={getTransaction}
+                          initialValues={transactionData.getTransaction}
                           submit={submit}
-                          accounts={getAccountList}
+                          accounts={data.getAccountList}
                           hasDelete
                         />
                       )}

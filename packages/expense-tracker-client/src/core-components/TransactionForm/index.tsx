@@ -96,10 +96,10 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
               InputProps={{
                 startAdornment: (
                   <GetCurrentUser fetchPolicy="cache-first">
-                    {({ data: { getCurrentUser } }) =>
-                      getCurrentUser ? (
+                    {({ data }) =>
+                      data.getCurrentUser ? (
                         <InputAdornment position="start">
-                          {getCurrentUser.currency.symbol}
+                          {data.getCurrentUser.currency.symbol}
                         </InputAdornment>
                       ) : null
                     }

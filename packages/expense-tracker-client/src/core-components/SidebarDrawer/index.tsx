@@ -90,8 +90,8 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
           <SidebarItemText primary="Transactions" />
         </ListItem>
         <GetCurrentUser fetchPolicy="cache-first">
-          {({ data: { getCurrentUser } }) =>
-            getCurrentUser ? (
+          {({ data }) =>
+            data && data.getCurrentUser ? (
               <ListItem
                 button
                 component={({ innerRef, ...props }) => (

@@ -7,11 +7,11 @@ import { GetCurrencyList } from '@controllers/currency/GetCurrencyList'
 export const SignUpPage = () => (
   <PageLayout title="Sign up">
     <GetCurrencyList>
-      {({ data: { getCurrencyList } }) =>
-        getCurrencyList ? (
+      {({ data }) =>
+        data && data.getCurrencyList ? (
           <CreateUser>
             {({ submit }) => (
-              <SignUpForm submit={submit} currencies={getCurrencyList} />
+              <SignUpForm submit={submit} currencies={data.getCurrencyList} />
             )}
           </CreateUser>
         ) : null
