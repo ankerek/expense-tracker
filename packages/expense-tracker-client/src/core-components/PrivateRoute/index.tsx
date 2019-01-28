@@ -5,21 +5,21 @@ import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
 export class PrivateRoute extends React.Component<RouteProps> {
   render() {
     const { component: Component, ...rest } = this.props
-    const user: any = true
     return (
       <Route
         {...rest}
         render={props => (
           <GetCurrentUser>
             {({ data, loading }) => {
+              if (data && data.getCurrentUser) {
+                return <Component {...this.props} />
+              }
+
               if (loading) {
                 return <span>loading...</span>
               }
-              return data.getCurrentUser ? (
-                <Component {...this.props} />
-              ) : (
-                <Redirect to="/signin" />
-              )
+
+              return <Redirect to="/signin" />
             }}
           </GetCurrentUser>
         )}

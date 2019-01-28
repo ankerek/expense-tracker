@@ -1,14 +1,18 @@
 import React from 'react'
+import { compose } from '@utils/compose'
+import { withRouter, RouteComponentProps } from 'react-router'
+import {
+  withCurrentUser,
+  WithCurrentUserInjectedProps,
+} from '@controllers/user/withCurrentUser'
 import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { SidebarDrawer } from '@core-components/SidebarDrawer'
 import { AppBar, MainContent, ToolbarLeftIcon, Wrapper } from './elements'
-import { withRouter, RouteComponentProps } from 'react-router'
 
-interface PageLayoutProps extends RouteComponentProps {
+interface PageLayoutProps {
   title: React.ReactNode
   hasGoBack?: boolean
 }
@@ -17,7 +21,10 @@ interface PageLayoutState {
   drawerOpen: boolean
 }
 
-class C extends React.PureComponent<PageLayoutProps, PageLayoutState> {
+class C extends React.PureComponent<
+  PageLayoutProps & RouteComponentProps & WithCurrentUserInjectedProps,
+  PageLayoutState
+> {
   state = {
     drawerOpen: false,
   }
@@ -31,35 +38,44 @@ class C extends React.PureComponent<PageLayoutProps, PageLayoutState> {
   }
 
   render() {
-    const { title, hasGoBack, children } = this.props
+    const { title, hasGoBack, currentUser, children } = this.props
     const { drawerOpen } = this.state
 
     return (
       <Wrapper>
         <AppBar drawerOpen={drawerOpen}>
           <Toolbar>
-            {hasGoBack ? (
-              <ToolbarLeftIcon onClick={this.goBack}>
-                <ChevronLeftIcon />
-              </ToolbarLeftIcon>
-            ) : (
-              <ToolbarLeftIcon onClick={this.handleToggleDrawer}>
-                <MenuIcon />
-              </ToolbarLeftIcon>
+            {currentUser && (
+              <>
+                {hasGoBack ? (
+                  <ToolbarLeftIcon onClick={this.goBack}>
+                    <ChevronLeftIcon />
+                  </ToolbarLeftIcon>
+                ) : (
+                  <ToolbarLeftIcon onClick={this.handleToggleDrawer}>
+                    <MenuIcon />
+                  </ToolbarLeftIcon>
+                )}
+              </>
             )}
             <Typography variant="h6" color="inherit">
               {title}
             </Typography>
           </Toolbar>
         </AppBar>
-        <SidebarDrawer
-          drawerOpen={drawerOpen}
-          handleToggleDrawer={this.handleToggleDrawer}
-        />
+        {currentUser && (
+          <SidebarDrawer
+            drawerOpen={drawerOpen}
+            handleToggleDrawer={this.handleToggleDrawer}
+          />
+        )}
         <MainContent>{children}</MainContent>
       </Wrapper>
     )
   }
 }
 
-export const PageLayout = withRouter(C)
+export const PageLayout = compose<PageLayoutProps>(
+  withRouter,
+  withCurrentUser
+)(C)
