@@ -1,4 +1,5 @@
 import express from 'express'
+import compression from 'compression'
 import dotenv from 'dotenv'
 import path from 'path'
 import { ApolloServer } from 'apollo-server-express'
@@ -22,6 +23,8 @@ const bootstrap = async () => {
 
   const app = express()
 
+  app.use(compression())
+
   const schema = await buildSchema()
 
   const server = new ApolloServer({
@@ -38,9 +41,10 @@ const bootstrap = async () => {
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(BUILD_PATH))
-    app.get('*', (req, res) =>
-      res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
-    )
+    app.get('*', (req, res) => {
+      res.set('Content-Encoding', 'gzip')
+      return res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
+    })
   }
 
   app.listen(port, () => {
