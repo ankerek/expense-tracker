@@ -1,4 +1,13 @@
 {
+  "scripts": {
+    "install:server": "npm install --prefix packages/expense-tracker-server",
+    "install:client": "npm install --prefix packages/expense-tracker-client",
+    "build:server": "cd packages/expense-tracker-server && npm run build",
+    "build:client": "cd packages/expense-tracker-client && npm run build",
+    "make:server": "npm run install:server && npm run build:server",
+    "make:client": "npm run install:client && npm run build:client",
+    "heroku-postbuild": "npm run make:server && npm run make:client"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lerna run --concurrency 1 --stream precommit"
