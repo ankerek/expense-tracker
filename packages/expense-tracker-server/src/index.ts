@@ -15,7 +15,7 @@ const BUILD_PATH = path.join(
 )
 
 dotenv.config()
-const port = process.env.API_PORT
+const port = process.env.PORT
 
 const bootstrap = async () => {
   await databaseInitializer()

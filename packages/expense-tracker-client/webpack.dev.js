@@ -9,7 +9,7 @@ module.exports = merge(common, {
     historyApiFallback: true,
     proxy: {
       '/graphql': {
-        target: `http://localhost:${process.env.API_PORT || 3000}/graphql`,
+        target: `http://localhost:${process.env.PORT || 3000}/graphql`,
         secure: false,
       },
     },
