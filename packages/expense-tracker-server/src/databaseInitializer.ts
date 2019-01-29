@@ -14,14 +14,19 @@ const getEntities = () => {
   return entities
 }
 
+const connectionUrl = process.env.DATABASE_URL
+  ? process.env.DATABASE_URL
+  : `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${
+      process.env.DB_HOST
+    }/${process.env.DB_NAME}`
+
 export const databaseInitializer = async () => {
   return createConnection({
     type: 'postgres',
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_HOST_PORT),
-    database: process.env.DB_NAME,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    url: connectionUrl,
+    ssl: {
+      sslfactory: 'org.postgresql.ssl.NonValidatingFactory',
+    },
     entities: getEntities(),
     synchronize: true,
   })
