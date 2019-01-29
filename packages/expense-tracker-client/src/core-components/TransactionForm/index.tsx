@@ -95,7 +95,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
               component={TextField}
               InputProps={{
                 startAdornment: (
-                  <GetCurrentUser fetchPolicy="cache-first">
+                  <GetCurrentUser>
                     {({ data }) =>
                       data.getCurrentUser ? (
                         <InputAdornment position="start">

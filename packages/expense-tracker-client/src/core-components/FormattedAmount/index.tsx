@@ -12,7 +12,7 @@ export class FormattedAmount extends React.PureComponent<FormattedAmountProps> {
     return (
       <>
         {children}
-        <GetCurrentUser fetchPolicy="cache-first">
+        <GetCurrentUser>
           {({ data }) =>
             data && data.getCurrentUser ? (
               <>&nbsp;{data.getCurrentUser.currency.symbol}</>

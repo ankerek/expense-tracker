@@ -9,7 +9,7 @@ export class PrivateRoute extends React.Component<RouteProps> {
       <Route
         {...rest}
         render={props => (
-          <GetCurrentUser>
+          <GetCurrentUser fetchPolicy="cache-and-network">
             {({ data, loading }) => {
               if (data && data.getCurrentUser) {
                 return <Component {...this.props} />

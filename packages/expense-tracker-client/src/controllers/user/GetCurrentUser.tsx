@@ -21,7 +21,7 @@ interface CurrentUserProps {
 
 export class GetCurrentUser extends React.Component<CurrentUserProps> {
   render() {
-    const { fetchPolicy = 'cache-and-network', children } = this.props
+    const { fetchPolicy = 'cache-first', children } = this.props
     return (
       <Query<GetCurrentUserQuery>
         query={getCurrentUserQuery}

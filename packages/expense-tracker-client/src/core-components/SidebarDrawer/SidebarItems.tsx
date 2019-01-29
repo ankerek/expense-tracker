@@ -41,7 +41,7 @@ export class SidebarItems extends React.PureComponent {
           </ListItemIcon>
           <SidebarItemText primary="Transactions" />
         </ListItem>
-        <GetCurrentUser fetchPolicy="cache-first">
+        <GetCurrentUser>
           {({ data }) =>
             data && data.getCurrentUser ? (
               <ListItem

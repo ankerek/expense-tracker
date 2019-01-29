@@ -4,7 +4,7 @@ import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 import { RetryLink } from 'apollo-link-retry'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { persistCache } from 'apollo-cache-persist'
+import { CachePersistor, persistCache } from 'apollo-cache-persist'
 import { CreateTransactionMutationName } from '@controllers/transaction/CreateTransaction'
 import { UpdateTransactionMutationName } from '@controllers/transaction/UpdateTransaction'
 import { DeleteTransactionMutationName } from '@controllers/transaction/DeleteTransaction'
@@ -51,12 +51,19 @@ const cache = new InMemoryCache({
   },
 })
 
-export const waitForCache = persistCache({
-  cache,
-  storage: window.localStorage,
-})
-
 export const client = new ApolloClient({
   link,
   cache,
 })
+
+// local storage cache persistor
+const cachePersistor = new CachePersistor({
+  cache,
+  storage: window.localStorage,
+})
+
+// promise restoring cache from local storage
+export const waitForCache = cachePersistor.restore()
+
+// purge local storage cache on store reset
+client.onResetStore(() => cachePersistor.purge())

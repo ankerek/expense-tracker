@@ -28,7 +28,7 @@ interface PageLayoutState {
   drawerOpen: boolean
 }
 
-class C extends React.PureComponent<
+class C extends React.Component<
   PageLayoutProps & RouteComponentProps & WithCurrentUserInjectedProps,
   PageLayoutState
 > {
