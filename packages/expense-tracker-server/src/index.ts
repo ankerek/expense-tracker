@@ -41,10 +41,9 @@ const bootstrap = async () => {
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(BUILD_PATH))
-    app.get('*', (req, res) => {
-      res.set('Content-Encoding', 'gzip')
-      return res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
-    })
+    app.get('*', (req, res) =>
+      res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
+    )
   }
 
   app.listen(port, () => {
