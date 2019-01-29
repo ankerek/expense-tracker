@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
-    "build": "tsc",
+    "start": "NODE_ENV=production node dist/index.js",
+    "dev": "NODE_ENV=development concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "build": "NODE_ENV=production tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint -c ../tslint.json -p tsconfig.json",
     "tsc": "tsc",
