@@ -9,7 +9,7 @@ export class AccountsPage extends React.Component {
       <PageLayout title="Accounts">
         <GetAccountList>
           {({ data }) =>
-            data.getAccountList ? (
+            data && data.getAccountList ? (
               <AccountList accounts={data.getAccountList} />
             ) : null
           }

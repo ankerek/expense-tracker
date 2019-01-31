@@ -8,6 +8,7 @@ import DnsIcon from '@material-ui/icons/Dns'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { SidebarItemText } from './elements'
+import { SignOut } from '@controllers/user/SignOut'
 
 export class SidebarItems extends React.PureComponent {
   render() {
@@ -44,17 +45,22 @@ export class SidebarItems extends React.PureComponent {
         <GetCurrentUser>
           {({ data }) =>
             data && data.getCurrentUser ? (
-              <ListItem
-                button
-                component={({ innerRef, ...props }) => (
-                  <NavLink {...props} to="/signout" />
+              <SignOut>
+                {({ signOut }) => (
+                  <ListItem
+                    button
+                    // component={({ innerRef, ...props }) => (
+                    //   <NavLink {...props} to="/signout" />
+                    // )}
+                    onClick={signOut}
+                  >
+                    <ListItemIcon>
+                      <ExitToAppIcon />
+                    </ListItemIcon>
+                    <SidebarItemText primary="Sign out" />
+                  </ListItem>
                 )}
-              >
-                <ListItemIcon>
-                  <ExitToAppIcon />
-                </ListItemIcon>
-                <SidebarItemText primary="Sign out" />
-              </ListItem>
+              </SignOut>
             ) : null
           }
         </GetCurrentUser>

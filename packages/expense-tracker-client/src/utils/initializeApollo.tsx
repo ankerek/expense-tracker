@@ -57,7 +57,7 @@ export const client = new ApolloClient({
 })
 
 // local storage cache persistor
-const cachePersistor = new CachePersistor({
+export const cachePersistor = new CachePersistor({
   cache,
   storage: window.localStorage,
 })

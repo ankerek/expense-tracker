@@ -8,8 +8,8 @@ export class PrivateRoute extends React.Component<RouteProps> {
     return (
       <Route
         {...rest}
-        render={props => (
-          <GetCurrentUser fetchPolicy="cache-and-network">
+        render={() => (
+          <GetCurrentUser fetchPolicy="network-only">
             {({ data, loading }) => {
               if (data && data.getCurrentUser) {
                 return <Component {...this.props} />
