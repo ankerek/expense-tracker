@@ -10,8 +10,12 @@ export const SignUpPage = () => (
       {({ data }) =>
         data && data.getCurrencyList ? (
           <CreateUser>
-            {({ submit }) => (
-              <SignUpForm submit={submit} currencies={data.getCurrencyList} />
+            {(submit, { loading }) => (
+              <SignUpForm
+                currencies={data.getCurrencyList}
+                submit={submit}
+                loading={loading}
+              />
             )}
           </CreateUser>
         ) : null

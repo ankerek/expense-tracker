@@ -26,19 +26,19 @@ const signInMutation = gql`
   ${userFragment}
 `
 
-export type SignInMutationFn = MutationFn<
-  SignInMutation,
-  SignInMutationVariables
->
-
 interface SignInProps {
   children: (
+    submit: (
+      values: SignInMutationVariables
+    ) => Promise<NormalizedErrorsMap | null>,
     data: {
-      submit: (
-        values: SignInMutationVariables
-      ) => Promise<NormalizedErrorsMap | null>
+      loading: boolean
     }
   ) => JSX.Element | null
+}
+
+const initialState = {
+  loading: false,
 }
 
 class C extends React.PureComponent<
@@ -49,8 +49,12 @@ class C extends React.PureComponent<
       SignInMutationVariables
     >
 > {
+  readonly state: Readonly<typeof initialState> = initialState
+
   handleSignIn = async (values: SignInMutationVariables) => {
     try {
+      this.setState({ loading: true })
+
       const res = await this.props.mutate({
         variables: values,
       })
@@ -69,10 +73,15 @@ class C extends React.PureComponent<
           data: { getCurrentUser: user },
         })
 
+        this.setState({ loading: false })
+
         this.props.history.push('/')
       }
     } catch (res) {
       const errors = normalizeErrors(res.graphQLErrors)
+
+      this.setState({ loading: false })
+
       return { errors }
     }
 
@@ -80,7 +89,9 @@ class C extends React.PureComponent<
   }
 
   render() {
-    return this.props.children({ submit: this.handleSignIn })
+    return this.props.children(this.handleSignIn, {
+      loading: this.state.loading,
+    })
   }
 }
 

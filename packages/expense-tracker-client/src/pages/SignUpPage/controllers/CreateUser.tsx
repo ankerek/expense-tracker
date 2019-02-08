@@ -29,12 +29,17 @@ const createUserMutation = gql`
 
 interface CreateUserProps {
   children: (
+    submit: (
+      values: CreateUserMutationVariables
+    ) => Promise<NormalizedErrorsMap | null>,
     data: {
-      submit: (
-        values: CreateUserMutationVariables
-      ) => Promise<NormalizedErrorsMap | null>
+      loading: boolean
     }
   ) => JSX.Element | null
+}
+
+const initialState = {
+  loading: false,
 }
 
 class C extends React.PureComponent<
@@ -45,8 +50,12 @@ class C extends React.PureComponent<
       CreateUserMutationVariables
     >
 > {
+  readonly state: Readonly<typeof initialState> = initialState
+
   handleCreateUser = async (values: CreateUserMutationVariables) => {
     try {
+      this.setState({ loading: true })
+
       const res = await this.props.mutate({
         variables: cleanPropertiesBeforeMutation(values),
       })
@@ -65,16 +74,23 @@ class C extends React.PureComponent<
           data: { getCurrentUser: user },
         })
 
+        this.setState({ loading: false })
+
         this.props.history.push('/')
       }
     } catch (res) {
       const errors = normalizeErrors(res.graphQLErrors)
+
+      this.setState({ loading: false })
+
       return { errors }
     }
   }
 
   render() {
-    return this.props.children({ submit: this.handleCreateUser })
+    return this.props.children(this.handleCreateUser, {
+      loading: this.state.loading,
+    })
   }
 }
 

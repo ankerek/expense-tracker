@@ -11,10 +11,11 @@ import { ActionsWrapper } from './elements'
 import MenuItem from '@material-ui/core/MenuItem'
 
 export interface SignUpFormProps {
+  currencies: Currency[]
   submit: (
     values: CreateUserMutationVariables
   ) => Promise<NormalizedErrorsMap | null>
-  currencies: Currency[]
+  loading: boolean
 }
 
 export interface SignUpFormValuesProps {
@@ -61,7 +62,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
   }
 
   render() {
-    const { currencies } = this.props
+    const { currencies, loading } = this.props
     return (
       <Formik
         initialValues={getInitialValues(currencies)}
@@ -124,6 +125,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
                     variant="contained"
                     color="primary"
                     disabled={!isValid}
+                    progress={loading}
                   >
                     Sign up
                   </Button>

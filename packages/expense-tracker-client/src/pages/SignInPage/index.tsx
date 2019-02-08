@@ -7,7 +7,11 @@ export class SignInPage extends React.Component {
   render() {
     return (
       <PageLayout title="Sign in">
-        <SignIn>{({ submit }) => <SignInForm submit={submit} />}</SignIn>
+        <SignIn>
+          {(submit, { loading }) => (
+            <SignInForm submit={submit} loading={loading} />
+          )}
+        </SignIn>
       </PageLayout>
     )
   }

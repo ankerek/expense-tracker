@@ -13,6 +13,7 @@ export interface SignInFormProps {
   submit: (
     values: SignInMutationVariables
   ) => Promise<NormalizedErrorsMap | null>
+  loading: boolean
 }
 
 export interface SignInFormValuesProps {
@@ -57,6 +58,8 @@ export class SignInForm extends React.PureComponent<SignInFormProps> {
   }
 
   render() {
+    const { loading } = this.props
+
     return (
       <Formik
         initialValues={initialValues}
@@ -93,6 +96,7 @@ export class SignInForm extends React.PureComponent<SignInFormProps> {
                     variant="contained"
                     color="primary"
                     disabled={!formikBag.isValid}
+                    progress={loading}
                   >
                     Sign in
                   </Button>
