@@ -3,7 +3,7 @@ import format from 'date-fns/format'
 import { FieldProps } from 'formik'
 import DatePicker, { DatePickerProps } from 'material-ui-pickers/DatePicker'
 
-export const DATE_FORMAT = 'YYYY-MM-DD'
+export const DATE_FORMAT = 'YYYY-MM-dd'
 
 export type DatePickerFieldProps = FieldProps & DatePickerProps
 
