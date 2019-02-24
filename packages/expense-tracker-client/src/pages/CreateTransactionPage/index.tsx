@@ -12,10 +12,11 @@ export class CreateTransactionPage extends React.Component {
           {({ data }) =>
             data && data.getAccountList ? (
               <CreateTransaction>
-                {({ submit }) => (
+                {(submit, { loading }) => (
                   <TransactionForm
                     submit={submit}
                     accounts={data.getAccountList}
+                    loading={loading}
                   />
                 )}
               </CreateTransaction>

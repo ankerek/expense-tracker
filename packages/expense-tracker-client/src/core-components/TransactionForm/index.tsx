@@ -23,6 +23,7 @@ export interface TransactionFormProps {
   initialValues?: Partial<TransactionFormValues>
   submit: (values: TransactionFormValues) => void
   hasDelete?: boolean
+  loading?: boolean
 }
 
 const getEmptyInitialValues = (
@@ -59,7 +60,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
   }
 
   render() {
-    const { initialValues, accounts, hasDelete } = this.props
+    const { initialValues, accounts, hasDelete, loading } = this.props
     return (
       <Formik
         initialValues={initialValues || getEmptyInitialValues(accounts)}
@@ -140,17 +141,19 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
                 variant="contained"
                 color="primary"
                 disabled={!isValid}
+                progress={loading}
               >
                 Save transaction
               </Button>
               {hasDelete && (
                 <DeleteTransaction>
-                  {({ deleteTransaction }) => (
+                  {(deleteTransaction, { loading: deleteLoading }) => (
                     <Button
                       fullWidth
                       variant="contained"
                       color="secondary"
                       onClick={deleteTransaction}
+                      progress={deleteLoading}
                     >
                       Delete transaction
                     </Button>

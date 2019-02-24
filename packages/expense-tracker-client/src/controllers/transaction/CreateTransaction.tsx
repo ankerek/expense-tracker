@@ -5,6 +5,7 @@ import {
   ChildMutateProps,
   withApollo,
   WithApolloClient,
+  MutationOptions,
 } from 'react-apollo'
 import {
   Account,
@@ -34,11 +35,18 @@ const createTransactionMutation = gql`
 
 interface CreateTransactionProps {
   children: (
+    submit: (values: SaveTransactionInput) => void,
     data: {
-      submit: (values: SaveTransactionInput) => void
+      loading: boolean
     }
   ) => JSX.Element | null
 }
+
+const initialState = {
+  loading: false,
+}
+
+type State = Readonly<typeof initialState>
 
 class C extends React.Component<
   RouteComponentProps &
@@ -48,23 +56,30 @@ class C extends React.Component<
       CreateTransactionMutationVariables
     >
 > {
+  readonly state: State = initialState
+
   render() {
-    return this.props.children({ submit: this.submit })
+    return this.props.children(this.submit, { loading: this.state.loading })
   }
 
-  private submit = (values: SaveTransactionInput) => {
+  private submit = async (values: SaveTransactionInput) => {
     const {
       mutate,
       history,
       location: { state },
     } = this.props
 
+    this.setState({ loading: true })
+
     const optimisticResponse: any = {
       __typename: 'Transaction',
       ...values,
     }
 
-    mutate({
+    const mutationOptions: MutationOptions<
+      CreateTransactionMutation,
+      CreateTransactionMutationVariables
+    > = {
       variables: cleanPropertiesBeforeMutation({ input: values }),
       optimisticResponse: {
         createTransaction: optimisticResponse,
@@ -93,7 +108,15 @@ class C extends React.Component<
           data: account,
         })
       },
-    })
+    }
+
+    if (window.navigator.onLine) {
+      await mutate(mutationOptions)
+    } else {
+      mutate(mutationOptions)
+    }
+
+    this.setState({ loading: false })
 
     if (state && state.next) {
       history.push(state.next)

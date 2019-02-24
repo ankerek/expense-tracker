@@ -5,6 +5,7 @@ import { setContext } from 'apollo-link-context'
 import { RetryLink } from 'apollo-link-retry'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { CachePersistor, persistCache } from 'apollo-cache-persist'
+import localForage from 'localforage'
 import { CreateTransactionMutationName } from '@controllers/transaction/CreateTransaction'
 import { UpdateTransactionMutationName } from '@controllers/transaction/UpdateTransaction'
 import { DeleteTransactionMutationName } from '@controllers/transaction/DeleteTransaction'
@@ -59,7 +60,7 @@ export const client = new ApolloClient({
 // local storage cache persistor
 export const cachePersistor = new CachePersistor({
   cache,
-  storage: window.localStorage,
+  storage: localForage as any,
 })
 
 // promise restoring cache from local storage

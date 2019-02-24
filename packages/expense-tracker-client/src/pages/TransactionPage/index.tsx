@@ -16,12 +16,13 @@ export class TransactionPage extends React.Component {
                 {({ data: transactionData }) =>
                   transactionData && transactionData.getTransaction ? (
                     <UpdateTransaction>
-                      {({ submit }) => (
+                      {(submit, { loading }) => (
                         <TransactionForm
                           initialValues={transactionData.getTransaction}
                           submit={submit}
                           accounts={data.getAccountList}
                           hasDelete
+                          loading={loading}
                         />
                       )}
                     </UpdateTransaction>

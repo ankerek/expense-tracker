@@ -5,12 +5,10 @@ import {
   ChildMutateProps,
   withApollo,
   WithApolloClient,
+  MutationOptions,
 } from 'react-apollo'
 import {
   Account,
-  CreateTransactionMutation,
-  CreateTransactionMutationVariables,
-  SaveTransactionInput,
   GetTransactionListQuery,
   DeleteTransactionMutation,
   DeleteTransactionMutationVariables,
@@ -20,7 +18,6 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
 import { sum } from '@utils/math'
 import { transactionFragment } from './fragments'
-import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 import { accountFragment } from '@controllers/account/fragments'
 
@@ -34,11 +31,18 @@ const deleteTransactionMutation = gql`
 
 interface DeleteTransactionProps {
   children: (
+    deleteTransaction: () => void,
     data: {
-      deleteTransaction: () => void
+      loading: boolean
     }
   ) => JSX.Element | null
 }
+
+const initialState = {
+  loading: false,
+}
+
+type State = Readonly<typeof initialState>
 
 class C extends React.Component<
   RouteComponentProps<{ id: string }> &
@@ -48,13 +52,16 @@ class C extends React.Component<
       DeleteTransactionMutationVariables
     >
 > {
+  readonly state: State = initialState
+
   render() {
-    return this.props.children({ deleteTransaction: this.deleteTransaction })
+    return this.props.children(this.deleteTransaction, {
+      loading: this.state.loading,
+    })
   }
 
-  private deleteTransaction = () => {
+  private deleteTransaction = async () => {
     const {
-      // client,
       mutate,
       history,
       match: {
@@ -63,7 +70,12 @@ class C extends React.Component<
       location: { state },
     } = this.props
 
-    mutate({
+    this.setState({ loading: true })
+
+    const mutationOptions: MutationOptions<
+      DeleteTransactionMutation,
+      DeleteTransactionMutationVariables
+    > = {
       variables: { id },
       optimisticResponse: {
         deleteTransaction: true,
@@ -78,7 +90,7 @@ class C extends React.Component<
         )
         client.writeQuery({ query: getTransactionListQuery, data })
 
-        // // update amount of the corresponding account
+        // update amount of the corresponding account
         const transaction: Transaction = client.readFragment({
           id: `Transaction:${id}`,
           fragment: transactionFragment,
@@ -102,7 +114,15 @@ class C extends React.Component<
 
         // TODO delete transaction fragment from cache
       },
-    })
+    }
+
+    if (window.navigator.onLine) {
+      await mutate(mutationOptions)
+    } else {
+      mutate(mutationOptions)
+    }
+
+    this.setState({ loading: false })
 
     if (state && state.next) {
       history.push(state.next)

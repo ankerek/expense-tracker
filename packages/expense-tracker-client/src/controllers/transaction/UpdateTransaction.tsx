@@ -5,6 +5,7 @@ import {
   ChildMutateProps,
   withApollo,
   WithApolloClient,
+  MutationOptions,
 } from 'react-apollo'
 import {
   UpdateTransactionMutation,
@@ -33,11 +34,18 @@ const updateTransactionMutation = gql`
 
 interface UpdateTransactionProps {
   children: (
+    submit: (values: SaveTransactionInput) => void,
     data: {
-      submit: (values: SaveTransactionInput) => void
+      loading: boolean
     }
   ) => JSX.Element | null
 }
+
+const initialState = {
+  loading: false,
+}
+
+type State = Readonly<typeof initialState>
 
 class C extends React.Component<
   RouteComponentProps<{ id: string }> &
@@ -47,11 +55,13 @@ class C extends React.Component<
       UpdateTransactionMutationVariables
     >
 > {
+  readonly state: State = initialState
+
   render() {
-    return this.props.children({ submit: this.submit })
+    return this.props.children(this.submit, { loading: this.state.loading })
   }
 
-  private submit = (values: SaveTransactionInput) => {
+  private submit = async (values: SaveTransactionInput) => {
     const {
       client,
       mutate,
@@ -61,6 +71,8 @@ class C extends React.Component<
       },
       location: { state },
     } = this.props
+
+    this.setState({ loading: true })
 
     // first stash away a current transaction before the update
     const prevTransaction: Transaction = client.readFragment({
@@ -74,7 +86,10 @@ class C extends React.Component<
       ...values,
     }
 
-    mutate({
+    const mutationOptions: MutationOptions<
+      UpdateTransactionMutation,
+      UpdateTransactionMutationVariables
+    > = {
       variables: {
         id,
         ...cleanPropertiesBeforeMutation({ input: values }),
@@ -102,10 +117,6 @@ class C extends React.Component<
             fragmentName: 'Account',
           })
 
-          console.log(
-            prevAccount.amount,
-            sum(prevAccount.amount, -prevTransaction.amount)
-          )
           prevAccount.amount = sum(prevAccount.amount, -prevTransaction.amount)
 
           client.writeFragment({
@@ -132,7 +143,15 @@ class C extends React.Component<
           data: account,
         })
       },
-    })
+    }
+
+    if (window.navigator.onLine) {
+      await mutate(mutationOptions)
+    } else {
+      mutate(mutationOptions)
+    }
+
+    this.setState({ loading: false })
 
     if (state && state.next) {
       history.push(state.next)
