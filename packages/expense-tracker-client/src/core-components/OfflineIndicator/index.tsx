@@ -1,4 +1,5 @@
 import React from 'react'
+import { offlineQueueLink } from '@apollo/offlineQueueLink'
 import { Wrapper } from './elements'
 
 const initialState = {
@@ -32,11 +33,13 @@ export class OfflineIndicator extends React.Component<{}, State> {
     this.setState({
       online: true,
     })
+    offlineQueueLink.open()
   }
 
   private handleOffline = () => {
     this.setState({
       online: false,
     })
+    offlineQueueLink.close()
   }
 }

@@ -12,6 +12,7 @@
       "@pages/*": ["pages/*"],
       "@core-components/*": ["core-components/*"],
       "@controllers/*": ["controllers/*"],
+      "@apollo/*": ["apollo/*"],
       "@utils/*": ["utils/*"]
     }
   },

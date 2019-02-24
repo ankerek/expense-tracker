@@ -23,6 +23,7 @@ module.exports = {
       '@pages': srcPath('pages'),
       '@core-components': srcPath('core-components'),
       '@controllers': srcPath('controllers'),
+      '@apollo': srcPath('apollo'),
       '@utils': srcPath('utils'),
     },
   },

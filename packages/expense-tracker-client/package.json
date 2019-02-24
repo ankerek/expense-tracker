@@ -64,6 +64,7 @@
     "apollo-link-context": "^1.0.12",
     "apollo-link-error": "^1.1.5",
     "apollo-link-http": "^1.5.9",
+    "apollo-link-queue": "^2.2.0",
     "apollo-link-retry": "^2.2.8",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.21",

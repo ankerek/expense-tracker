@@ -1,6 +1,6 @@
 import React from 'react'
 import { withApollo, WithApolloClient } from 'react-apollo'
-import { cachePersistor } from '@utils/initializeApollo'
+import { cachePersistor } from '@apollo/initializeApollo'
 
 interface SignOutProps {
   children: (data: { signOut: () => void }) => React.ReactNode
