@@ -21,6 +21,7 @@ import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 import { accountFragment } from '@controllers/account/fragments'
+import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 
 export const CreateTransactionMutationName = 'CreateTransactionMutation'
 
@@ -64,6 +65,7 @@ class C extends React.Component<
 
   private submit = async (values: SaveTransactionInput) => {
     const {
+      client,
       mutate,
       history,
       location: { state },
@@ -84,7 +86,7 @@ class C extends React.Component<
       optimisticResponse: {
         createTransaction: optimisticResponse,
       },
-      update: (client, { data: { createTransaction } }) => {
+      update: (_, { data: { createTransaction } }) => {
         // push new transaction to Transaction list
         const data: GetTransactionListQuery = client.readQuery({
           query: getTransactionListQuery,
@@ -110,7 +112,11 @@ class C extends React.Component<
       },
     }
 
-    if (window.navigator.onLine) {
+    const { isOnline } = client.readQuery({
+      query: getIsOnlineQuery,
+    })
+
+    if (isOnline) {
       await mutate(mutationOptions)
     } else {
       mutate(mutationOptions)

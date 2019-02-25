@@ -18,7 +18,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.ts', '.tsx', '.js', '.mjs', '.json'],
     alias: {
       '@pages': srcPath('pages'),
       '@core-components': srcPath('core-components'),
@@ -43,6 +43,13 @@ module.exports = {
         loader: 'source-map-loader',
         exclude: [/node_modules/],
       },
+
+      // fixes https://github.com/graphql/graphql-js/issues/1272
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      }
 
       // {
       //   test: /\.css$/,

@@ -20,6 +20,7 @@ import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
 import { accountFragment } from '@controllers/account/fragments'
 import { sum } from '@utils/math'
+import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 
 export const UpdateTransactionMutationName = 'UpdateTransactionMutation'
 
@@ -98,6 +99,7 @@ class C extends React.Component<
         updateTransaction: optimisticResponse,
       },
       update: (_, { data: { updateTransaction } }) => {
+        console.log(client)
         // account where the updated transaction belongs to
         const account: Account = client.readFragment({
           id: `Account:${updateTransaction.account.id}`,
@@ -145,7 +147,11 @@ class C extends React.Component<
       },
     }
 
-    if (window.navigator.onLine) {
+    const { isOnline } = client.readQuery({
+      query: getIsOnlineQuery,
+    })
+
+    if (isOnline) {
       await mutate(mutationOptions)
     } else {
       mutate(mutationOptions)

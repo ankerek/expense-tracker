@@ -20,6 +20,7 @@ import { sum } from '@utils/math'
 import { transactionFragment } from './fragments'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 import { accountFragment } from '@controllers/account/fragments'
+import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 
 export const DeleteTransactionMutationName = 'DeleteTransactionMutation'
 
@@ -62,6 +63,7 @@ class C extends React.Component<
 
   private deleteTransaction = async () => {
     const {
+      client,
       mutate,
       history,
       match: {
@@ -80,7 +82,7 @@ class C extends React.Component<
       optimisticResponse: {
         deleteTransaction: true,
       },
-      update: client => {
+      update: () => {
         // remove the transaction from the Transaction list
         const data: GetTransactionListQuery = client.readQuery({
           query: getTransactionListQuery,
@@ -116,7 +118,11 @@ class C extends React.Component<
       },
     }
 
-    if (window.navigator.onLine) {
+    const { isOnline } = client.readQuery({
+      query: getIsOnlineQuery,
+    })
+
+    if (isOnline) {
       await mutate(mutationOptions)
     } else {
       mutate(mutationOptions)

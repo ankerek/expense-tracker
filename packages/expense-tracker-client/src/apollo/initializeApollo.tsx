@@ -7,19 +7,13 @@ import { CachePersistor } from 'apollo-cache-persist'
 import { authLink } from './authLink'
 import { retryLink } from './retryLink'
 import { queueOfflineMutationsLink } from './offlineQueueLink'
+import { stateLink } from '@apollo/stateLink'
 
 const API_BASE_URL = '/graphql'
 
 const httpLink = new HttpLink({
   uri: API_BASE_URL,
 })
-
-const link = apolloLinkFrom([
-  authLink,
-  retryLink,
-  queueOfflineMutationsLink,
-  httpLink,
-])
 
 const cache = new InMemoryCache({
   cacheRedirects: {
@@ -31,6 +25,14 @@ const cache = new InMemoryCache({
     },
   },
 })
+
+const link = apolloLinkFrom([
+  authLink,
+  stateLink(cache),
+  retryLink,
+  queueOfflineMutationsLink,
+  httpLink,
+])
 
 export const client = new ApolloClient({
   link,

@@ -1,6 +1,36 @@
 import React from 'react'
+import { withApollo, WithApolloClient } from 'react-apollo'
 import { offlineQueueLink } from '@apollo/offlineQueueLink'
 import { Wrapper } from './elements'
+import { GetIsOnline, getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+
+const URL = 'https://ipv4.icanhazip.com/'
+const TIMEOUT = 5000
+const INTERVAL = 5000
+
+const ping = () => {
+  return new Promise(resolve => {
+    const isOnline = () => resolve(true)
+    const isOffline = () => resolve(false)
+
+    const xhr = new XMLHttpRequest()
+
+    xhr.onerror = isOffline
+    xhr.ontimeout = isOffline
+    xhr.onload = () => {
+      const response = xhr.responseText.trim()
+      if (!response) {
+        isOffline()
+      } else {
+        isOnline()
+      }
+    }
+
+    xhr.open('GET', URL)
+    xhr.timeout = TIMEOUT
+    xhr.send()
+  })
+}
 
 const initialState = {
   online: true,
@@ -8,38 +38,52 @@ const initialState = {
 
 type State = Readonly<typeof initialState>
 
-export class OfflineIndicator extends React.Component<{}, State> {
+class C extends React.Component<WithApolloClient<any>, State> {
   readonly state = initialState
+  pollingId?: any
 
   componentDidMount() {
-    window.addEventListener('online', this.handleOnline)
-    window.addEventListener('offline', this.handleOffline)
+    this.pollingId = setInterval(() => {
+      ping().then(online => {
+        online ? this.handleOnline() : this.handleOffline()
+      })
+    }, INTERVAL)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('online', this.handleOnline)
-    window.removeEventListener('offline', this.handleOffline)
+    clearInterval(this.pollingId)
   }
 
   render() {
     return (
       <Wrapper>
-        {this.state.online ? null : 'Your network is unavailable.'}
+        <GetIsOnline>
+          {({ data: { isOnline } }) =>
+            isOnline ? null : 'Your network is unavailable.'
+          }
+        </GetIsOnline>
       </Wrapper>
     )
   }
 
-  private handleOnline = () => {
-    this.setState({
-      online: true,
+  private handleUpdateOnline = (isOnline: boolean) => {
+    this.props.client.writeQuery({
+      query: getIsOnlineQuery,
+      data: {
+        isOnline,
+      },
     })
+  }
+
+  private handleOnline = () => {
     offlineQueueLink.open()
+    this.handleUpdateOnline(true)
   }
 
   private handleOffline = () => {
-    this.setState({
-      online: false,
-    })
     offlineQueueLink.close()
+    this.handleUpdateOnline(false)
   }
 }
+
+export const OfflineIndicator = withApollo(C)
