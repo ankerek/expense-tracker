@@ -40,7 +40,18 @@ const bootstrap = async () => {
   server.applyMiddleware({ app, path: '/graphql' })
 
   if (process.env.NODE_ENV === 'production') {
+    app.get('/service-worker.js', (req, res) => {
+      res.sendFile(path.join(BUILD_PATH, 'service-worker.js'))
+      res.header(
+        'Cache-Control',
+        'private, max-age=0, no-cache, no-store, must-revalidate'
+      )
+      res.header('Expires', '-1')
+      res.header('Pragma', 'no-cache')
+    })
+
     app.use(express.static(BUILD_PATH))
+
     app.get('*', (req, res) =>
       res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
     )
