@@ -1,12 +1,23 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import { Mutation, MutationFn, MutationResult } from 'react-apollo'
+import {
+  ChildMutateProps,
+  graphql,
+  MutationOptions,
+  withApollo,
+  WithApolloClient,
+} from 'react-apollo'
 import {
   DeleteAccountMutation,
   DeleteAccountMutationVariables,
+  GetAccountListQuery,
+  GetTransactionListQuery,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
+import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
+import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { getAccountListQuery } from '@controllers/account/AccountList'
 
 export const DeleteAccountMutationName = 'DeleteAccountMutation'
 
@@ -18,40 +29,107 @@ const deleteAccountMutation = gql`
 
 interface DeleteAccountProps {
   children: (
-    mutateFn: MutationFn<DeleteAccountMutation, DeleteAccountMutationVariables>,
-    result: MutationResult<DeleteAccountMutation>
+    deleteAccount: () => void,
+    data: {
+      loading: boolean
+    }
   ) => JSX.Element | null
 }
 
+const initialState = {
+  loading: false,
+}
+
 class C extends React.Component<
-  DeleteAccountProps & RouteComponentProps<{ id: string }>
+  RouteComponentProps<{ id: string }> &
+    ChildMutateProps<
+      WithApolloClient<DeleteAccountProps>,
+      DeleteAccountMutation,
+      DeleteAccountMutationVariables
+    >
 > {
+  readonly state: Readonly<typeof initialState> = initialState
+
   render() {
+    return this.props.children(this.deleteAccount, {
+      loading: this.state.loading,
+    })
+  }
+
+  private deleteAccount = async () => {
     const {
-      children,
+      client,
+      mutate,
       history,
-      location: { state },
       match: {
         params: { id },
       },
+      location: { state },
     } = this.props
 
-    return (
-      <Mutation<DeleteAccountMutation, DeleteAccountMutationVariables>
-        mutation={deleteAccountMutation}
-        variables={{ id }}
-        onCompleted={() => {
-          if (state && state.next) {
-            history.push(state.next)
-          } else {
-            history.push('/')
-          }
-        }}
-      >
-        {(...args) => children(...args)}
-      </Mutation>
-    )
+    this.setState({ loading: true })
+
+    const mutationOptions: MutationOptions<
+      DeleteAccountMutation,
+      DeleteAccountMutationVariables
+    > = {
+      variables: { id },
+      optimisticResponse: {
+        deleteAccount: true,
+      },
+      update: () => {
+        // remove the account from the account list
+        const accountsData: GetAccountListQuery = client.readQuery({
+          query: getAccountListQuery,
+        })
+        accountsData.getAccountList = accountsData.getAccountList.filter(
+          a => a.id !== id
+        )
+        client.writeQuery({
+          query: getAccountListQuery,
+          data: accountsData,
+        })
+
+        // remove transactions associated to the account from the transaction list
+        const transactionsData: GetTransactionListQuery = client.readQuery({
+          query: getTransactionListQuery,
+        })
+        transactionsData.getTransactionList = transactionsData.getTransactionList.filter(
+          t => t.account.id !== id
+        )
+        client.writeQuery({
+          query: getTransactionListQuery,
+          data: transactionsData,
+        })
+      },
+    }
+
+    const { isOnline } = client.readQuery({
+      query: getIsOnlineQuery,
+    })
+
+    if (isOnline) {
+      await mutate(mutationOptions)
+    } else {
+      mutate(mutationOptions)
+    }
+
+    this.setState({ loading: false })
+
+    if (state && state.next) {
+      history.push(state.next)
+    } else {
+      history.push('/')
+    }
   }
 }
 
-export const DeleteAccount = compose(withRouter)(C)
+export const DeleteAccount = compose(
+  withRouter,
+  withApollo,
+  graphql<
+    DeleteAccountProps,
+    DeleteAccountMutation,
+    DeleteAccountMutationVariables
+  >(deleteAccountMutation)
+)(C)

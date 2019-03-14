@@ -32,7 +32,7 @@ const createAccountMutation = gql`
   ${accountFragment}
 `
 
-export interface CreateCccountProps {
+export interface CreateAccountProps {
   children: (
     submit: (values: SaveAccountInput) => Promise<NormalizedErrorsMap | null>,
     data: {
@@ -50,7 +50,7 @@ type State = Readonly<typeof initialState>
 class C extends React.Component<
   RouteComponentProps &
     ChildMutateProps<
-      WithApolloClient<CreateCccountProps>,
+      WithApolloClient<CreateAccountProps>,
       CreateAccountMutation,
       CreateAccountMutationVariables
     >
@@ -70,7 +70,7 @@ class C extends React.Component<
       history,
       location: { state },
     } = this.props
-    console.log(this.props)
+
     this.setState({ loading: true })
 
     const optimisticResponse: any = {

@@ -11,6 +11,8 @@ import {
 } from 'apollo-link'
 import { Observer } from 'zen-observable-ts'
 import { CreateAccountMutationName } from '@controllers/account/CreateAccount'
+import { UpdateAccountMutationName } from '@controllers/account/UpdateAccount'
+import { DeleteAccountMutationName } from '@controllers/account/DeleteAccount'
 import { CreateTransactionMutationName } from '@controllers/transaction/CreateTransaction'
 import { UpdateTransactionMutationName } from '@controllers/transaction/UpdateTransaction'
 import { DeleteTransactionMutationName } from '@controllers/transaction/DeleteTransaction'
@@ -24,6 +26,8 @@ const isMutationOperation = (operation: Operation) => {
 
 const opLevels: { [opName: string]: number } = {
   [CreateAccountMutationName]: 0,
+  [UpdateAccountMutationName]: 0,
+  [DeleteAccountMutationName]: 0,
   [CreateTransactionMutationName]: 1,
   [UpdateTransactionMutationName]: 1,
   [DeleteTransactionMutationName]: 1,
