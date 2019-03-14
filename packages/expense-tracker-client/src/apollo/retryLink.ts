@@ -12,7 +12,6 @@ const offlineOperations = [
 
 export const retryLink = new RetryLink({
   attempts: (count, operation, error) => {
-    console.log('retry')
     return (
       error.toString() === 'TypeError: Failed to fetch' &&
       offlineOperations.includes(operation.operationName)

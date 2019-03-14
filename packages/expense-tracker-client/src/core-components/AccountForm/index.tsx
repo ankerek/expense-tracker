@@ -1,5 +1,7 @@
 import React from 'react'
+import uuid from 'uuid/v4'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
+import { SaveAccountInput } from '@schema-types'
 import { DeleteAccount } from '@controllers/account/DeleteAccount'
 import { Field, Formik, FormikProps, FormikErrors } from 'formik'
 import { Button } from '@core-components/Button'
@@ -9,20 +11,18 @@ import { ActionsWrapper } from './elements'
 
 export interface AccountFormProps {
   initialValues?: AccountFormValues
-  submit: (
-    values: { input: AccountFormValues }
-  ) => Promise<NormalizedErrorsMap | null>
+  submit: (values: AccountFormValues) => Promise<NormalizedErrorsMap | null>
   hasDelete?: boolean
   loading?: boolean
 }
 
-export interface AccountFormValues {
-  name: string
-}
+export type AccountFormValues = SaveAccountInput
 
-const initialEmptyValues = {
+const getInitialEmptyValues = () => ({
+  id: uuid(),
   name: '',
-}
+  amount: 0,
+})
 
 const validate = (values: AccountFormValues) => {
   const errors: any = {}
@@ -41,7 +41,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
     values: AccountFormValues,
     formikBag: FormikProps<AccountFormValues>
   ) => {
-    const response = await this.props.submit({ input: values })
+    const response = await this.props.submit(values)
 
     if (response && response.errors) {
       formikBag.setErrors(response.errors as FormikErrors<AccountFormValues>)
@@ -53,7 +53,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
     const { initialValues, hasDelete, loading } = this.props
     return (
       <Formik
-        initialValues={initialValues || initialEmptyValues}
+        initialValues={initialValues || getInitialEmptyValues()}
         validate={validate}
         onSubmit={this.handleSubmit}
         render={({ isValid }: FormikProps<AccountFormValues>) => (

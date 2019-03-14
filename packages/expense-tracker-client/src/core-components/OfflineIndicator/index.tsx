@@ -1,6 +1,6 @@
 import React from 'react'
 import { withApollo, WithApolloClient } from 'react-apollo'
-import { offlineQueueLink } from '@apollo/offlineQueueLink'
+import { offlineLink } from '@apollo/offlineLink'
 import { Wrapper } from './elements'
 import { GetIsOnline, getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 
@@ -76,12 +76,12 @@ class C extends React.Component<WithApolloClient<any>, State> {
   }
 
   private handleOnline = () => {
-    offlineQueueLink.open()
+    offlineLink.open()
     this.handleUpdateOnline(true)
   }
 
   private handleOffline = () => {
-    offlineQueueLink.close()
+    offlineLink.close()
     this.handleUpdateOnline(false)
   }
 }

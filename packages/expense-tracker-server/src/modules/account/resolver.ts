@@ -62,8 +62,7 @@ export class AccountResolver {
     @Arg('input') input: SaveAccountInput,
     @Ctx() ctx: Context
   ) {
-    const newAccount = new Account()
-    newAccount.name = input.name
+    const newAccount = new Account(input)
     newAccount.userId = ctx.user.id
     return this.accountRepository.save(newAccount)
   }

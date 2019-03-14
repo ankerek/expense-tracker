@@ -4,7 +4,7 @@ import { Query, QueryResult } from 'react-apollo'
 import { GetAccountListQuery } from '@schema-types'
 import { accountFragment } from './fragments'
 
-const getAccountListQuery = gql`
+export const getAccountListQuery = gql`
   query GetAccountListQuery {
     getAccountList {
       ...Account

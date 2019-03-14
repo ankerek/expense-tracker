@@ -99,7 +99,6 @@ class C extends React.Component<
         updateTransaction: optimisticResponse,
       },
       update: (_, { data: { updateTransaction } }) => {
-        console.log(client)
         // account where the updated transaction belongs to
         const account: Account = client.readFragment({
           id: `Account:${updateTransaction.account.id}`,

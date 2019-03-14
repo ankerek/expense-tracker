@@ -42,19 +42,30 @@ class C<AccountMutation, AccountMutationVariables> extends React.PureComponent<
   private submit = async (values: AccountMutationVariables) => {
     try {
       const {
+        client,
         mutate,
         variables = {},
         history,
         location: { state },
       } = this.props
-
+      console.log(this.props)
       this.setState({ loading: true })
+
+      const optimisticResponse: any = {
+        __typename: 'Account',
+        ...(values as any).input,
+      }
 
       await mutate({
         variables: cleanPropertiesBeforeMutation(
           Object.assign(variables, values)
         ),
-      })
+        optimisticResponse: {
+          createAccount: optimisticResponse,
+          updateAccount: optimisticResponse,
+        },
+        // update: (_, {  })
+      } as any)
 
       this.setState({ loading: false })
 
