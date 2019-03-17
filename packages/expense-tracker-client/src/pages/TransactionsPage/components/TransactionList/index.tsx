@@ -34,7 +34,9 @@ export class TransactionList extends React.Component<AccountListProps> {
                 >
                   {transaction.id}
                 </NavLink>
-                {!transaction.isPersisted && <ItemNotPersistedIndicator />}
+                {!transaction.isPersisted && (
+                  <ItemNotPersistedIndicator compact={true} />
+                )}
                 <Amount>
                   <FormattedAmount>{transaction.amount}</FormattedAmount>
                 </Amount>

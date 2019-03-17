@@ -4,6 +4,7 @@ import { GetTransaction } from '@controllers/transaction/GetTransaction'
 import { UpdateTransaction } from '@controllers/transaction/UpdateTransaction'
 import { TransactionForm } from '@core-components/TransactionForm'
 import { GetAccountList } from '@controllers/account/AccountList'
+import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
 
 export class TransactionPage extends React.Component {
   render() {
@@ -13,21 +14,28 @@ export class TransactionPage extends React.Component {
           {({ data }) =>
             data && data.getAccountList ? (
               <GetTransaction>
-                {({ data: transactionData }) =>
-                  transactionData && transactionData.getTransaction ? (
-                    <UpdateTransaction>
-                      {(submit, { loading }) => (
-                        <TransactionForm
-                          initialValues={transactionData.getTransaction}
-                          submit={submit}
-                          accounts={data.getAccountList}
-                          hasDelete
-                          loading={loading}
-                        />
+                {({ data: transactionData }) => {
+                  const transaction =
+                    transactionData && transactionData.getTransaction
+                  return transaction ? (
+                    <>
+                      {!transaction.isPersisted && (
+                        <ItemNotPersistedIndicator />
                       )}
-                    </UpdateTransaction>
+                      <UpdateTransaction>
+                        {(submit, { loading }) => (
+                          <TransactionForm
+                            initialValues={transactionData.getTransaction}
+                            submit={submit}
+                            accounts={data.getAccountList}
+                            hasDelete
+                            loading={loading}
+                          />
+                        )}
+                      </UpdateTransaction>
+                    </>
                   ) : null
-                }
+                }}
               </GetTransaction>
             ) : null
           }

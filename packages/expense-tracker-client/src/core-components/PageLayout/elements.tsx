@@ -43,6 +43,6 @@ export const ToolbarLeftIcon = styled(IconButton)`
 `
 
 export const ToolbarLeftIconEmpty = styled.div`
-  width: 28px
+  width: 28px;
   height: 28px;
 `

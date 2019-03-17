@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: Roboto;
     color: ${textPrimaryColor};
-}
+  }
 `
 
 const themeOptions: ThemeOptions = {
