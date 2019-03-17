@@ -10,6 +10,7 @@ export const transactionFragment = gql`
     account {
       ...Account
     }
+    isPersisted
   }
   ${accountFragment}
 `

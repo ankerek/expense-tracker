@@ -67,12 +67,18 @@ class C extends React.Component<WithApolloClient<any>, State> {
   }
 
   private handleUpdateOnline = (isOnline: boolean) => {
-    this.props.client.writeQuery({
+    const data = this.props.client.readQuery({
       query: getIsOnlineQuery,
-      data: {
-        isOnline,
-      },
     })
+
+    if (data.isOnline !== isOnline) {
+      this.props.client.writeQuery({
+        query: getIsOnlineQuery,
+        data: {
+          isOnline,
+        },
+      })
+    }
   }
 
   private handleOnline = () => {

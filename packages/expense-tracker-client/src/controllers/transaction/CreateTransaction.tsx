@@ -76,6 +76,7 @@ class C extends React.Component<
     const optimisticResponse: any = {
       __typename: 'Transaction',
       ...values,
+      isPersisted: false,
     }
 
     const mutationOptions: MutationOptions<
@@ -93,7 +94,6 @@ class C extends React.Component<
         })
         data.getTransactionList.push(createTransaction)
         client.writeQuery({ query: getTransactionListQuery, data })
-
         // update amount of the corresponding account
         const account: Account = client.readFragment({
           id: `Account:${createTransaction.account.id}`,

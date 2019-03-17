@@ -119,6 +119,17 @@ export interface GetCurrencyListQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetIsOnlineQuery
+// ====================================================
+
+export interface GetIsOnlineQuery {
+  isOnline: boolean
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateTransactionMutation
 // ====================================================
 
@@ -136,6 +147,7 @@ export interface CreateTransactionMutation_createTransaction {
   description: string | null
   amount: number
   account: CreateTransactionMutation_createTransaction_account
+  isPersisted: boolean
 }
 
 export interface CreateTransactionMutation {
@@ -182,6 +194,7 @@ export interface GetTransactionQuery_getTransaction {
   description: string | null
   amount: number
   account: GetTransactionQuery_getTransaction_account
+  isPersisted: boolean
 }
 
 export interface GetTransactionQuery {
@@ -213,6 +226,7 @@ export interface GetTransactionListQuery_getTransactionList {
   description: string | null
   amount: number
   account: GetTransactionListQuery_getTransactionList_account
+  isPersisted: boolean
 }
 
 export interface GetTransactionListQuery {
@@ -240,6 +254,7 @@ export interface UpdateTransactionMutation_updateTransaction {
   description: string | null
   amount: number
   account: UpdateTransactionMutation_updateTransaction_account
+  isPersisted: boolean
 }
 
 export interface UpdateTransactionMutation {
@@ -391,6 +406,7 @@ export interface Transaction {
   description: string | null
   amount: number
   account: Transaction_account
+  isPersisted: boolean
 }
 
 /* tslint:disable */
@@ -421,7 +437,7 @@ export interface User {
 //==============================================================
 
 export interface SaveAccountInput {
-  id?: string | null
+  id: string
   name: string
   amount?: number | null
 }

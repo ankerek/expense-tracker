@@ -54,9 +54,15 @@ class OfflineLink extends ApolloLink {
   }
 
   public request(operation: Operation, forward: NextLink) {
-    if (this.isOpen || !isMutationOperation(operation)) {
+    if (this.isOpen) {
       return forward(operation)
     }
+
+    if (!isMutationOperation(operation)) {
+      return
+    }
+
+    this.cancelRedundantOperations(operation)
 
     return new Observable(observer => {
       const operationEntry = { operation, forward, observer }
@@ -94,6 +100,31 @@ class OfflineLink extends ApolloLink {
   private enqueue(entry: OperationQueueEntry) {
     const opLevel = opLevels[entry.operation.operationName] || 0
     this.opQueue[opLevel].push(entry)
+  }
+  // remove redundant operations
+  private cancelRedundantOperations(operation: Operation) {
+    // only the latest update mutation is needed
+    // remove all previous updates
+    if (
+      operation.operationName === UpdateAccountMutationName ||
+      operation.operationName === UpdateTransactionMutationName
+    ) {
+      const opLevel = opLevels[operation.operationName] || 0
+      this.opQueue[opLevel] = this.opQueue[opLevel].filter(
+        entry =>
+          !(
+            entry.operation.operationName === operation.operationName &&
+            entry.operation.variables.id === operation.variables.id
+          )
+      )
+    }
+
+    // if (
+    //   operation.operationName === DeleteAccountMutationName
+    // ) {
+    //   const opLevel = opLevels[UpdateTransactionMutationName]
+    //   this.opQueue[opLevel] = this.opQueue[opLevel].filter(entry => entry.operation.operationName)
+    // }
   }
 }
 

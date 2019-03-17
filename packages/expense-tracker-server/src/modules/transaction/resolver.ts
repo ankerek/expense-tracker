@@ -29,6 +29,11 @@ export class TransactionResolver {
     return this.accountRepository.findOne(transaction.accountId)
   }
 
+  @FieldResolver(returns => Boolean)
+  async isPersisted() {
+    return true
+  }
+
   @Authorized()
   @Query(returns => Transaction)
   async getTransaction(@Arg('id', type => ID) id: string) {

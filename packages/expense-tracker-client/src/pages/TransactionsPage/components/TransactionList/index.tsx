@@ -11,12 +11,13 @@ import Divider from '@material-ui/core/Divider'
 import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
+import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
 
 interface AccountListProps {
   transactions: GetTransactionListQuery_getTransactionList[]
 }
 
-export class TransactionList extends React.PureComponent<AccountListProps> {
+export class TransactionList extends React.Component<AccountListProps> {
   render() {
     const { transactions } = this.props
     return (
@@ -24,7 +25,7 @@ export class TransactionList extends React.PureComponent<AccountListProps> {
         <Wrapper>
           {transactions.map(transaction => (
             <div key={transaction.id}>
-              <Item>
+              <Item isNotPersisted={!transaction.isPersisted}>
                 <NavLink
                   to={{
                     pathname: `/transactions/${transaction.id}`,
@@ -33,6 +34,7 @@ export class TransactionList extends React.PureComponent<AccountListProps> {
                 >
                   {transaction.id}
                 </NavLink>
+                {!transaction.isPersisted && <ItemNotPersistedIndicator />}
                 <Amount>
                   <FormattedAmount>{transaction.amount}</FormattedAmount>
                 </Amount>
