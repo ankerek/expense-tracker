@@ -3,15 +3,18 @@ import { PageLayout } from '@core-components/PageLayout'
 import { AccountForm } from '@core-components/AccountForm'
 import { GetAccount } from '@controllers/account/GetAccount'
 import { UpdateAccount } from '@controllers/account/UpdateAccount'
+import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
 
 export class AccountPage extends React.Component {
   render() {
     return (
       <PageLayout title="Account" hasGoBack>
         <GetAccount>
-          {({ data }) => (
-            <>
-              {data && data.getAccount && (
+          {({ data }) => {
+            const account = data && data.getAccount
+            return account ? (
+              <>
+                {!account.isPersisted && <ItemNotPersistedIndicator />}
                 <UpdateAccount>
                   {(submit, { loading }) => (
                     <AccountForm
@@ -22,9 +25,9 @@ export class AccountPage extends React.Component {
                     />
                   )}
                 </UpdateAccount>
-              )}
-            </>
-          )}
+              </>
+            ) : null
+          }}
         </GetAccount>
       </PageLayout>
     )

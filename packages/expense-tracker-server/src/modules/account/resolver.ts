@@ -42,6 +42,11 @@ export class AccountResolver {
     return sum || 0
   }
 
+  @FieldResolver(returns => Boolean)
+  async isPersisted() {
+    return true
+  }
+
   @Authorized()
   @Query(returns => [Account])
   async getAccountList(@Ctx() ctx: Context) {

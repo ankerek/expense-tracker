@@ -2,24 +2,6 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetAccountListQuery
-// ====================================================
-
-export interface GetAccountListQuery_getAccountList {
-  __typename: 'Account'
-  id: string
-  name: string
-  amount: number
-}
-
-export interface GetAccountListQuery {
-  getAccountList: GetAccountListQuery_getAccountList[]
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: CreateAccountMutation
 // ====================================================
 
@@ -28,6 +10,7 @@ export interface CreateAccountMutation_createAccount {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface CreateAccountMutation {
@@ -65,6 +48,7 @@ export interface GetAccountQuery_getAccount {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface GetAccountQuery {
@@ -79,6 +63,25 @@ export interface GetAccountQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetAccountListQuery
+// ====================================================
+
+export interface GetAccountListQuery_getAccountList {
+  __typename: 'Account'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface GetAccountListQuery {
+  getAccountList: GetAccountListQuery_getAccountList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: UpdateAccountMutation
 // ====================================================
 
@@ -87,6 +90,7 @@ export interface UpdateAccountMutation_updateAccount {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface UpdateAccountMutation {
@@ -138,6 +142,7 @@ export interface CreateTransactionMutation_createTransaction_account {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface CreateTransactionMutation_createTransaction {
@@ -185,6 +190,7 @@ export interface GetTransactionQuery_getTransaction_account {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface GetTransactionQuery_getTransaction {
@@ -217,6 +223,7 @@ export interface GetTransactionListQuery_getTransactionList_account {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface GetTransactionListQuery_getTransactionList {
@@ -245,6 +252,7 @@ export interface UpdateTransactionMutation_updateTransaction_account {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface UpdateTransactionMutation_updateTransaction {
@@ -370,6 +378,7 @@ export interface Account {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 /* tslint:disable */
@@ -397,6 +406,7 @@ export interface Transaction_account {
   id: string
   name: string
   amount: number
+  isPersisted: boolean
 }
 
 export interface Transaction {

@@ -13,11 +13,11 @@ export const getAccountListQuery = gql`
   ${accountFragment}
 `
 
-interface AccountListProps {
+interface GetAccountListProps {
   children: (result: QueryResult<GetAccountListQuery>) => JSX.Element | null
 }
 
-export class GetAccountList extends React.Component<AccountListProps> {
+export class GetAccountList extends React.Component<GetAccountListProps> {
   render() {
     const { children } = this.props
     return (

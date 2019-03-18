@@ -5,5 +5,6 @@ export const accountFragment = gql`
     id
     name
     amount
+    isPersisted
   }
 `

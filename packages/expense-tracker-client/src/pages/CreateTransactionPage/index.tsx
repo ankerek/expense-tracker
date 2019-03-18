@@ -2,7 +2,7 @@ import React from 'react'
 import { PageLayout } from '@core-components/PageLayout'
 import { CreateTransaction } from '@controllers/transaction/CreateTransaction'
 import { TransactionForm } from '@core-components/TransactionForm'
-import { GetAccountList } from '@controllers/account/AccountList'
+import { GetAccountList } from '@controllers/account/GetAccountList'
 
 export class CreateTransactionPage extends React.Component {
   render() {

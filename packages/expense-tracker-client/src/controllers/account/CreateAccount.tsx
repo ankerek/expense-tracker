@@ -18,7 +18,7 @@ import { accountFragment } from '@controllers/account/fragments'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { getAccountListQuery } from '@controllers/account/AccountList'
+import { getAccountListQuery } from '@controllers/account/GetAccountList'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 
 export const CreateAccountMutationName = 'CreateAccountMutation'
@@ -76,6 +76,7 @@ class C extends React.Component<
     const optimisticResponse: any = {
       __typename: 'Account',
       ...values,
+      isPersisted: false,
     }
 
     const mutationOptions: MutationOptions<

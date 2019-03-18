@@ -17,7 +17,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { getAccountListQuery } from '@controllers/account/AccountList'
+import { getAccountListQuery } from '@controllers/account/GetAccountList'
 
 export const DeleteAccountMutationName = 'DeleteAccountMutation'
 

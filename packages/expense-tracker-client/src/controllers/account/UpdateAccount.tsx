@@ -77,6 +77,7 @@ class C extends React.Component<
     const optimisticResponse: any = {
       __typename: 'Account',
       ...values,
+      isPersisted: false,
     }
 
     const mutationOptions: MutationOptions<

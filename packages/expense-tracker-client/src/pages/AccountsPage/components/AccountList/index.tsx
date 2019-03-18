@@ -2,6 +2,7 @@ import React from 'react'
 import { GetAccountListQuery_getAccountList } from '@schema-types'
 import { Amount, Container, Item, OutsideActionsWrapper } from './elements'
 import Divider from '@material-ui/core/Divider'
+import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
 import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
@@ -18,7 +19,7 @@ export class AccountList extends React.PureComponent<AccountListProps> {
         <Container>
           {accounts.map(account => (
             <div key={account.id}>
-              <Item key={account.id}>
+              <Item isNotPersisted={!account.isPersisted}>
                 <NavLink
                   to={{
                     pathname: `/accounts/${account.id}`,
@@ -27,6 +28,9 @@ export class AccountList extends React.PureComponent<AccountListProps> {
                 >
                   {account.name}
                 </NavLink>
+                {!account.isPersisted && (
+                  <ItemNotPersistedIndicator compact={true} />
+                )}
                 <Amount>
                   <FormattedAmount>{account.amount}</FormattedAmount>
                 </Amount>

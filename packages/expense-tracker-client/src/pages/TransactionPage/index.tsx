@@ -3,7 +3,7 @@ import { PageLayout } from '@core-components/PageLayout'
 import { GetTransaction } from '@controllers/transaction/GetTransaction'
 import { UpdateTransaction } from '@controllers/transaction/UpdateTransaction'
 import { TransactionForm } from '@core-components/TransactionForm'
-import { GetAccountList } from '@controllers/account/AccountList'
+import { GetAccountList } from '@controllers/account/GetAccountList'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
 
 export class TransactionPage extends React.Component {
