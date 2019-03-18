@@ -67,7 +67,6 @@
     "apollo-link-http": "^1.5.9",
     "apollo-link-queue": "^2.2.0",
     "apollo-link-retry": "^2.2.8",
-    "apollo-link-state": "^0.4.2",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.21",
     "formik": "^1.4.1",

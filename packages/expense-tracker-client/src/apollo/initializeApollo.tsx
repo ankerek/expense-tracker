@@ -8,7 +8,6 @@ import { typeDefs } from './clientSchema'
 import { authLink } from './authLink'
 import { retryLink } from './retryLink'
 import { offlineLink } from './offlineLink'
-import { stateLink } from '@apollo/stateLink'
 
 const API_BASE_URL = '/graphql'
 
@@ -27,13 +26,7 @@ const cache = new InMemoryCache({
   },
 })
 
-const link = apolloLinkFrom([
-  authLink,
-  stateLink(cache),
-  retryLink,
-  offlineLink,
-  httpLink,
-])
+const link = apolloLinkFrom([authLink, retryLink, offlineLink, httpLink])
 
 export const client = new ApolloClient({
   link,
