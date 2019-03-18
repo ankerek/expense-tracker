@@ -1,21 +1,24 @@
-import omit from 'lodash/omit'
+const PROPERTIES_TO_OMIT = ['__typename', 'isPersisted']
 
-// go through all properties in obj and omit `__typename` property
-const omitTypename = (obj: any) => {
+// go through all properties in obj and omit PROPERTIES_TO_OMIT
+const omitProperties = (obj: any) => {
   const newObj = { ...obj }
   Object.keys(newObj).forEach(key => {
     if (typeof newObj[key] === 'object' && newObj[key] !== null) {
-      newObj[key] = omitTypename(newObj[key])
+      newObj[key] = omitProperties(newObj[key])
+    } else if (PROPERTIES_TO_OMIT.includes(key)) {
+      delete newObj[key]
     }
   })
-  return newObj['__typename'] ? omit(newObj, ['__typename']) : newObj
+
+  return newObj
 }
 
 export const cleanPropertiesBeforeMutation = (variables: any) => {
   if (variables.input) {
     return {
       ...variables,
-      input: omitTypename(variables.input),
+      input: omitProperties(variables.input),
     }
   }
 
