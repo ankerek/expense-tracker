@@ -1,4 +1,5 @@
 import React from 'react'
+import { GetIsOnline } from '@controllers/network/GetIsOnline'
 import OfflineIcon from '@material-ui/icons/OfflineBolt'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
@@ -16,14 +17,28 @@ export class ItemNotPersistedIndicator extends React.PureComponent<
   render() {
     const { compact } = this.props
 
-    return compact ? (
-      <Tooltip title={TEXT}>
-        <OfflineIcon />
-      </Tooltip>
-    ) : (
-      <Wrapper elevation={1}>
-        <Typography component="p">{TEXT}</Typography>
-      </Wrapper>
+    return (
+      <GetIsOnline>
+        {({ data: { isOnline } }) => {
+          if (isOnline) {
+            return null
+          }
+
+          if (compact) {
+            return (
+              <Tooltip title={TEXT}>
+                <OfflineIcon />
+              </Tooltip>
+            )
+          }
+
+          return (
+            <Wrapper elevation={1}>
+              <Typography component="p">{TEXT}</Typography>
+            </Wrapper>
+          )
+        }}
+      </GetIsOnline>
     )
   }
 }
