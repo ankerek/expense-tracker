@@ -1,11 +1,11 @@
 import { RetryLink } from 'apollo-link-retry'
-import { CreateTransactionMutationName } from '@controllers/transaction/CreateTransaction'
+import { SaveTransactionMutationName } from '@controllers/transaction/SaveTransaction'
 import { UpdateTransactionMutationName } from '@controllers/transaction/UpdateTransaction'
 import { DeleteTransactionMutationName } from '@controllers/transaction/DeleteTransaction'
 
 // TODO: move to other file
 const offlineOperations = [
-  CreateTransactionMutationName,
+  SaveTransactionMutationName,
   UpdateTransactionMutationName,
   DeleteTransactionMutationName,
 ]

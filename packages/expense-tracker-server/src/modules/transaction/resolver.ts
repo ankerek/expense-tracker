@@ -53,7 +53,7 @@ export class TransactionResolver {
 
   @Authorized()
   @Mutation(returns => Transaction)
-  async createTransaction(
+  async saveTransaction(
     @Arg('input') input: SaveTransactionInput,
     @Ctx() ctx: Context
   ) {
@@ -63,6 +63,7 @@ export class TransactionResolver {
     return this.transactionRepository.save(newTransaction)
   }
 
+  // TODO: remove
   @Authorized()
   @Mutation(returns => Transaction)
   async updateTransaction(

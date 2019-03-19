@@ -4,6 +4,7 @@ import { AccountForm } from '@core-components/AccountForm'
 import { GetAccount } from '@controllers/account/GetAccount'
 import { UpdateAccount } from '@controllers/account/UpdateAccount'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
+import { CreateAccount } from '@controllers/account/CreateAccount'
 
 export class AccountPage extends React.Component {
   render() {
@@ -15,7 +16,7 @@ export class AccountPage extends React.Component {
             return account ? (
               <>
                 {!account.isPersisted && <ItemNotPersistedIndicator />}
-                <UpdateAccount>
+                <CreateAccount>
                   {(submit, { loading }) => (
                     <AccountForm
                       initialValues={data.getAccount}
@@ -24,7 +25,7 @@ export class AccountPage extends React.Component {
                       loading={loading}
                     />
                   )}
-                </UpdateAccount>
+                </CreateAccount>
               </>
             ) : null
           }}

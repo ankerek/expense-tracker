@@ -657,7 +657,7 @@
             "deprecationReason": null
           },
           {
-            "name": "createTransaction",
+            "name": "saveTransaction",
             "description": null,
             "args": [
               {

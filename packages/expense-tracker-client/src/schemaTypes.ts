@@ -134,39 +134,6 @@ export interface GetIsOnlineQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: CreateTransactionMutation
-// ====================================================
-
-export interface CreateTransactionMutation_createTransaction_account {
-  __typename: 'Account'
-  id: string
-  name: string
-  amount: number
-  isPersisted: boolean
-}
-
-export interface CreateTransactionMutation_createTransaction {
-  __typename: 'Transaction'
-  id: string
-  createdAt: string
-  description: string | null
-  amount: number
-  account: CreateTransactionMutation_createTransaction_account
-  isPersisted: boolean
-}
-
-export interface CreateTransactionMutation {
-  createTransaction: CreateTransactionMutation_createTransaction
-}
-
-export interface CreateTransactionMutationVariables {
-  input: SaveTransactionInput
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: DeleteTransactionMutation
 // ====================================================
 
@@ -238,6 +205,39 @@ export interface GetTransactionListQuery_getTransactionList {
 
 export interface GetTransactionListQuery {
   getTransactionList: GetTransactionListQuery_getTransactionList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SaveTransactionMutation
+// ====================================================
+
+export interface SaveTransactionMutation_saveTransaction_account {
+  __typename: 'Account'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface SaveTransactionMutation_saveTransaction {
+  __typename: 'Transaction'
+  id: string
+  createdAt: string
+  description: string | null
+  amount: number
+  account: SaveTransactionMutation_saveTransaction_account
+  isPersisted: boolean
+}
+
+export interface SaveTransactionMutation {
+  saveTransaction: SaveTransactionMutation_saveTransaction
+}
+
+export interface SaveTransactionMutationVariables {
+  input: SaveTransactionInput
 }
 
 /* tslint:disable */

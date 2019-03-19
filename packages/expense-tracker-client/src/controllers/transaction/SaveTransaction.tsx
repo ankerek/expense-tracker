@@ -8,39 +8,37 @@ import {
   MutationOptions,
 } from 'react-apollo'
 import {
-  Account,
-  CreateTransactionMutation,
-  CreateTransactionMutationVariables,
+  SaveTransactionMutation,
+  SaveTransactionMutationVariables,
   SaveTransactionInput,
-  GetTransactionListQuery,
+  Transaction,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { sum } from '@utils/math'
 import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
-import { accountFragment } from '@controllers/account/fragments'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { SaveTransactionMutationUpdaterFn } from './updaters'
 
-export const CreateTransactionMutationName = 'CreateTransactionMutation'
+export const SaveTransactionMutationName = 'SaveTransactionMutation'
 
-const createTransactionMutation = gql`
-  mutation CreateTransactionMutation($input: SaveTransactionInput!) {
-    createTransaction(input: $input) {
+const saveTransactionMutation = gql`
+  mutation SaveTransactionMutation($input: SaveTransactionInput!) {
+    saveTransaction(input: $input) {
       ...Transaction
     }
   }
   ${transactionFragment}
 `
 
-interface CreateTransactionProps {
+interface SaveTransactionProps {
   children: (
     submit: (values: SaveTransactionInput) => void,
     data: {
       loading: boolean
     }
-  ) => JSX.Element | null
+  ) => React.ReactNode
+  update?: SaveTransactionMutationUpdaterFn<SaveTransactionMutation>
 }
 
 const initialState = {
@@ -52,9 +50,9 @@ type State = Readonly<typeof initialState>
 class C extends React.Component<
   RouteComponentProps &
     ChildMutateProps<
-      WithApolloClient<CreateTransactionProps>,
-      CreateTransactionMutation,
-      CreateTransactionMutationVariables
+      WithApolloClient<SaveTransactionProps>,
+      SaveTransactionMutation,
+      SaveTransactionMutationVariables
     >
 > {
   readonly state: State = initialState
@@ -69,6 +67,7 @@ class C extends React.Component<
       mutate,
       history,
       location: { state },
+      update,
     } = this.props
 
     this.setState({ loading: true })
@@ -79,37 +78,22 @@ class C extends React.Component<
       isPersisted: false,
     }
 
+    // first stash away a current transaction before the update
+    const prevTransaction: Transaction = client.readFragment({
+      id: `Transaction:${values.id}`,
+      fragment: transactionFragment,
+      fragmentName: 'Transaction',
+    })
+
     const mutationOptions: MutationOptions<
-      CreateTransactionMutation,
-      CreateTransactionMutationVariables
+      SaveTransactionMutation,
+      SaveTransactionMutationVariables
     > = {
       variables: cleanPropertiesBeforeMutation({ input: values }),
       optimisticResponse: {
-        createTransaction: optimisticResponse,
+        saveTransaction: optimisticResponse,
       },
-      update: (_, { data: { createTransaction } }) => {
-        // push new transaction to Transaction list
-        const data: GetTransactionListQuery = client.readQuery({
-          query: getTransactionListQuery,
-        })
-        data.getTransactionList.push(createTransaction)
-        client.writeQuery({ query: getTransactionListQuery, data })
-        // update amount of the corresponding account
-        const account: Account = client.readFragment({
-          id: `Account:${createTransaction.account.id}`,
-          fragment: accountFragment,
-          fragmentName: 'Account',
-        })
-
-        account.amount = sum(account.amount, createTransaction.amount)
-
-        client.writeFragment({
-          id: `Account:${createTransaction.account.id}`,
-          fragment: accountFragment,
-          fragmentName: 'Account',
-          data: account,
-        })
-      },
+      update: (...args) => update(args[0], args[1], prevTransaction),
     }
 
     const { isOnline } = client.readQuery({
@@ -132,12 +116,12 @@ class C extends React.Component<
   }
 }
 
-export const CreateTransaction = compose(
+export const SaveTransaction = compose<SaveTransactionProps>(
   withRouter,
   withApollo,
   graphql<
-    CreateTransactionProps,
-    CreateTransactionMutation,
-    CreateTransactionMutationVariables
-  >(createTransactionMutation)
+    SaveTransactionProps,
+    SaveTransactionMutation,
+    SaveTransactionMutationVariables
+  >(saveTransactionMutation)
 )(C)

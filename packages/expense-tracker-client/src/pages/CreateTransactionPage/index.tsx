@@ -1,6 +1,7 @@
 import React from 'react'
+import { createTransactionUpdater } from '@controllers/transaction/updaters'
 import { PageLayout } from '@core-components/PageLayout'
-import { CreateTransaction } from '@controllers/transaction/CreateTransaction'
+import { SaveTransaction } from '@controllers/transaction/SaveTransaction'
 import { TransactionForm } from '@core-components/TransactionForm'
 import { GetAccountList } from '@controllers/account/GetAccountList'
 
@@ -11,7 +12,7 @@ export class CreateTransactionPage extends React.Component {
         <GetAccountList>
           {({ data }) =>
             data && data.getAccountList ? (
-              <CreateTransaction>
+              <SaveTransaction update={createTransactionUpdater}>
                 {(submit, { loading }) => (
                   <TransactionForm
                     submit={submit}
@@ -19,7 +20,7 @@ export class CreateTransactionPage extends React.Component {
                     loading={loading}
                   />
                 )}
-              </CreateTransaction>
+              </SaveTransaction>
             ) : (
               <>Loading...</>
             )
