@@ -1,10 +1,9 @@
 import React from 'react'
+import { SaveAccount } from '@controllers/account/SaveAccount'
+import { GetAccount } from '@controllers/account/GetAccount'
 import { PageLayout } from '@core-components/PageLayout'
 import { AccountForm } from '@core-components/AccountForm'
-import { GetAccount } from '@controllers/account/GetAccount'
-import { UpdateAccount } from '@controllers/account/UpdateAccount'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
-import { CreateAccount } from '@controllers/account/CreateAccount'
 
 export class AccountPage extends React.Component {
   render() {
@@ -16,7 +15,7 @@ export class AccountPage extends React.Component {
             return account ? (
               <>
                 {!account.isPersisted && <ItemNotPersistedIndicator />}
-                <CreateAccount>
+                <SaveAccount>
                   {(submit, { loading }) => (
                     <AccountForm
                       initialValues={data.getAccount}
@@ -25,7 +24,7 @@ export class AccountPage extends React.Component {
                       loading={loading}
                     />
                   )}
-                </CreateAccount>
+                </SaveAccount>
               </>
             ) : null
           }}

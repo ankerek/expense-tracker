@@ -63,7 +63,7 @@ export class AccountResolver {
 
   @Authorized()
   @Mutation(returns => Account)
-  async createAccount(
+  async saveAccount(
     @Arg('input') input: SaveAccountInput,
     @Ctx() ctx: Context
   ) {
@@ -72,6 +72,7 @@ export class AccountResolver {
     return this.accountRepository.save(newAccount)
   }
 
+  // @deprecated
   @Authorized()
   @Mutation(returns => Account)
   async updateAccount(

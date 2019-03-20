@@ -2,29 +2,6 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: CreateAccountMutation
-// ====================================================
-
-export interface CreateAccountMutation_createAccount {
-  __typename: 'Account'
-  id: string
-  name: string
-  amount: number
-  isPersisted: boolean
-}
-
-export interface CreateAccountMutation {
-  createAccount: CreateAccountMutation_createAccount
-}
-
-export interface CreateAccountMutationVariables {
-  input: SaveAccountInput
-}
-
-/* tslint:disable */
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: DeleteAccountMutation
 // ====================================================
 
@@ -76,6 +53,29 @@ export interface GetAccountListQuery_getAccountList {
 
 export interface GetAccountListQuery {
   getAccountList: GetAccountListQuery_getAccountList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SaveAccountMutation
+// ====================================================
+
+export interface SaveAccountMutation_saveAccount {
+  __typename: 'Account'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface SaveAccountMutation {
+  saveAccount: SaveAccountMutation_saveAccount
+}
+
+export interface SaveAccountMutationVariables {
+  input: SaveAccountInput
 }
 
 /* tslint:disable */

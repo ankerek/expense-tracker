@@ -4,12 +4,13 @@ import {
   ChildMutateProps,
   graphql,
   MutationOptions,
+  MutationUpdaterFn,
   withApollo,
   WithApolloClient,
 } from 'react-apollo'
 import {
-  CreateAccountMutation,
-  CreateAccountMutationVariables,
+  SaveAccountMutation,
+  SaveAccountMutationVariables,
   GetAccountListQuery,
   SaveAccountInput,
 } from '@schema-types'
@@ -21,24 +22,25 @@ import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutat
 import { getAccountListQuery } from '@controllers/account/GetAccountList'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 
-export const CreateAccountMutationName = 'CreateAccountMutation'
+export const SaveAccountMutationName = 'SaveAccountMutation'
 
-const createAccountMutation = gql`
-  mutation CreateAccountMutation($input: SaveAccountInput!) {
-    createAccount(input: $input) {
+const saveAccountMutation = gql`
+  mutation SaveAccountMutation($input: SaveAccountInput!) {
+    saveAccount(input: $input) {
       ...Account
     }
   }
   ${accountFragment}
 `
 
-export interface CreateAccountProps {
+export interface SaveAccountProps {
   children: (
     submit: (values: SaveAccountInput) => Promise<NormalizedErrorsMap | null>,
     data: {
       loading: boolean
     }
   ) => JSX.Element | null
+  update?: MutationUpdaterFn<SaveAccountMutation>
 }
 
 const initialState = {
@@ -50,9 +52,9 @@ type State = Readonly<typeof initialState>
 class C extends React.Component<
   RouteComponentProps &
     ChildMutateProps<
-      WithApolloClient<CreateAccountProps>,
-      CreateAccountMutation,
-      CreateAccountMutationVariables
+      WithApolloClient<SaveAccountProps>,
+      SaveAccountMutation,
+      SaveAccountMutationVariables
     >
 > {
   readonly state: State = initialState
@@ -69,6 +71,7 @@ class C extends React.Component<
       mutate,
       history,
       location: { state },
+      update,
     } = this.props
 
     this.setState({ loading: true })
@@ -80,23 +83,14 @@ class C extends React.Component<
     }
 
     const mutationOptions: MutationOptions<
-      CreateAccountMutation,
-      CreateAccountMutationVariables
+      SaveAccountMutation,
+      SaveAccountMutationVariables
     > = {
       variables: cleanPropertiesBeforeMutation({ input: values }),
       optimisticResponse: {
-        createAccount: optimisticResponse,
+        saveAccount: optimisticResponse,
       },
-      update: (_, { data: { createAccount } }) => {
-        // push new transaction to Account list
-        const data: GetAccountListQuery = client.readQuery({
-          query: getAccountListQuery,
-        })
-
-        data.getAccountList.push(createAccount)
-
-        client.writeQuery({ query: getAccountListQuery, data })
-      },
+      update,
     }
 
     const { isOnline } = client.readQuery({
@@ -129,10 +123,10 @@ class C extends React.Component<
   }
 }
 
-export const CreateAccount = compose(
+export const SaveAccount = compose<SaveAccountProps>(
   withRouter,
   withApollo,
-  graphql<null, CreateAccountMutation, CreateAccountMutationVariables>(
-    createAccountMutation
+  graphql<null, SaveAccountMutation, SaveAccountMutationVariables>(
+    saveAccountMutation
   )
 )(C)

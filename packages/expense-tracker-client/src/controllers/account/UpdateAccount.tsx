@@ -1,3 +1,4 @@
+// @deprecated
 import React from 'react'
 import { compose } from '@utils/compose'
 import {

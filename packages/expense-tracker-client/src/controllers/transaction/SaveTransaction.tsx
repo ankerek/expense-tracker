@@ -12,6 +12,7 @@ import {
   SaveTransactionMutationVariables,
   SaveTransactionInput,
   Transaction,
+  Account,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
@@ -85,6 +86,11 @@ class C extends React.Component<
       fragmentName: 'Transaction',
     })
 
+    const dependencies = []
+    if (!(values.account as Account).isPersisted) {
+      dependencies.push(`SaveAccountMutation:${values.account.id}`)
+    }
+
     const mutationOptions: MutationOptions<
       SaveTransactionMutation,
       SaveTransactionMutationVariables
@@ -94,6 +100,9 @@ class C extends React.Component<
         saveTransaction: optimisticResponse,
       },
       update: (...args) => update(args[0], args[1], prevTransaction),
+      context: {
+        dependencies,
+      },
     }
 
     const { isOnline } = client.readQuery({
