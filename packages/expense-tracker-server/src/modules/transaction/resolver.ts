@@ -57,13 +57,25 @@ export class TransactionResolver {
     @Arg('input') input: SaveTransactionInput,
     @Ctx() ctx: Context
   ) {
-    const newTransaction = new Transaction(input)
-    newTransaction.userId = ctx.user.id
+    let newTransaction
+    const existingTransaction = await this.transactionRepository.findOne(
+      input.id
+    )
+
+    if (existingTransaction) {
+      newTransaction = {
+        ...existingTransaction,
+        ...input,
+      }
+    } else {
+      newTransaction = new Transaction(input)
+      newTransaction.userId = ctx.user.id
+    }
 
     return this.transactionRepository.save(newTransaction)
   }
 
-  // TODO: remove
+  // @deprecated
   @Authorized()
   @Mutation(returns => Transaction)
   async updateTransaction(

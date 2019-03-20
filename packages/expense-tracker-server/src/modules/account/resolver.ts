@@ -67,8 +67,16 @@ export class AccountResolver {
     @Arg('input') input: SaveAccountInput,
     @Ctx() ctx: Context
   ) {
-    const newAccount = new Account(input)
-    newAccount.userId = ctx.user.id
+    let newAccount
+    const existingAccount = await this.accountRepository.findOne(input.id)
+
+    if (existingAccount) {
+      newAccount = { ...existingAccount, ...input }
+    } else {
+      newAccount = new Account(input)
+      newAccount.userId = ctx.user.id
+    }
+
     return this.accountRepository.save(newAccount)
   }
 
