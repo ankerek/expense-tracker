@@ -1,7 +1,3 @@
-/*
- * This link is forked from https://github.com/helfer/apollo-link-queue
- * and extended with custom offline functionality
- */
 import {
   ApolloLink,
   Observable,
@@ -10,12 +6,8 @@ import {
   NextLink,
 } from 'apollo-link'
 import { Observer } from 'zen-observable-ts'
-import { CreateAccountMutationName } from '@controllers/account/CreateAccount'
-import { UpdateAccountMutationName } from '@controllers/account/UpdateAccount'
+import { SaveAccountMutationName } from '@controllers/account/SaveAccount'
 import { DeleteAccountMutationName } from '@controllers/account/DeleteAccount'
-import { SaveTransactionMutationName } from '@controllers/transaction/SaveTransaction'
-import { UpdateTransactionMutationName } from '@controllers/transaction/UpdateTransaction'
-import { DeleteTransactionMutationName } from '@controllers/transaction/DeleteTransaction'
 
 const isMutationOperation = (operation: Operation) => {
   return (
@@ -24,25 +16,28 @@ const isMutationOperation = (operation: Operation) => {
   )
 }
 
-const opLevels: { [opName: string]: number } = {
-  [CreateAccountMutationName]: 0,
-  [UpdateAccountMutationName]: 0,
-  [DeleteAccountMutationName]: 0,
-  [SaveTransactionMutationName]: 1,
-  [UpdateTransactionMutationName]: 1,
-  [DeleteTransactionMutationName]: 1,
+const DEPENDABLE_MUTATIONS = [SaveAccountMutationName]
+
+const parseDependencies = (context: any) => {
+  const dependencies: string[] = []
+  if (context.account && !context.account.isPersisted) {
+    dependencies.push(`${SaveAccountMutationName}:${context.account.id}`)
+  }
+
+  return dependencies
 }
 
-interface OperationQueueEntry {
+interface Job {
   operation: Operation
   forward: NextLink
   observer: Observer<FetchResult>
   subscription?: { unsubscribe: () => void }
+  dependencies: string[]
 }
 
 class OfflineLink extends ApolloLink {
   private isOpen = true
-  private opQueue: OperationQueueEntry[][] = [[], []]
+  private jobQueue: Job[] = []
 
   public open() {
     this.isOpen = true
@@ -65,66 +60,81 @@ class OfflineLink extends ApolloLink {
     this.cancelRedundantOperations(operation)
 
     return new Observable(observer => {
-      const operationEntry = { operation, forward, observer }
+      const operationEntry: Job = {
+        operation,
+        forward,
+        observer,
+        dependencies: parseDependencies(operation.getContext()),
+      }
       this.enqueue(operationEntry)
       return () => this.cancelOperation(operationEntry)
     })
   }
 
-  private runQueue(level = 0) {
-    if (this.opQueue[level].length) {
-      this.opQueue[level].forEach(({ operation, forward, observer }) => {
-        forward(operation).subscribe(observer)
-      })
-    } else if (level < this.opQueue.length - 1) {
-      this.runQueue(level + 1)
+  private runQueue() {
+    this.jobQueue.forEach((job, idx) => {
+      this.runJob(idx)
+    })
+  }
+
+  private runJob(idx: number) {
+    const job = this.jobQueue[idx]
+
+    if (job && !job.dependencies.length && !job.subscription) {
+      job.subscription = job.forward(job.operation).subscribe(job.observer)
     }
   }
 
-  private cancelOperation(entry: OperationQueueEntry) {
-    for (const queue of this.opQueue) {
-      const idx = queue.findIndex(e => e === entry)
-      if (idx >= 0) {
-        queue.splice(idx, 1)
-        break
+  private cancelOperation(job: Job) {
+    const idx = this.jobQueue.findIndex(e => e === job)
+    if (idx >= 0) {
+      // unsubscribe if it's currently in progress
+      if (this.jobQueue[idx].subscription) {
+        this.jobQueue[idx].subscription.unsubscribe()
       }
+      this.jobQueue.splice(idx, 1)
     }
 
-    const opLevel = opLevels[entry.operation.operationName] || 0
-    // current queue is empty -> run another
-    if (!this.opQueue[opLevel].length) {
-      this.runQueue()
-    }
-  }
-
-  private enqueue(entry: OperationQueueEntry) {
-    const opLevel = opLevels[entry.operation.operationName] || 0
-    this.opQueue[opLevel].push(entry)
-  }
-  // remove redundant operations
-  private cancelRedundantOperations(operation: Operation) {
-    // only the latest update mutation is needed
-    // remove all previous updates
     if (
-      operation.operationName === UpdateAccountMutationName ||
-      operation.operationName === UpdateTransactionMutationName
+      this.open &&
+      DEPENDABLE_MUTATIONS.includes(job.operation.operationName)
     ) {
-      const opLevel = opLevels[operation.operationName] || 0
-      this.opQueue[opLevel] = this.opQueue[opLevel].filter(
-        entry =>
-          !(
-            entry.operation.operationName === operation.operationName &&
-            entry.operation.variables.id === operation.variables.id
-          )
-      )
-    }
+      this.jobQueue.forEach((e, entryIdx) => {
+        const dependencyIdx = e.dependencies.findIndex(
+          d =>
+            d ===
+            `${job.operation.operationName}:${job.operation.variables.input.id}`
+        )
+        if (dependencyIdx >= 0) {
+          e.dependencies.splice(dependencyIdx, 1)
 
-    // if (
-    //   operation.operationName === DeleteAccountMutationName
-    // ) {
-    //   const opLevel = opLevels[UpdateTransactionMutationName]
-    //   this.opQueue[opLevel] = this.opQueue[opLevel].filter(entry => entry.operation.operationName)
-    // }
+          this.runJob(entryIdx)
+        }
+      })
+    }
+  }
+
+  private enqueue(job: Job) {
+    this.jobQueue.push(job)
+  }
+
+  private cancelRedundantOperations(operation: Operation) {
+    this.jobQueue.forEach(job => {
+      const jobOperationContext = job.operation.getContext()
+      if (
+        // jobs of the same operation type
+        (job.operation.operationName === operation.operationName &&
+          job.operation.variables.input.id === operation.variables.input.id) ||
+        // transaction jobs on account delete
+        (operation.operationName === DeleteAccountMutationName &&
+          jobOperationContext.account &&
+          jobOperationContext.account.id === operation.variables.id)
+      ) {
+        job.observer.error(() => {
+          // cancel op
+        })
+      }
+    })
   }
 }
 

@@ -23,13 +23,14 @@ export type SaveTransactionMutationUpdaterFn<
 export const createTransactionUpdater: SaveTransactionMutationUpdaterFn<
   SaveTransactionMutation
 > = (client, { data: { saveTransaction } }, prevTransaction: Transaction) => {
+  // push new transaction to Transaction list
+  const data: GetTransactionListQuery = client.readQuery({
+    query: getTransactionListQuery,
+  })
+  data.getTransactionList.push(saveTransaction)
+  client.writeQuery({ query: getTransactionListQuery, data })
+
   if (!saveTransaction.isPersisted) {
-    // push new transaction to Transaction list
-    const data: GetTransactionListQuery = client.readQuery({
-      query: getTransactionListQuery,
-    })
-    data.getTransactionList.push(saveTransaction)
-    client.writeQuery({ query: getTransactionListQuery, data })
     // update amount of the corresponding account
     const account: Account = client.readFragment({
       id: `Account:${saveTransaction.account.id}`,

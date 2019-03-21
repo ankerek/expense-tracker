@@ -74,6 +74,12 @@ class C extends React.Component<
 
     this.setState({ loading: true })
 
+    const transaction: Transaction = client.readFragment({
+      id: `Transaction:${id}`,
+      fragment: transactionFragment,
+      fragmentName: 'Transaction',
+    })
+
     const mutationOptions: MutationOptions<
       DeleteTransactionMutation,
       DeleteTransactionMutationVariables
@@ -93,11 +99,6 @@ class C extends React.Component<
         client.writeQuery({ query: getTransactionListQuery, data })
 
         // update amount of the corresponding account
-        const transaction: Transaction = client.readFragment({
-          id: `Transaction:${id}`,
-          fragment: transactionFragment,
-          fragmentName: 'Transaction',
-        })
 
         const account: Account = client.readFragment({
           id: `Account:${transaction.account.id}`,
@@ -115,6 +116,9 @@ class C extends React.Component<
         })
 
         // TODO delete transaction fragment from cache
+      },
+      context: {
+        account: transaction.account,
       },
     }
 
