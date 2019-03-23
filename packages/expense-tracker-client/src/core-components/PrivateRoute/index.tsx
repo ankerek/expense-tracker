@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Route, RouteProps } from 'react-router'
 import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
+import { GetIsOnline } from '@controllers/network/GetIsOnline'
 
 export class PrivateRoute extends React.Component<RouteProps> {
   render() {
@@ -9,19 +10,25 @@ export class PrivateRoute extends React.Component<RouteProps> {
       <Route
         {...rest}
         render={() => (
-          <GetCurrentUser fetchPolicy="network-only">
-            {({ data, loading }) => {
-              if (data && data.getCurrentUser) {
-                return <Component {...this.props} />
-              }
+          <GetIsOnline>
+            {({ data: { isOnline } }) => (
+              <GetCurrentUser
+                fetchPolicy={isOnline ? 'network-only' : 'cache-first'}
+              >
+                {({ data, loading }) => {
+                  if (data && data.getCurrentUser) {
+                    return <Component {...this.props} />
+                  }
 
-              if (loading) {
-                return <span>loading...</span>
-              }
+                  if (loading) {
+                    return <span>loading...</span>
+                  }
 
-              return <Redirect to="/signin" />
-            }}
-          </GetCurrentUser>
+                  return <Redirect to="/signin" />
+                }}
+              </GetCurrentUser>
+            )}
+          </GetIsOnline>
         )}
       />
     )
