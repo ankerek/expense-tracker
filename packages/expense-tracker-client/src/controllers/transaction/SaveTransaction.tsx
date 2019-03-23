@@ -13,6 +13,7 @@ import {
   SaveTransactionMutationVariables,
   SaveTransactionInput,
   Transaction,
+  Account,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
@@ -21,6 +22,7 @@ import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutat
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 import { getUpdater } from '@controllers/getUpdater'
 import { setLocalOperation } from '@controllers/network/localOperations'
+import { accountFragment } from '@controllers/account/fragments'
 
 export const SaveTransactionMutationName = 'SaveTransactionMutation'
 
@@ -79,7 +81,12 @@ class C extends React.Component<
       isPersisted: false,
     }
 
-    // first stash away a current transaction before the update
+    // first stash away a current/prev account and transaction before the update
+    const prevAccount: Account = client.readFragment({
+      id: `Account:${values.account.id}`,
+      fragment: accountFragment,
+      fragmentName: 'Account',
+    })
     const prevTransaction: Transaction = client.readFragment({
       id: `Transaction:${values.id}`,
       fragment: transactionFragment,
@@ -87,6 +94,7 @@ class C extends React.Component<
     })
 
     const updaterOtherOptions: any = {
+      prevAccount,
       prevTransaction,
     }
 

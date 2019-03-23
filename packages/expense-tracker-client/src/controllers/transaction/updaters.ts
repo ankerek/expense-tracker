@@ -5,7 +5,6 @@ import {
   SaveTransactionMutation,
   GetTransactionListQuery,
   Transaction,
-  DeleteAccountMutation,
   DeleteTransactionMutation,
 } from '@schema-types'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
@@ -19,12 +18,19 @@ export type SaveTransactionMutationUpdaterFn<
 > = (
   proxy: DataProxy,
   mutationResult: FetchResult<T>,
-  otherOptions?: { prevTransaction?: Transaction }
+  otherOptions?: {
+    prevAccount?: Account
+    prevTransaction?: Transaction
+  }
 ) => void
 
 export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
   SaveTransactionMutation
-> = (client, { data: { saveTransaction } }, { prevTransaction } = {}) => {
+> = (
+  client,
+  { data: { saveTransaction } },
+  { prevAccount, prevTransaction } = {}
+) => {
   // there is no prevTransaction
   // create a new transaction
   if (!prevTransaction) {
@@ -35,71 +41,53 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
     data.getTransactionList.push(saveTransaction)
     client.writeQuery({ query: getTransactionListQuery, data })
 
-    if (!saveTransaction.isPersisted) {
-      // update amount of the corresponding account
-      const account: Account = client.readFragment({
-        id: `Account:${saveTransaction.account.id}`,
-        fragment: accountFragment,
-        fragmentName: 'Account',
-      })
-
-      account.amount = sum(account.amount, saveTransaction.amount)
-
-      client.writeFragment({
-        id: `Account:${saveTransaction.account.id}`,
-        fragment: accountFragment,
-        fragmentName: 'Account',
-        data: account,
-      })
-    }
+    // update amount of the corresponding account
+    client.writeFragment({
+      id: `Account:${saveTransaction.account.id}`,
+      fragment: accountFragment,
+      fragmentName: 'Account',
+      data: {
+        ...prevAccount,
+        amount: sum(prevAccount.amount, saveTransaction.amount),
+      },
+    })
   } else {
     // update existing transaction
-    if (!saveTransaction.isPersisted) {
-      // account where the updated transaction belongs to
-      const account: Account = client.readFragment({
-        id: `Account:${saveTransaction.account.id}`,
-        fragment: accountFragment,
-        fragmentName: 'Account',
-      })
+    // account where the updated transaction belongs to
 
-      // this num will be added to the account
-      let newAccountAmountDifference = 0
+    // this num will be added to the account
+    let newAccountAmountDifference = 0
 
-      if (prevTransaction.account.id !== saveTransaction.account.id) {
-        // transaction has moved to different account
-        // it's needed to deduct the amount from the prev account
-        const prevAccount: Account = client.readFragment({
-          id: `Account:${prevTransaction.account.id}`,
-          fragment: accountFragment,
-          fragmentName: 'Account',
-        })
-
-        prevAccount.amount = sum(prevAccount.amount, -prevTransaction.amount)
-
-        client.writeFragment({
-          id: `Account:${prevAccount.id}`,
-          fragment: accountFragment,
-          fragmentName: 'Account',
-          data: prevAccount,
-        })
-
-        newAccountAmountDifference = saveTransaction.amount
-      } else if (prevTransaction.amount !== saveTransaction.amount) {
-        newAccountAmountDifference = sum(
-          saveTransaction.amount,
-          -prevTransaction.amount
-        )
-      }
-
-      account.amount = sum(account.amount, newAccountAmountDifference)
-
+    if (prevTransaction.account.id !== saveTransaction.account.id) {
+      // transaction has moved to different account
+      // it's needed to deduct the amount from the prev account
       client.writeFragment({
-        id: `Account:${saveTransaction.account.id}`,
+        id: `Account:${prevTransaction.account.id}`,
         fragment: accountFragment,
         fragmentName: 'Account',
-        data: account,
+        data: {
+          ...prevTransaction.account,
+          amount: sum(prevTransaction.account.amount, -prevTransaction.amount),
+        },
       })
+
+      newAccountAmountDifference = saveTransaction.amount
+    } else if (prevTransaction.amount !== saveTransaction.amount) {
+      newAccountAmountDifference = sum(
+        saveTransaction.amount,
+        -prevTransaction.amount
+      )
     }
+
+    client.writeFragment({
+      id: `Account:${saveTransaction.account.id}`,
+      fragment: accountFragment,
+      fragmentName: 'Account',
+      data: {
+        ...prevAccount,
+        amount: sum(prevAccount.amount, newAccountAmountDifference),
+      },
+    })
   }
 }
 
