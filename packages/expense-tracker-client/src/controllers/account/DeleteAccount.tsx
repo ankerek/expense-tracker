@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'uuid/v4'
 import gql from 'graphql-tag'
 import {
   ChildMutateProps,
@@ -10,14 +11,14 @@ import {
 import {
   DeleteAccountMutation,
   DeleteAccountMutationVariables,
-  GetAccountListQuery,
-  GetTransactionListQuery,
+  Account,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { getAccountListQuery } from '@controllers/account/GetAccountList'
+import { accountFragment } from '@controllers/account/fragments'
+import { getUpdater } from '@controllers/getUpdater'
+import { setLocalOperation } from '@controllers/network/localOperations'
 
 export const DeleteAccountMutationName = 'DeleteAccountMutation'
 
@@ -66,8 +67,19 @@ class C extends React.Component<
       },
       location: { state },
     } = this.props
+    const operationId = uuid()
 
     this.setState({ loading: true })
+
+    const prevAccount: Account = client.readFragment({
+      id: `Account:${id}`,
+      fragment: accountFragment,
+      fragmentName: 'Account',
+    })
+
+    const updaterOtherOptions: any = {
+      prevAccount,
+    }
 
     const mutationOptions: MutationOptions<
       DeleteAccountMutation,
@@ -77,30 +89,10 @@ class C extends React.Component<
       optimisticResponse: {
         deleteAccount: true,
       },
-      update: () => {
-        // remove the account from the account list
-        const accountsData: GetAccountListQuery = client.readQuery({
-          query: getAccountListQuery,
-        })
-        accountsData.getAccountList = accountsData.getAccountList.filter(
-          a => a.id !== id
-        )
-        client.writeQuery({
-          query: getAccountListQuery,
-          data: accountsData,
-        })
-
-        // remove transactions associated to the account from the transaction list
-        const transactionsData: GetTransactionListQuery = client.readQuery({
-          query: getTransactionListQuery,
-        })
-        transactionsData.getTransactionList = transactionsData.getTransactionList.filter(
-          t => t.account.id !== id
-        )
-        client.writeQuery({
-          query: getTransactionListQuery,
-          data: transactionsData,
-        })
+      update: (proxy, response) =>
+        getUpdater(response)(proxy, response, updaterOtherOptions),
+      context: {
+        operationId,
       },
     }
 
@@ -112,6 +104,14 @@ class C extends React.Component<
       await mutate(mutationOptions)
     } else {
       mutate(mutationOptions)
+
+      setLocalOperation({
+        mutationOptions: {
+          ...mutationOptions,
+          mutation: deleteAccountMutation,
+        },
+        updaterOtherOptions,
+      })
     }
 
     this.setState({ loading: false })

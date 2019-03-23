@@ -1,17 +1,17 @@
 import React from 'react'
+import uuid from 'uuid/v4'
 import { compose } from '@utils/compose'
 import {
   ChildMutateProps,
   graphql,
   MutationOptions,
-  MutationUpdaterFn,
   withApollo,
   WithApolloClient,
 } from 'react-apollo'
 import {
+  Account,
   SaveAccountMutation,
   SaveAccountMutationVariables,
-  GetAccountListQuery,
   SaveAccountInput,
 } from '@schema-types'
 import gql from 'graphql-tag'
@@ -19,8 +19,9 @@ import { accountFragment } from '@controllers/account/fragments'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { getAccountListQuery } from '@controllers/account/GetAccountList'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { getUpdater } from '@controllers/getUpdater'
+import { setLocalOperation } from '@controllers/network/localOperations'
 
 export const SaveAccountMutationName = 'SaveAccountMutation'
 
@@ -40,7 +41,6 @@ export interface SaveAccountProps {
       loading: boolean
     }
   ) => JSX.Element | null
-  update?: MutationUpdaterFn<SaveAccountMutation>
 }
 
 const initialState = {
@@ -71,8 +71,8 @@ class C extends React.Component<
       mutate,
       history,
       location: { state },
-      update,
     } = this.props
+    const operationId = uuid()
 
     this.setState({ loading: true })
 
@@ -80,6 +80,17 @@ class C extends React.Component<
       __typename: 'Account',
       ...values,
       isPersisted: false,
+    }
+
+    // first stash away a current account before the update
+    const prevAccount: Account = client.readFragment({
+      id: `Account:${values.id}`,
+      fragment: accountFragment,
+      fragmentName: 'Account',
+    })
+
+    const updaterOtherOptions: any = {
+      prevAccount,
     }
 
     const mutationOptions: MutationOptions<
@@ -90,7 +101,11 @@ class C extends React.Component<
       optimisticResponse: {
         saveAccount: optimisticResponse,
       },
-      update,
+      update: (proxy, response) =>
+        getUpdater(response)(proxy, response, updaterOtherOptions),
+      context: {
+        operationId,
+      },
     }
 
     const { isOnline } = client.readQuery({
@@ -111,6 +126,14 @@ class C extends React.Component<
       }
     } else {
       mutate(mutationOptions)
+
+      setLocalOperation({
+        mutationOptions: {
+          ...mutationOptions,
+          mutation: saveAccountMutation,
+        },
+        updaterOtherOptions,
+      })
     }
 
     if (state && state.next) {

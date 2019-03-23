@@ -9,6 +9,7 @@ import { authLink } from './authLink'
 import { retryLink } from './retryLink'
 import { offlineLink } from './offlineLink'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { localOperationsLink } from './localOperationsLink'
 
 const API_BASE_URL = '/graphql'
 
@@ -27,7 +28,13 @@ const cache = new InMemoryCache({
   },
 })
 
-const link = apolloLinkFrom([authLink, retryLink, offlineLink, httpLink])
+const link = apolloLinkFrom([
+  authLink,
+  retryLink,
+  offlineLink,
+  localOperationsLink,
+  httpLink,
+])
 
 export const client = new ApolloClient({
   link,

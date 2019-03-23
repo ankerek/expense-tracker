@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'uuid/v4'
 import gql from 'graphql-tag'
 import {
   graphql,
@@ -18,7 +19,8 @@ import { compose } from '@utils/compose'
 import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { SaveTransactionMutationUpdaterFn } from './updaters'
+import { getUpdater } from '@controllers/getUpdater'
+import { setLocalOperation } from '@controllers/network/localOperations'
 
 export const SaveTransactionMutationName = 'SaveTransactionMutation'
 
@@ -38,7 +40,6 @@ interface SaveTransactionProps {
       loading: boolean
     }
   ) => React.ReactNode
-  update?: SaveTransactionMutationUpdaterFn<SaveTransactionMutation>
 }
 
 const initialState = {
@@ -67,8 +68,8 @@ class C extends React.Component<
       mutate,
       history,
       location: { state },
-      update,
     } = this.props
+    const operationId = uuid()
 
     this.setState({ loading: true })
 
@@ -85,18 +86,19 @@ class C extends React.Component<
       fragmentName: 'Transaction',
     })
 
+    const updaterOtherOptions: any = {
+      prevTransaction,
+    }
+
     const mutationOptions: MutationOptions<
       SaveTransactionMutation,
       SaveTransactionMutationVariables
     > = {
       variables: cleanPropertiesBeforeMutation({ input: values }),
-      optimisticResponse: {
-        saveTransaction: optimisticResponse,
-      },
-      update: (...args) => update(args[0], args[1], prevTransaction),
-      context: {
-        account: values.account,
-      },
+      optimisticResponse: { saveTransaction: optimisticResponse },
+      update: (proxy, response) =>
+        getUpdater(response)(proxy, response, updaterOtherOptions),
+      context: { operationId, account: values.account },
     }
 
     const { isOnline } = client.readQuery({
@@ -107,6 +109,14 @@ class C extends React.Component<
       await mutate(mutationOptions)
     } else {
       mutate(mutationOptions)
+
+      setLocalOperation({
+        mutationOptions: {
+          ...mutationOptions,
+          mutation: saveTransactionMutation,
+        },
+        updaterOtherOptions,
+      })
     }
 
     this.setState({ loading: false })

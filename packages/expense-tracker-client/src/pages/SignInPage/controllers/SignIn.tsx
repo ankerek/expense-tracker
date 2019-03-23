@@ -13,6 +13,8 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
 import { getCurrentUserQuery } from '@controllers/user/GetCurrentUser'
 import { userFragment } from '@controllers/user/fragments'
+import { restoreLocalOperations } from '@controllers/network/localOperations'
+import { client } from '@apollo/initializeApollo'
 
 const signInMutation = gql`
   mutation SignInMutation($input: SignInInput!) {
@@ -74,6 +76,8 @@ class C extends React.PureComponent<
         })
 
         this.setState({ loading: false })
+
+        restoreLocalOperations(client)
 
         this.props.history.push('/')
       }

@@ -1,9 +1,7 @@
 import React from 'react'
 import { SaveTransaction } from '@controllers/transaction/SaveTransaction'
-import { updateTransactionUpdater } from '@controllers/transaction/updaters'
 import { PageLayout } from '@core-components/PageLayout'
 import { GetTransaction } from '@controllers/transaction/GetTransaction'
-import { UpdateTransaction } from '@controllers/transaction/UpdateTransaction'
 import { TransactionForm } from '@core-components/TransactionForm'
 import { GetAccountList } from '@controllers/account/GetAccountList'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
@@ -24,7 +22,7 @@ export class TransactionPage extends React.Component {
                       {!transaction.isPersisted && (
                         <ItemNotPersistedIndicator />
                       )}
-                      <SaveTransaction update={updateTransactionUpdater}>
+                      <SaveTransaction>
                         {(submit, { loading }) => (
                           <TransactionForm
                             initialValues={transactionData.getTransaction}

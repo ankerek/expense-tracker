@@ -6,15 +6,10 @@ import {
   NextLink,
 } from 'apollo-link'
 import { Observer } from 'zen-observable-ts'
+import { isMutationOperation } from '@utils/isMutationOperation'
 import { SaveAccountMutationName } from '@controllers/account/SaveAccount'
 import { DeleteAccountMutationName } from '@controllers/account/DeleteAccount'
-
-const isMutationOperation = (operation: Operation) => {
-  return (
-    operation.query.definitions.filter((e: any) => e.operation === 'mutation')
-      .length > 0
-  )
-}
+import { removeLocalOperation } from '@controllers/network/localOperations'
 
 const DEPENDABLE_MUTATIONS = [SaveAccountMutationName]
 
@@ -89,9 +84,13 @@ class OfflineLink extends ApolloLink {
     const idx = this.jobQueue.findIndex(e => e === job)
     if (idx >= 0) {
       // unsubscribe if it's currently in progress
-      if (this.jobQueue[idx].subscription) {
-        this.jobQueue[idx].subscription.unsubscribe()
+      if (job.subscription) {
+        job.subscription.unsubscribe()
       }
+      // remove local operation from localStorage
+      removeLocalOperation(job.operation.getContext().operationId)
+
+      // remove job from queue
       this.jobQueue.splice(idx, 1)
     }
 

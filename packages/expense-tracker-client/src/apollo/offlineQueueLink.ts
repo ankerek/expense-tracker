@@ -1,12 +1,6 @@
 import QueueLink from 'apollo-link-queue'
 import { ApolloLink, Operation } from 'apollo-link'
-
-const isMutationOperation = (operation: Operation) => {
-  return (
-    operation.query.definitions.filter((e: any) => e.operation === 'mutation')
-      .length > 0
-  )
-}
+import { isMutationOperation } from '@utils/isMutationOperation'
 
 export const offlineQueueLink = new QueueLink()
 

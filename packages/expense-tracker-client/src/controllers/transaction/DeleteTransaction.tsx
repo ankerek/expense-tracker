@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'uuid/v4'
 import gql from 'graphql-tag'
 import {
   graphql,
@@ -8,19 +9,16 @@ import {
   MutationOptions,
 } from 'react-apollo'
 import {
-  Account,
-  GetTransactionListQuery,
   DeleteTransactionMutation,
   DeleteTransactionMutationVariables,
   Transaction,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { sum } from '@utils/math'
 import { transactionFragment } from './fragments'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
-import { accountFragment } from '@controllers/account/fragments'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { getUpdater } from '@controllers/getUpdater'
+import { setLocalOperation } from '@controllers/network/localOperations'
 
 export const DeleteTransactionMutationName = 'DeleteTransactionMutation'
 
@@ -71,14 +69,19 @@ class C extends React.Component<
       },
       location: { state },
     } = this.props
+    const operationId = uuid()
 
     this.setState({ loading: true })
 
-    const transaction: Transaction = client.readFragment({
+    const prevTransaction: Transaction = client.readFragment({
       id: `Transaction:${id}`,
       fragment: transactionFragment,
       fragmentName: 'Transaction',
     })
+
+    const updaterOtherOptions: any = {
+      prevTransaction,
+    }
 
     const mutationOptions: MutationOptions<
       DeleteTransactionMutation,
@@ -88,37 +91,11 @@ class C extends React.Component<
       optimisticResponse: {
         deleteTransaction: true,
       },
-      update: () => {
-        // remove the transaction from the Transaction list
-        const data: GetTransactionListQuery = client.readQuery({
-          query: getTransactionListQuery,
-        })
-        data.getTransactionList = data.getTransactionList.filter(
-          t => t.id !== id
-        )
-        client.writeQuery({ query: getTransactionListQuery, data })
-
-        // update amount of the corresponding account
-
-        const account: Account = client.readFragment({
-          id: `Account:${transaction.account.id}`,
-          fragment: accountFragment,
-          fragmentName: 'Account',
-        })
-
-        account.amount = sum(account.amount, -transaction.amount)
-
-        client.writeFragment({
-          id: `Account:${account.id}`,
-          fragment: accountFragment,
-          fragmentName: 'Account',
-          data: account,
-        })
-
-        // TODO delete transaction fragment from cache
-      },
+      update: (proxy, response) =>
+        getUpdater(response)(proxy, response, updaterOtherOptions),
       context: {
-        account: transaction.account,
+        operationId,
+        account: prevTransaction.account,
       },
     }
 
@@ -130,6 +107,14 @@ class C extends React.Component<
       await mutate(mutationOptions)
     } else {
       mutate(mutationOptions)
+
+      setLocalOperation({
+        mutationOptions: {
+          ...mutationOptions,
+          mutation: deleteTransactionMutation,
+        },
+        updaterOtherOptions,
+      })
     }
 
     this.setState({ loading: false })

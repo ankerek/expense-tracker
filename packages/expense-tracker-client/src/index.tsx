@@ -9,6 +9,7 @@ import { registerServiceWorker } from './registerServiceWorker'
 import { ThemeProvider } from '@core-components/ThemeProvider'
 import { OfflineIndicator } from '@core-components/OfflineIndicator'
 import { Routes } from '@pages/Routes'
+import { restoreLocalOperations } from '@controllers/network/localOperations'
 
 const App = () => (
   <ApolloProvider client={client}>
@@ -22,6 +23,7 @@ const App = () => (
 )
 
 waitForCache.then(() => {
+  restoreLocalOperations(client)
   ReactDOM.render(<App />, document.getElementById('root'))
 })
 
