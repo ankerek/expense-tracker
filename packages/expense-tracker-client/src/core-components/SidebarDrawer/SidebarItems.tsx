@@ -34,6 +34,17 @@ export class SidebarItems extends React.PureComponent {
         <ListItem
           button
           component={({ innerRef, ...props }) => (
+            <NavLink {...props} to="/categories" />
+          )}
+        >
+          <ListItemIcon>
+            <DnsIcon />
+          </ListItemIcon>
+          <SidebarItemText primary="Categories" />
+        </ListItem>
+        <ListItem
+          button
+          component={({ innerRef, ...props }) => (
             <NavLink {...props} to="/transactions" />
           )}
         >

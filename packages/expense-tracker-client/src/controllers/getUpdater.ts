@@ -5,6 +5,7 @@ import {
   saveAccountUpdater,
   deleteAccountUpdater,
 } from '@controllers/account/updaters'
+import { deleteCategoryUpdater, saveCategoryUpdater } from './category/updaters'
 import {
   saveTransactionUpdater,
   deleteTransactionUpdater,
@@ -21,20 +22,31 @@ export type UpdaterFn<
 ) => void
 
 export const getUpdater = (response: any): UpdaterFn => {
-  if (response.data.saveTransaction) {
-    return saveTransactionUpdater
-  }
-
-  if (response.data.deleteTransaction) {
-    return deleteTransactionUpdater
-  }
-
+  // accounts
   if (response.data.saveAccount) {
     return saveAccountUpdater
   }
 
   if (response.data.deleteAccount) {
     return deleteAccountUpdater
+  }
+
+  // categories
+  if (response.data.saveCategory) {
+    return saveCategoryUpdater
+  }
+
+  if (response.data.deleteCategory) {
+    return deleteCategoryUpdater
+  }
+
+  // transactions
+  if (response.data.saveTransaction) {
+    return saveTransactionUpdater
+  }
+
+  if (response.data.deleteTransaction) {
+    return deleteTransactionUpdater
   }
 
   return () => {}

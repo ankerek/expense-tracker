@@ -12,21 +12,29 @@ import {
 } from 'type-graphql'
 import { Transaction } from './definitions/Transaction'
 import { Account } from '../account/definitions/Account'
+import { Category } from '../category/definitions/Category'
 import { SaveTransactionInput } from './definitions/SaveTransactionInput'
 
 @Resolver(of => Transaction)
 export class TransactionResolver {
   private transactionRepository: Repository<Transaction>
   private accountRepository: Repository<Account>
+  private categoryRepository: Repository<Category>
 
   constructor() {
     this.transactionRepository = getRepository(Transaction)
     this.accountRepository = getRepository(Account)
+    this.categoryRepository = getRepository(Category)
   }
 
   @FieldResolver(returns => Account)
   async account(@Root() transaction: Transaction) {
     return this.accountRepository.findOne(transaction.accountId)
+  }
+
+  @FieldResolver(returns => Category)
+  async category(@Root() transaction: Transaction) {
+    return this.categoryRepository.findOne(transaction.categoryId)
   }
 
   @FieldResolver(returns => Boolean)

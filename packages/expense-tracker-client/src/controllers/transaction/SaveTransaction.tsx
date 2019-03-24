@@ -14,6 +14,7 @@ import {
   SaveTransactionInput,
   Transaction,
   Account,
+  Category,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
@@ -23,6 +24,7 @@ import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 import { getUpdater } from '@controllers/getUpdater'
 import { setLocalOperation } from '@controllers/network/localOperations'
 import { accountFragment } from '@controllers/account/fragments'
+import { categoryFragment } from '@controllers/category/fragments'
 
 export const SaveTransactionMutationName = 'SaveTransactionMutation'
 
@@ -81,11 +83,16 @@ class C extends React.Component<
       isPersisted: false,
     }
 
-    // first stash away a current/prev account and transaction before the update
+    // first stash away a current/prev account, category and transaction before the update
     const prevAccount: Account = client.readFragment({
       id: `Account:${values.account.id}`,
       fragment: accountFragment,
       fragmentName: 'Account',
+    })
+    const prevCategory: Category = client.readFragment({
+      id: `Category:${values.category.id}`,
+      fragment: categoryFragment,
+      fragmentName: 'Category',
     })
     const prevTransaction: Transaction = client.readFragment({
       id: `Transaction:${values.id}`,
@@ -95,6 +102,7 @@ class C extends React.Component<
 
     const updaterOtherOptions: any = {
       prevAccount,
+      prevCategory,
       prevTransaction,
     }
 
@@ -106,7 +114,11 @@ class C extends React.Component<
       optimisticResponse: { saveTransaction: optimisticResponse },
       update: (proxy, response) =>
         getUpdater(response)(proxy, response, updaterOtherOptions),
-      context: { operationId, account: values.account },
+      context: {
+        operationId,
+        account: values.account,
+        category: values.category,
+      },
     }
 
     const { isOnline } = client.readQuery({

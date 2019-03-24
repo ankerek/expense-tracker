@@ -1,8 +1,6 @@
 import { InputType, Field } from 'type-graphql'
-import { MinLength } from 'class-validator'
-import { Account } from '../../account/definitions/Account'
-import { Transaction } from './Transaction'
 import { SaveAccountInput } from '../../account/definitions/SaveAccountInput'
+import { SaveCategoryInput } from '../../category/definitions/SaveCategoryInput'
 
 @InputType()
 export class SaveTransactionInput {
@@ -20,4 +18,7 @@ export class SaveTransactionInput {
 
   @Field()
   account: SaveAccountInput
+
+  @Field()
+  category: SaveCategoryInput
 }

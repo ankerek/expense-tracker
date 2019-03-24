@@ -8,15 +8,20 @@ import {
 import { Observer } from 'zen-observable-ts'
 import { isMutationOperation } from '@utils/isMutationOperation'
 import { SaveAccountMutationName } from '@controllers/account/SaveAccount'
+import { SaveCategoryMutationName } from '@controllers/category/SaveCategory'
 import { DeleteAccountMutationName } from '@controllers/account/DeleteAccount'
 import { removeLocalOperation } from '@controllers/network/localOperations'
 
-const DEPENDABLE_MUTATIONS = [SaveAccountMutationName]
+const DEPENDABLE_MUTATIONS = [SaveAccountMutationName, SaveCategoryMutationName]
 
 const parseDependencies = (context: any) => {
   const dependencies: string[] = []
   if (context.account && !context.account.isPersisted) {
     dependencies.push(`${SaveAccountMutationName}:${context.account.id}`)
+  }
+
+  if (context.category && !context.category.isPersisted) {
+    dependencies.push(`${SaveCategoryMutationName}:${context.category.id}`)
   }
 
   return dependencies

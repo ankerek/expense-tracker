@@ -6,10 +6,12 @@ import {
   GetTransactionListQuery,
   Transaction,
   DeleteTransactionMutation,
+  Category,
 } from '@schema-types'
 import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 import { accountFragment } from '@controllers/account/fragments'
 import { sum } from '@utils/math'
+import { categoryFragment } from '@controllers/category/fragments'
 
 export type SaveTransactionMutationUpdaterFn<
   T = {
@@ -20,6 +22,7 @@ export type SaveTransactionMutationUpdaterFn<
   mutationResult: FetchResult<T>,
   otherOptions?: {
     prevAccount?: Account
+    prevCategory?: Category
     prevTransaction?: Transaction
   }
 ) => void
@@ -29,7 +32,7 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
 > = (
   client,
   { data: { saveTransaction } },
-  { prevAccount, prevTransaction } = {}
+  { prevAccount, prevCategory, prevTransaction } = {}
 ) => {
   // there is no prevTransaction
   // create a new transaction
@@ -53,7 +56,6 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
     })
   } else {
     // update existing transaction
-    // account where the updated transaction belongs to
 
     // this num will be added to the account
     let newAccountAmountDifference = 0
@@ -86,6 +88,43 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
       data: {
         ...prevAccount,
         amount: sum(prevAccount.amount, newAccountAmountDifference),
+      },
+    })
+
+    // this num will be added to the category
+    let newCategoryAmountDifference = 0
+
+    if (prevTransaction.category.id !== saveTransaction.category.id) {
+      // transaction has moved to different category
+      // it's needed to deduct the amount from the prev category
+      client.writeFragment({
+        id: `Category:${prevTransaction.category.id}`,
+        fragment: categoryFragment,
+        fragmentName: 'Category',
+        data: {
+          ...prevTransaction.category,
+          amount: sum(
+            prevTransaction.category.amount,
+            -prevTransaction.category.amount
+          ),
+        },
+      })
+
+      newCategoryAmountDifference = saveTransaction.amount
+    } else if (prevTransaction.category !== saveTransaction.category) {
+      newCategoryAmountDifference = sum(
+        saveTransaction.amount,
+        -prevTransaction.amount
+      )
+    }
+
+    client.writeFragment({
+      id: `Category:${saveTransaction.category.id}`,
+      fragment: categoryFragment,
+      fragmentName: 'Category',
+      data: {
+        ...prevCategory,
+        amount: sum(prevCategory.amount, newCategoryAmountDifference),
       },
     })
   }

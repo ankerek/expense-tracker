@@ -22,6 +22,8 @@ const cache = new InMemoryCache({
     Query: {
       getAccount: (_, args, { getCacheKey }) =>
         getCacheKey({ __typename: 'Account', id: args.id }),
+      getCategory: (_, args, { getCacheKey }) =>
+        getCacheKey({ __typename: 'Category', id: args.id }),
       getTransaction: (_, args, { getCacheKey }) =>
         getCacheKey({ __typename: 'Transaction', id: args.id }),
     },

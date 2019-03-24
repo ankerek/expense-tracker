@@ -1,4 +1,6 @@
-// because of floating point precision we need some math helpers
+/*
+ * Because of floating point precision we need math helpers
+ */
 
 // fraction multiplier
 const F_M = 100

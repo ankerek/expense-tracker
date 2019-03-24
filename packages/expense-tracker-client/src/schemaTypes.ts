@@ -106,6 +106,86 @@ export interface UpdateAccountMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: DeleteCategoryMutation
+// ====================================================
+
+export interface DeleteCategoryMutation {
+  deleteCategory: boolean
+}
+
+export interface DeleteCategoryMutationVariables {
+  id: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetCategoryQuery
+// ====================================================
+
+export interface GetCategoryQuery_getCategory {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface GetCategoryQuery {
+  getCategory: GetCategoryQuery_getCategory
+}
+
+export interface GetCategoryQueryVariables {
+  id: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetCategoryListQuery
+// ====================================================
+
+export interface GetCategoryListQuery_getCategoryList {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface GetCategoryListQuery {
+  getCategoryList: GetCategoryListQuery_getCategoryList[]
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SaveCategoryMutation
+// ====================================================
+
+export interface SaveCategoryMutation_saveCategory {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface SaveCategoryMutation {
+  saveCategory: SaveCategoryMutation_saveCategory
+}
+
+export interface SaveCategoryMutationVariables {
+  input: SaveCategoryInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetCurrencyListQuery
 // ====================================================
 
@@ -160,6 +240,14 @@ export interface GetTransactionQuery_getTransaction_account {
   isPersisted: boolean
 }
 
+export interface GetTransactionQuery_getTransaction_category {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
 export interface GetTransactionQuery_getTransaction {
   __typename: 'Transaction'
   id: string
@@ -167,6 +255,7 @@ export interface GetTransactionQuery_getTransaction {
   description: string | null
   amount: number
   account: GetTransactionQuery_getTransaction_account
+  category: GetTransactionQuery_getTransaction_category
   isPersisted: boolean
 }
 
@@ -193,6 +282,14 @@ export interface GetTransactionListQuery_getTransactionList_account {
   isPersisted: boolean
 }
 
+export interface GetTransactionListQuery_getTransactionList_category {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
 export interface GetTransactionListQuery_getTransactionList {
   __typename: 'Transaction'
   id: string
@@ -200,6 +297,7 @@ export interface GetTransactionListQuery_getTransactionList {
   description: string | null
   amount: number
   account: GetTransactionListQuery_getTransactionList_account
+  category: GetTransactionListQuery_getTransactionList_category
   isPersisted: boolean
 }
 
@@ -222,6 +320,14 @@ export interface SaveTransactionMutation_saveTransaction_account {
   isPersisted: boolean
 }
 
+export interface SaveTransactionMutation_saveTransaction_category {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
 export interface SaveTransactionMutation_saveTransaction {
   __typename: 'Transaction'
   id: string
@@ -229,6 +335,7 @@ export interface SaveTransactionMutation_saveTransaction {
   description: string | null
   amount: number
   account: SaveTransactionMutation_saveTransaction_account
+  category: SaveTransactionMutation_saveTransaction_category
   isPersisted: boolean
 }
 
@@ -255,6 +362,14 @@ export interface UpdateTransactionMutation_updateTransaction_account {
   isPersisted: boolean
 }
 
+export interface UpdateTransactionMutation_updateTransaction_category {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
 export interface UpdateTransactionMutation_updateTransaction {
   __typename: 'Transaction'
   id: string
@@ -262,6 +377,7 @@ export interface UpdateTransactionMutation_updateTransaction {
   description: string | null
   amount: number
   account: UpdateTransactionMutation_updateTransaction_account
+  category: UpdateTransactionMutation_updateTransaction_category
   isPersisted: boolean
 }
 
@@ -385,6 +501,21 @@ export interface Account {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: Category
+// ====================================================
+
+export interface Category {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Currency
 // ====================================================
 
@@ -409,6 +540,14 @@ export interface Transaction_account {
   isPersisted: boolean
 }
 
+export interface Transaction_category {
+  __typename: 'Category'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
 export interface Transaction {
   __typename: 'Transaction'
   id: string
@@ -416,6 +555,7 @@ export interface Transaction {
   description: string | null
   amount: number
   account: Transaction_account
+  category: Transaction_category
   isPersisted: boolean
 }
 
@@ -452,6 +592,12 @@ export interface SaveAccountInput {
   amount?: number | null
 }
 
+export interface SaveCategoryInput {
+  id: string
+  name: string
+  amount?: number | null
+}
+
 export interface SaveCurrencyInput {
   id: string
   symbol: string
@@ -463,6 +609,7 @@ export interface SaveTransactionInput {
   description?: string | null
   amount: number
   account: SaveAccountInput
+  category: SaveCategoryInput
 }
 
 export interface SignInInput {

@@ -9,6 +9,7 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql'
 import { User } from '../../user/definitions/User'
 import { Account } from '../../account/definitions/Account'
+import { Category } from '../../category/definitions/Category'
 import { SaveTransactionInput } from './SaveTransactionInput'
 
 @Entity()
@@ -45,6 +46,13 @@ export class Transaction {
   @Column({ name: 'account_id' })
   accountId?: string
 
+  @ManyToOne(type => Category, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'category_id' })
+  @Field(type => Category)
+  category: Category
+  @Column({ name: 'category_id' })
+  categoryId?: string
+
   constructor(input?: SaveTransactionInput) {
     if (input) {
       this.id = input.id
@@ -52,6 +60,7 @@ export class Transaction {
       this.description = input.description
       this.amount = input.amount
       this.account = new Account(input.account)
+      this.category = new Category(input.category)
     }
   }
 }
