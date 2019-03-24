@@ -3,7 +3,7 @@ import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
 
 interface FormattedAmountProps {
   currency?: string
-  children: number
+  children: React.ReactNode
 }
 
 export class FormattedAmount extends React.PureComponent<FormattedAmountProps> {

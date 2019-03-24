@@ -128,7 +128,6 @@ export interface GetCategoryQuery_getCategory {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -151,7 +150,6 @@ export interface GetCategoryListQuery_getCategoryList {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -170,7 +168,6 @@ export interface SaveCategoryMutation_saveCategory {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -244,7 +241,6 @@ export interface GetTransactionQuery_getTransaction_category {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -286,7 +282,6 @@ export interface GetTransactionListQuery_getTransactionList_category {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -324,7 +319,6 @@ export interface SaveTransactionMutation_saveTransaction_category {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -366,7 +360,6 @@ export interface UpdateTransactionMutation_updateTransaction_category {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -508,7 +501,6 @@ export interface Category {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -544,7 +536,6 @@ export interface Transaction_category {
   __typename: 'Category'
   id: string
   name: string
-  amount: number
   isPersisted: boolean
 }
 
@@ -595,7 +586,6 @@ export interface SaveAccountInput {
 export interface SaveCategoryInput {
   id: string
   name: string
-  amount?: number | null
 }
 
 export interface SaveCurrencyInput {

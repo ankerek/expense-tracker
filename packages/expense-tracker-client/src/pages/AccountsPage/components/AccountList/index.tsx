@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetAccountListQuery_getAccountList } from '@schema-types'
+import { GetAccountListQuery_getAccountList, Transaction } from '@schema-types'
 import { Amount, Wrapper, Item, OutsideActionsWrapper } from './elements'
 import Divider from '@material-ui/core/Divider'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
@@ -7,6 +7,7 @@ import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
 import { EmptyState } from '@core-components/EmptyState'
+import { GetTransactionList } from '@controllers/transaction/GetTransactionList'
 
 interface AccountListProps {
   accounts: GetAccountListQuery_getAccountList[]

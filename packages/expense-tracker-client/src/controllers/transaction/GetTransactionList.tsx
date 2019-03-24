@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { Query, QueryResult } from 'react-apollo'
 import { GetTransactionListQuery } from '@schema-types'
 import { transactionFragment } from './fragments'
+import { FetchPolicy } from 'apollo-client'
 
 export const getTransactionListQuery = gql`
   query GetTransactionListQuery {
@@ -14,6 +15,7 @@ export const getTransactionListQuery = gql`
 `
 
 interface GetTransactionListProps {
+  fetchPolicy?: FetchPolicy
   children: (result: QueryResult<GetTransactionListQuery>) => JSX.Element | null
 }
 
@@ -21,11 +23,11 @@ export class GetTransactionList extends React.Component<
   GetTransactionListProps
 > {
   render() {
-    const { children } = this.props
+    const { fetchPolicy = 'cache-and-network', children } = this.props
     return (
       <Query<GetTransactionListQuery>
         query={getTransactionListQuery}
-        fetchPolicy="cache-and-network"
+        fetchPolicy={fetchPolicy}
       >
         {(...args) => children(...args)}
       </Query>

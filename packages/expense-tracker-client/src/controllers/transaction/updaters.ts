@@ -82,43 +82,6 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
         amount: sum(saveTransaction.account.amount, newAccountAmountDifference),
       },
     })
-
-    // this num will be added to the category
-    let newCategoryAmountDifference = 0
-
-    if (prevTransaction.category.id !== saveTransaction.category.id) {
-      // transaction has moved to different category
-      // it's needed to deduct the amount from the prev category
-      client.writeFragment({
-        id: `Category:${prevTransaction.category.id}`,
-        fragment: categoryFragment,
-        fragmentName: 'Category',
-        data: {
-          ...prevTransaction.category,
-          amount: sum(prevTransaction.category.amount, -prevTransaction.amount),
-        },
-      })
-
-      newCategoryAmountDifference = saveTransaction.amount
-    } else if (prevTransaction.amount !== saveTransaction.amount) {
-      newCategoryAmountDifference = sum(
-        saveTransaction.amount,
-        -prevTransaction.amount
-      )
-    }
-
-    client.writeFragment({
-      id: `Category:${saveTransaction.category.id}`,
-      fragment: categoryFragment,
-      fragmentName: 'Category',
-      data: {
-        ...saveTransaction.category,
-        amount: sum(
-          saveTransaction.category.amount,
-          newCategoryAmountDifference
-        ),
-      },
-    })
   }
 }
 

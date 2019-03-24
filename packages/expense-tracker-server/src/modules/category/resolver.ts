@@ -8,8 +8,6 @@ import {
   Authorized,
   ID,
   FieldResolver,
-  Root,
-  Float,
 } from 'type-graphql'
 import { Transaction } from '../transaction/definitions/Transaction'
 import { SaveCategoryInput } from './definitions/SaveCategoryInput'
@@ -23,17 +21,6 @@ export class AccountResolver {
   constructor() {
     this.categoryRepository = getRepository(Category)
     this.transactionRepository = getRepository(Transaction)
-  }
-
-  @FieldResolver(type => Float)
-  async amount(@Root() category: Category) {
-    const { sum } = await this.transactionRepository
-      .createQueryBuilder('transaction')
-      .select('SUM(transaction.amount)', 'sum')
-      .where('transaction.categoryId = :id', { id: category.id })
-      .getRawOne()
-
-    return sum || 0
   }
 
   @FieldResolver(returns => Boolean)

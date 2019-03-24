@@ -1,9 +1,8 @@
 import React from 'react'
 import { GetCategoryListQuery_getCategoryList } from '@schema-types'
-import { Amount, Wrapper, Item, OutsideActionsWrapper } from './elements'
+import { Wrapper, Item, OutsideActionsWrapper } from './elements'
 import Divider from '@material-ui/core/Divider'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
-import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
 import { EmptyState } from '@core-components/EmptyState'
@@ -33,9 +32,6 @@ export class CategoryList extends React.PureComponent<CategoryListProps> {
                   {!category.isPersisted && (
                     <ItemNotPersistedIndicator compact={true} />
                   )}
-                  <Amount>
-                    <FormattedAmount>{category.amount}</FormattedAmount>
-                  </Amount>
                 </Item>
                 <Divider light />
               </div>
