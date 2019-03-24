@@ -6,8 +6,11 @@ export const Wrapper = styled.div`
 
 export const Item = styled.div<{ isNotPersisted: boolean }>`
   padding: 10px 20px;
-  display: flex;
   background: ${props => (props.isNotPersisted ? '#F8F8F8' : 'white')};
+`
+
+export const ItemRow = styled.div`
+  display: flex;
 `
 
 export const Amount = styled.div`

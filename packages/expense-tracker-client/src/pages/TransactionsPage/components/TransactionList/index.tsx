@@ -1,10 +1,10 @@
 import React from 'react'
 import { GetTransactionListQuery_getTransactionList } from '@schema-types'
 import {
-  Actions,
   Amount,
   Wrapper,
   Item,
+  ItemRow,
   OutsideActionsWrapper,
 } from './elements'
 import Divider from '@material-ui/core/Divider'
@@ -13,6 +13,7 @@ import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
 import { EmptyState } from '@core-components/EmptyState'
+import Typography from '@material-ui/core/Typography'
 
 interface AccountListProps {
   transactions: GetTransactionListQuery_getTransactionList[]
@@ -28,21 +29,29 @@ export class TransactionList extends React.Component<AccountListProps> {
             transactions.map(transaction => (
               <div key={transaction.id}>
                 <Item isNotPersisted={!transaction.isPersisted}>
-                  <NavLink
-                    to={{
-                      pathname: `/transactions/${transaction.id}`,
-                      state: { next: '/transactions' },
-                    }}
-                  >
-                    {transaction.id}
-                  </NavLink>
-                  {!transaction.isPersisted && (
-                    <ItemNotPersistedIndicator compact={true} />
-                  )}
-                  <Amount>
-                    <FormattedAmount>{transaction.amount}</FormattedAmount>
-                  </Amount>
-                  <Actions>Actions</Actions>
+                  <ItemRow>
+                    <NavLink
+                      to={{
+                        pathname: `/transactions/${transaction.id}`,
+                        state: { next: '/transactions' },
+                      }}
+                    >
+                      {transaction.category.name}
+                    </NavLink>
+                    {!transaction.isPersisted && (
+                      <ItemNotPersistedIndicator compact={true} />
+                    )}
+                    <Amount>
+                      <FormattedAmount>{transaction.amount}</FormattedAmount>
+                    </Amount>
+                  </ItemRow>
+                  <ItemRow>
+                    {transaction.description !== '' && (
+                      <Typography color="textSecondary">
+                        {transaction.description}
+                      </Typography>
+                    )}
+                  </ItemRow>
                 </Item>
                 <Divider light />
               </div>
