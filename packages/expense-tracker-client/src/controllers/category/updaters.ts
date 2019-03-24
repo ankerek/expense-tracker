@@ -23,16 +23,14 @@ export type CategoryMutationUpdaterFn<
 export const saveCategoryUpdater: CategoryMutationUpdaterFn<
   SaveCategoryMutation
 > = (client, { data: { saveCategory } }, { prevCategory } = {}) => {
-  if (!prevCategory) {
-    // push new transaction to Category list
-    const data: GetCategoryListQuery = client.readQuery({
-      query: getCategoryListQuery,
-    })
+  // push new transaction to Category list
+  const data: GetCategoryListQuery = client.readQuery({
+    query: getCategoryListQuery,
+  })
 
-    data.getCategoryList.push(saveCategory)
+  data.getCategoryList.push(saveCategory)
 
-    client.writeQuery({ query: getCategoryListQuery, data })
-  }
+  client.writeQuery({ query: getCategoryListQuery, data })
 }
 
 export const deleteCategoryUpdater: CategoryMutationUpdaterFn<

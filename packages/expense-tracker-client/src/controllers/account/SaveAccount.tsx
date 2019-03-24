@@ -36,7 +36,10 @@ const saveAccountMutation = gql`
 
 export interface SaveAccountProps {
   children: (
-    submit: (values: SaveAccountInput) => Promise<NormalizedErrorsMap | null>,
+    submit: (
+      values: SaveAccountInput,
+      prevValues?: SaveAccountInput
+    ) => Promise<NormalizedErrorsMap | null>,
     data: {
       loading: boolean
     }
@@ -65,7 +68,10 @@ class C extends React.Component<
     })
   }
 
-  private submit = async (values: SaveAccountInput) => {
+  private submit = async (
+    values: SaveAccountInput,
+    prevValues?: SaveAccountInput
+  ) => {
     const {
       client,
       mutate,
@@ -82,15 +88,8 @@ class C extends React.Component<
       isPersisted: false,
     }
 
-    // first stash away a current account before the update
-    const prevAccount: Account = client.readFragment({
-      id: `Account:${values.id}`,
-      fragment: accountFragment,
-      fragmentName: 'Account',
-    })
-
     const updaterOtherOptions: any = {
-      prevAccount,
+      prevAccount: prevValues,
     }
 
     const mutationOptions: MutationOptions<

@@ -11,12 +11,11 @@ import {
 import {
   DeleteCategoryMutation,
   DeleteCategoryMutationVariables,
-  Category,
+  SaveCategoryInput,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { categoryFragment } from '@controllers/category/fragments'
 import { getUpdater } from '@controllers/getUpdater'
 import { setLocalOperation } from '@controllers/network/localOperations'
 
@@ -30,7 +29,7 @@ const deleteCategoryMutation = gql`
 
 interface DeleteCategoryProps {
   children: (
-    deleteCategory: () => void,
+    deleteCategory: (prevValues: SaveCategoryInput) => void,
     data: {
       loading: boolean
     }
@@ -57,7 +56,7 @@ class C extends React.Component<
     })
   }
 
-  private deleteCategory = async () => {
+  private deleteCategory = async (prevValues: SaveCategoryInput) => {
     const {
       client,
       mutate,
@@ -71,14 +70,8 @@ class C extends React.Component<
 
     this.setState({ loading: true })
 
-    const prevCategory: Category = client.readFragment({
-      id: `Category:${id}`,
-      fragment: categoryFragment,
-      fragmentName: 'Category',
-    })
-
     const updaterOtherOptions: any = {
-      prevCategory,
+      prevCategory: prevValues,
     }
 
     const mutationOptions: MutationOptions<

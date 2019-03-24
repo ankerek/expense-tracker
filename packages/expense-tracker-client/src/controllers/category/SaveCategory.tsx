@@ -37,7 +37,10 @@ const saveCategoryMutation = gql`
 
 export interface SaveCategoryProps {
   children: (
-    submit: (values: SaveCategoryInput) => Promise<NormalizedErrorsMap | null>,
+    submit: (
+      values: SaveCategoryInput,
+      prevValues?: SaveCategoryInput
+    ) => Promise<NormalizedErrorsMap | null>,
     data: {
       loading: boolean
     }
@@ -66,7 +69,10 @@ class C extends React.Component<
     })
   }
 
-  private submit = async (values: SaveCategoryInput) => {
+  private submit = async (
+    values: SaveCategoryInput,
+    prevValues?: SaveCategoryInput
+  ) => {
     const {
       client,
       mutate,
@@ -83,15 +89,8 @@ class C extends React.Component<
       isPersisted: false,
     }
 
-    // first stash away a current account before the update
-    const prevCategory: Category = client.readFragment({
-      id: `Category:${values.id}`,
-      fragment: accountFragment,
-      fragmentName: 'Category',
-    })
-
     const updaterOtherOptions: any = {
-      prevCategory,
+      prevCategory: prevValues,
     }
 
     const mutationOptions: MutationOptions<

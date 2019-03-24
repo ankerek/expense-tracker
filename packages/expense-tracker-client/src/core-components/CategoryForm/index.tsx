@@ -11,7 +11,10 @@ import { ActionsWrapper } from './elements'
 
 export interface CategoryFormProps {
   initialValues?: CategoryFormValues
-  submit: (values: CategoryFormValues) => Promise<NormalizedErrorsMap | null>
+  submit: (
+    values: CategoryFormValues,
+    prevValues?: CategoryFormValues
+  ) => Promise<NormalizedErrorsMap | null>
   hasDelete?: boolean
   loading?: boolean
 }
@@ -41,7 +44,7 @@ export class CategoryForm<MutationVariables> extends React.PureComponent<
     values: CategoryFormValues,
     formikBag: FormikProps<CategoryFormValues>
   ) => {
-    const response = await this.props.submit(values)
+    const response = await this.props.submit(values, this.props.initialValues)
 
     if (response && response.errors) {
       formikBag.setErrors(response.errors as FormikErrors<CategoryFormValues>)
@@ -84,7 +87,7 @@ export class CategoryForm<MutationVariables> extends React.PureComponent<
                       fullWidth
                       variant="contained"
                       color="secondary"
-                      onClick={deleteCategory as any}
+                      onClick={() => deleteCategory(initialValues)}
                       progress={deleteLoading}
                     >
                       Delete category

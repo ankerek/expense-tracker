@@ -11,7 +11,7 @@ import {
 import {
   DeleteAccountMutation,
   DeleteAccountMutationVariables,
-  Account,
+  SaveAccountInput,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
@@ -30,7 +30,7 @@ const deleteAccountMutation = gql`
 
 interface DeleteAccountProps {
   children: (
-    deleteAccount: () => void,
+    deleteAccount: (prevValues: SaveAccountInput) => void,
     data: {
       loading: boolean
     }
@@ -57,7 +57,7 @@ class C extends React.Component<
     })
   }
 
-  private deleteAccount = async () => {
+  private deleteAccount = async (prevValues: SaveAccountInput) => {
     const {
       client,
       mutate,
@@ -71,14 +71,8 @@ class C extends React.Component<
 
     this.setState({ loading: true })
 
-    const prevAccount: Account = client.readFragment({
-      id: `Account:${id}`,
-      fragment: accountFragment,
-      fragmentName: 'Account',
-    })
-
     const updaterOtherOptions: any = {
-      prevAccount,
+      prevAccount: prevValues,
     }
 
     const mutationOptions: MutationOptions<

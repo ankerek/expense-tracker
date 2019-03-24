@@ -23,16 +23,14 @@ export type SaveAccountMutationUpdaterFn<
 export const saveAccountUpdater: SaveAccountMutationUpdaterFn<
   SaveAccountMutation
 > = (client, { data: { saveAccount } }, { prevAccount } = {}) => {
-  if (!prevAccount) {
-    // push new transaction to Account list
-    const data: GetAccountListQuery = client.readQuery({
-      query: getAccountListQuery,
-    })
+  // push new account to Account list
+  const data: GetAccountListQuery = client.readQuery({
+    query: getAccountListQuery,
+  })
 
-    data.getAccountList.push(saveAccount)
+  data.getAccountList.push(saveAccount)
 
-    client.writeQuery({ query: getAccountListQuery, data })
-  }
+  client.writeQuery({ query: getAccountListQuery, data })
 }
 
 export const deleteAccountUpdater: SaveAccountMutationUpdaterFn<

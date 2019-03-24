@@ -22,8 +22,11 @@ type TransactionFormValues = SaveTransactionInput
 export interface TransactionFormProps {
   accounts: GetAccountListQuery_getAccountList[]
   categories: GetCategoryListQuery_getCategoryList[]
-  initialValues?: Partial<TransactionFormValues>
-  submit: (values: TransactionFormValues) => void
+  initialValues?: TransactionFormValues
+  submit: (
+    values: TransactionFormValues,
+    prevValues?: TransactionFormValues
+  ) => void
   hasDelete?: boolean
   loading?: boolean
 }
@@ -63,7 +66,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
   TransactionFormProps
 > {
   handleSubmit = async (values: TransactionFormValues) => {
-    this.props.submit(values)
+    this.props.submit(values, this.props.initialValues)
   }
 
   render() {
@@ -192,7 +195,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
                       fullWidth
                       variant="contained"
                       color="secondary"
-                      onClick={deleteTransaction}
+                      onClick={() => deleteTransaction(initialValues)}
                       progress={deleteLoading}
                     >
                       Delete transaction

@@ -11,7 +11,10 @@ import { ActionsWrapper } from './elements'
 
 export interface AccountFormProps {
   initialValues?: AccountFormValues
-  submit: (values: AccountFormValues) => Promise<NormalizedErrorsMap | null>
+  submit: (
+    values: AccountFormValues,
+    prevValues?: AccountFormValues
+  ) => Promise<NormalizedErrorsMap | null>
   hasDelete?: boolean
   loading?: boolean
 }
@@ -41,7 +44,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
     values: AccountFormValues,
     formikBag: FormikProps<AccountFormValues>
   ) => {
-    const response = await this.props.submit(values)
+    const response = await this.props.submit(values, this.props.initialValues)
 
     if (response && response.errors) {
       formikBag.setErrors(response.errors as FormikErrors<AccountFormValues>)
@@ -84,7 +87,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
                       fullWidth
                       variant="contained"
                       color="secondary"
-                      onClick={deleteAccount as any}
+                      onClick={() => deleteAccount(initialValues)}
                       progress={deleteLoading}
                     >
                       Delete account

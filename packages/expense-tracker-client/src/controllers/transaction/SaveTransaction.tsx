@@ -13,8 +13,6 @@ import {
   SaveTransactionMutationVariables,
   SaveTransactionInput,
   Transaction,
-  Account,
-  Category,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
@@ -23,8 +21,6 @@ import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutat
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 import { getUpdater } from '@controllers/getUpdater'
 import { setLocalOperation } from '@controllers/network/localOperations'
-import { accountFragment } from '@controllers/account/fragments'
-import { categoryFragment } from '@controllers/category/fragments'
 
 export const SaveTransactionMutationName = 'SaveTransactionMutation'
 
@@ -39,7 +35,10 @@ const saveTransactionMutation = gql`
 
 interface SaveTransactionProps {
   children: (
-    submit: (values: SaveTransactionInput) => void,
+    submit: (
+      values: SaveTransactionInput,
+      prevValues?: SaveTransactionInput
+    ) => void,
     data: {
       loading: boolean
     }
@@ -66,7 +65,10 @@ class C extends React.Component<
     return this.props.children(this.submit, { loading: this.state.loading })
   }
 
-  private submit = async (values: SaveTransactionInput) => {
+  private submit = async (
+    values: SaveTransactionInput,
+    prevValues: SaveTransactionInput
+  ) => {
     const {
       client,
       mutate,
@@ -83,27 +85,8 @@ class C extends React.Component<
       isPersisted: false,
     }
 
-    // first stash away a current/prev account, category and transaction before the update
-    const prevAccount: Account = client.readFragment({
-      id: `Account:${values.account.id}`,
-      fragment: accountFragment,
-      fragmentName: 'Account',
-    })
-    const prevCategory: Category = client.readFragment({
-      id: `Category:${values.category.id}`,
-      fragment: categoryFragment,
-      fragmentName: 'Category',
-    })
-    const prevTransaction: Transaction = client.readFragment({
-      id: `Transaction:${values.id}`,
-      fragment: transactionFragment,
-      fragmentName: 'Transaction',
-    })
-
     const updaterOtherOptions: any = {
-      prevAccount,
-      prevCategory,
-      prevTransaction,
+      prevTransaction: prevValues,
     }
 
     const mutationOptions: MutationOptions<

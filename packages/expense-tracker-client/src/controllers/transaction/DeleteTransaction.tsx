@@ -11,11 +11,10 @@ import {
 import {
   DeleteTransactionMutation,
   DeleteTransactionMutationVariables,
-  Transaction,
+  SaveTransactionInput,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { transactionFragment } from './fragments'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 import { getUpdater } from '@controllers/getUpdater'
 import { setLocalOperation } from '@controllers/network/localOperations'
@@ -30,7 +29,7 @@ const deleteTransactionMutation = gql`
 
 interface DeleteTransactionProps {
   children: (
-    deleteTransaction: () => void,
+    deleteTransaction: (values: SaveTransactionInput) => void,
     data: {
       loading: boolean
     }
@@ -59,7 +58,7 @@ class C extends React.Component<
     })
   }
 
-  private deleteTransaction = async () => {
+  private deleteTransaction = async (prevValues: SaveTransactionInput) => {
     const {
       client,
       mutate,
@@ -73,14 +72,8 @@ class C extends React.Component<
 
     this.setState({ loading: true })
 
-    const prevTransaction: Transaction = client.readFragment({
-      id: `Transaction:${id}`,
-      fragment: transactionFragment,
-      fragmentName: 'Transaction',
-    })
-
     const updaterOtherOptions: any = {
-      prevTransaction,
+      prevTransaction: prevValues,
     }
 
     const mutationOptions: MutationOptions<
@@ -95,7 +88,7 @@ class C extends React.Component<
         getUpdater(response)(proxy, response, updaterOtherOptions),
       context: {
         operationId,
-        account: prevTransaction.account,
+        account: prevValues.account,
       },
     }
 

@@ -21,37 +21,29 @@ export type SaveTransactionMutationUpdaterFn<
   proxy: DataProxy,
   mutationResult: FetchResult<T>,
   otherOptions?: {
-    prevAccount?: Account
-    prevCategory?: Category
     prevTransaction?: Transaction
   }
 ) => void
 
 export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
   SaveTransactionMutation
-> = (
-  client,
-  { data: { saveTransaction } },
-  { prevAccount, prevCategory, prevTransaction } = {}
-) => {
-  // there is no prevTransaction
-  // create a new transaction
-  if (!prevTransaction) {
-    // push new transaction to Transaction list
-    const data: GetTransactionListQuery = client.readQuery({
-      query: getTransactionListQuery,
-    })
-    data.getTransactionList.push(saveTransaction)
-    client.writeQuery({ query: getTransactionListQuery, data })
+> = (client, { data: { saveTransaction } }, { prevTransaction } = {}) => {
+  // push transaction to Transaction list
+  const data: GetTransactionListQuery = client.readQuery({
+    query: getTransactionListQuery,
+  })
+  data.getTransactionList.push(saveTransaction)
+  client.writeQuery({ query: getTransactionListQuery, data })
 
+  if (!prevTransaction) {
     // update amount of the corresponding account
     client.writeFragment({
       id: `Account:${saveTransaction.account.id}`,
       fragment: accountFragment,
       fragmentName: 'Account',
       data: {
-        ...prevAccount,
-        amount: sum(prevAccount.amount, saveTransaction.amount),
+        ...saveTransaction.account,
+        amount: sum(saveTransaction.account.amount, saveTransaction.amount),
       },
     })
   } else {
@@ -86,8 +78,8 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
       fragment: accountFragment,
       fragmentName: 'Account',
       data: {
-        ...prevAccount,
-        amount: sum(prevAccount.amount, newAccountAmountDifference),
+        ...saveTransaction.account,
+        amount: sum(saveTransaction.account.amount, newAccountAmountDifference),
       },
     })
 
@@ -103,15 +95,12 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
         fragmentName: 'Category',
         data: {
           ...prevTransaction.category,
-          amount: sum(
-            prevTransaction.category.amount,
-            -prevTransaction.category.amount
-          ),
+          amount: sum(prevTransaction.category.amount, -prevTransaction.amount),
         },
       })
 
       newCategoryAmountDifference = saveTransaction.amount
-    } else if (prevTransaction.category !== saveTransaction.category) {
+    } else if (prevTransaction.amount !== saveTransaction.amount) {
       newCategoryAmountDifference = sum(
         saveTransaction.amount,
         -prevTransaction.amount
@@ -123,8 +112,11 @@ export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
       fragment: categoryFragment,
       fragmentName: 'Category',
       data: {
-        ...prevCategory,
-        amount: sum(prevCategory.amount, newCategoryAmountDifference),
+        ...saveTransaction.category,
+        amount: sum(
+          saveTransaction.category.amount,
+          newCategoryAmountDifference
+        ),
       },
     })
   }
