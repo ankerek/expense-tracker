@@ -129,6 +129,8 @@ class OfflineLink extends ApolloLink {
       if (
         // jobs of the same operation type
         (job.operation.operationName === operation.operationName &&
+          job.operation.variables.input &&
+          operation.variables.input &&
           job.operation.variables.input.id === operation.variables.input.id) ||
         // transaction jobs on account delete
         (operation.operationName === DeleteAccountMutationName &&

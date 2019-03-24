@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   margin: 10px 0;
-  background: white;
 `
 
 export const Item = styled.div<{ isNotPersisted: boolean }>`

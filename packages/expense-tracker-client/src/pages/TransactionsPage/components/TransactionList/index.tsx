@@ -12,6 +12,7 @@ import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
+import { EmptyState } from '@core-components/EmptyState'
 
 interface AccountListProps {
   transactions: GetTransactionListQuery_getTransactionList[]
@@ -23,28 +24,32 @@ export class TransactionList extends React.Component<AccountListProps> {
     return (
       <>
         <Wrapper>
-          {transactions.map(transaction => (
-            <div key={transaction.id}>
-              <Item isNotPersisted={!transaction.isPersisted}>
-                <NavLink
-                  to={{
-                    pathname: `/transactions/${transaction.id}`,
-                    state: { next: '/transactions' },
-                  }}
-                >
-                  {transaction.id}
-                </NavLink>
-                {!transaction.isPersisted && (
-                  <ItemNotPersistedIndicator compact={true} />
-                )}
-                <Amount>
-                  <FormattedAmount>{transaction.amount}</FormattedAmount>
-                </Amount>
-                <Actions>Actions</Actions>
-              </Item>
-              <Divider light />
-            </div>
-          ))}
+          {transactions.length ? (
+            transactions.map(transaction => (
+              <div key={transaction.id}>
+                <Item isNotPersisted={!transaction.isPersisted}>
+                  <NavLink
+                    to={{
+                      pathname: `/transactions/${transaction.id}`,
+                      state: { next: '/transactions' },
+                    }}
+                  >
+                    {transaction.id}
+                  </NavLink>
+                  {!transaction.isPersisted && (
+                    <ItemNotPersistedIndicator compact={true} />
+                  )}
+                  <Amount>
+                    <FormattedAmount>{transaction.amount}</FormattedAmount>
+                  </Amount>
+                  <Actions>Actions</Actions>
+                </Item>
+                <Divider light />
+              </div>
+            ))
+          ) : (
+            <EmptyState title="There are no transactions" />
+          )}
         </Wrapper>
         <OutsideActionsWrapper>
           <Button.Link
