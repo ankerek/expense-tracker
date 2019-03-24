@@ -11,6 +11,7 @@ import { SaveAccountMutationName } from '@controllers/account/SaveAccount'
 import { SaveCategoryMutationName } from '@controllers/category/SaveCategory'
 import { DeleteAccountMutationName } from '@controllers/account/DeleteAccount'
 import { removeLocalOperation } from '@controllers/network/localOperations'
+import { DeleteCategoryMutationName } from '@controllers/category/DeleteCategory'
 
 const DEPENDABLE_MUTATIONS = [SaveAccountMutationName, SaveCategoryMutationName]
 
@@ -132,7 +133,11 @@ class OfflineLink extends ApolloLink {
         // transaction jobs on account delete
         (operation.operationName === DeleteAccountMutationName &&
           jobOperationContext.account &&
-          jobOperationContext.account.id === operation.variables.id)
+          jobOperationContext.account.id === operation.variables.id) ||
+        // transaction jobs on category delete
+        (operation.operationName === DeleteCategoryMutationName &&
+          jobOperationContext.category &&
+          jobOperationContext.category.id === operation.variables.id)
       ) {
         job.observer.error(() => {
           // cancel op
