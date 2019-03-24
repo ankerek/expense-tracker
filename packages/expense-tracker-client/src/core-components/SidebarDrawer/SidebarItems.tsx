@@ -5,6 +5,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import InboxIcon from '@material-ui/icons/Inbox'
 import DnsIcon from '@material-ui/icons/Dns'
+import AllInboxIcon from '@material-ui/icons/AllInbox'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { SidebarItemText } from './elements'
@@ -38,7 +39,7 @@ export class SidebarItems extends React.PureComponent {
           )}
         >
           <ListItemIcon>
-            <DnsIcon />
+            <AllInboxIcon />
           </ListItemIcon>
           <SidebarItemText primary="Categories" />
         </ListItem>
@@ -58,13 +59,7 @@ export class SidebarItems extends React.PureComponent {
             data && data.getCurrentUser ? (
               <SignOut>
                 {({ signOut }) => (
-                  <ListItem
-                    button
-                    // component={({ innerRef, ...props }) => (
-                    //   <NavLink {...props} to="/signout" />
-                    // )}
-                    onClick={signOut}
-                  >
+                  <ListItem button onClick={signOut}>
                     <ListItemIcon>
                       <ExitToAppIcon />
                     </ListItemIcon>
