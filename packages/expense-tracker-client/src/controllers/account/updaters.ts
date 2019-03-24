@@ -22,13 +22,21 @@ export type SaveAccountMutationUpdaterFn<
 
 export const saveAccountUpdater: SaveAccountMutationUpdaterFn<
   SaveAccountMutation
-> = (client, { data: { saveAccount } }, { prevAccount } = {}) => {
-  // push new account to Account list
+> = (client, { data: { saveAccount } }) => {
+  // update account in Account list
   const data: GetAccountListQuery = client.readQuery({
     query: getAccountListQuery,
   })
 
-  data.getAccountList.push(saveAccount)
+  const accountIdx = data.getAccountList.findIndex(
+    account => account.id === saveAccount.id
+  )
+
+  if (accountIdx === -1) {
+    data.getAccountList.push(saveAccount)
+  } else {
+    data.getAccountList[accountIdx] = saveAccount
+  }
 
   client.writeQuery({ query: getAccountListQuery, data })
 }

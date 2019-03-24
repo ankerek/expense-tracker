@@ -28,11 +28,21 @@ export type SaveTransactionMutationUpdaterFn<
 export const saveTransactionUpdater: SaveTransactionMutationUpdaterFn<
   SaveTransactionMutation
 > = (client, { data: { saveTransaction } }, { prevTransaction } = {}) => {
-  // push transaction to Transaction list
+  // update transaction in Transaction list
   const data: GetTransactionListQuery = client.readQuery({
     query: getTransactionListQuery,
   })
-  data.getTransactionList.push(saveTransaction)
+
+  const transactionIdx = data.getTransactionList.findIndex(
+    trans => trans.id === saveTransaction.id
+  )
+
+  if (transactionIdx === -1) {
+    data.getTransactionList.push(saveTransaction)
+  } else {
+    data.getTransactionList[transactionIdx] = saveTransaction
+  }
+
   client.writeQuery({ query: getTransactionListQuery, data })
 
   if (!prevTransaction) {
