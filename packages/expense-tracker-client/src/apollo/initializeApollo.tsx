@@ -20,7 +20,10 @@ const httpLink = new HttpLink({
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:3000/`,
+  uri:
+    process.env.NODE_ENV === 'production'
+      ? 'wss://expense-tracker-2049.herokuapp.com/'
+      : 'ws://localhost:3000/',
   options: {
     reconnect: true,
   },
