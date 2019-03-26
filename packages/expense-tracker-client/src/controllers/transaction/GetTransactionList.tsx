@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { Query, QueryResult } from 'react-apollo'
 import {
   GetTransactionListQuery,
+  TransactionDeletedSubscription,
   TransactionSavedSubscription,
 } from '@schema-types'
 import { transactionFragment } from './fragments'
@@ -25,6 +26,12 @@ const transactionSavedSubscription = gql`
     }
   }
   ${transactionFragment}
+`
+
+const transactionDeletedSubscription = gql`
+  subscription TransactionDeletedSubscription($userId: String!) {
+    transactionDeleted(userId: $userId)
+  }
 `
 
 interface GetTransactionListProps {
@@ -52,7 +59,8 @@ export class GetTransactionList extends React.Component<
                 children({
                   ...rest,
                   subscribeToMore,
-                  subscribe: () =>
+                  subscribe: () => {
+                    // subscribe to new or updated transactions
                     subscribeToMore<TransactionSavedSubscription>({
                       document: transactionSavedSubscription,
                       variables: { userId: data.getCurrentUser.id },
@@ -88,7 +96,39 @@ export class GetTransactionList extends React.Component<
                           getTransactionList: newTransactionList,
                         }
                       },
-                    }),
+                    })
+
+                    // subscribe to deleted transactions
+                    subscribeToMore<TransactionDeletedSubscription>({
+                      document: transactionDeletedSubscription,
+                      variables: { userId: data.getCurrentUser.id },
+                      updateQuery: (prev, { subscriptionData }) => {
+                        if (!subscriptionData.data) {
+                          return prev
+                        }
+
+                        const transactionList = prev.getTransactionList
+
+                        const transactionIdx = prev.getTransactionList.findIndex(
+                          transaction =>
+                            transaction.id ===
+                            subscriptionData.data.transactionDeleted
+                        )
+
+                        if (transactionIdx === -1) {
+                          return prev
+                        }
+
+                        return {
+                          ...prev,
+                          getTransactionList: [
+                            ...transactionList.slice(0, transactionIdx),
+                            ...transactionList.slice(transactionIdx + 1),
+                          ],
+                        }
+                      },
+                    })
+                  },
                 })
               }
             </Query>

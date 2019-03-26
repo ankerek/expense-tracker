@@ -75,6 +75,19 @@ export class TransactionResolver {
     return new Transaction(transaction)
   }
 
+  @Subscription({
+    topics: ['TRANSACTION_DELETED'],
+    filter: ({ payload, args }) => {
+      return payload.userId === args.userId
+    },
+  })
+  transactionDeleted(
+    @Arg('userId') userId: string,
+    @Root('transactionId') transactionId: string
+  ): string {
+    return transactionId
+  }
+
   @Authorized()
   @Mutation(returns => Transaction)
   async saveTransaction(
@@ -107,8 +120,16 @@ export class TransactionResolver {
 
   @Authorized()
   @Mutation(returns => Boolean)
-  async deleteTransaction(@Arg('id', type => ID) id: string) {
+  async deleteTransaction(
+    @Arg('id', type => ID) id: string,
+    @Ctx() ctx: Context,
+    @PubSub('TRANSACTION_DELETED')
+    publish: Publisher<{ transactionId: string; userId: string }>
+  ) {
     await this.transactionRepository.delete(id)
+
+    await publish({ transactionId: id, userId: ctx.user.id })
+
     return true
   }
 }
