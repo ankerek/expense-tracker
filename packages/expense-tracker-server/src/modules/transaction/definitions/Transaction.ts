@@ -60,7 +60,9 @@ export class Transaction {
       this.description = input.description
       this.amount = input.amount
       this.account = new Account(input.account)
+      this.accountId = input.account.id
       this.category = new Category(input.category)
+      this.categoryId = input.category.id
     }
   }
 }

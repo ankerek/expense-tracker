@@ -8,9 +8,12 @@ export class TransactionsPage extends React.Component {
     return (
       <PageLayout title="Transactions">
         <GetTransactionList>
-          {({ data }) =>
+          {({ data, subscribe }) =>
             data && data.getTransactionList ? (
-              <TransactionList transactions={data.getTransactionList} />
+              <TransactionList
+                transactions={data.getTransactionList}
+                subscribe={subscribe}
+              />
             ) : null
           }
         </GetTransactionList>

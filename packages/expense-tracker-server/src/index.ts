@@ -1,8 +1,11 @@
 import express from 'express'
+import { createServer } from 'http'
 import compression from 'compression'
 import dotenv from 'dotenv'
 import path from 'path'
+import { execute, subscribe } from 'graphql'
 import { ApolloServer } from 'apollo-server-express'
+import { SubscriptionServer } from 'subscriptions-transport-ws'
 import { databaseInitializer } from './databaseInitializer'
 import { buildSchema } from './utils/buildSchema'
 import { getCurrentUser } from './utils/authentification'
@@ -27,7 +30,7 @@ const bootstrap = async () => {
 
   const schema = await buildSchema()
 
-  const server = new ApolloServer({
+  const apolloServer = new ApolloServer({
     schema,
     context: ({ req, ...other }: { req: express.Request }) => {
       const ctx: Context = {
@@ -36,8 +39,11 @@ const bootstrap = async () => {
 
       return ctx
     },
+    subscriptions: {
+      onConnect: () => console.log('Connected to websocket'),
+    },
   })
-  server.applyMiddleware({ app, path: '/graphql' })
+  apolloServer.applyMiddleware({ app, path: '/graphql' })
 
   if (process.env.NODE_ENV === 'production') {
     app.get('/service-worker.js', (req, res) => {
@@ -57,8 +63,24 @@ const bootstrap = async () => {
     )
   }
 
-  app.listen(port, () => {
-    console.log(`server is listening on ${port}`)
+  const server = createServer(app)
+
+  server.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`)
+    console.log(`Subscriptions server is running on ws://localhost:${port}`)
+
+    // tslint:disable:no-unused-expression
+    new SubscriptionServer(
+      {
+        execute,
+        subscribe,
+        schema,
+      },
+      {
+        server,
+        // path: '/subscriptions',
+      }
+    )
   })
 
   // app.get(

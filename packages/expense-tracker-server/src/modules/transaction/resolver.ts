@@ -9,6 +9,9 @@ import {
   ID,
   FieldResolver,
   Root,
+  Subscription,
+  Publisher,
+  PubSub,
 } from 'type-graphql'
 import { Transaction } from './definitions/Transaction'
 import { Account } from '../account/definitions/Account'
@@ -59,26 +62,33 @@ export class TransactionResolver {
     })
   }
 
+  @Subscription({
+    topics: ['TRANSACTION_SAVED'],
+    filter: ({ payload, args }) => {
+      return payload.userId === args.userId
+    },
+  })
+  transactionSaved(
+    @Arg('userId') userId: string,
+    @Root('transaction') transaction: SaveTransactionInput
+  ): Transaction {
+    return new Transaction(transaction)
+  }
+
   @Authorized()
   @Mutation(returns => Transaction)
   async saveTransaction(
     @Arg('input') input: SaveTransactionInput,
-    @Ctx() ctx: Context
+    @Ctx() ctx: Context,
+    @PubSub('TRANSACTION_SAVED')
+    publish: Publisher<{ transaction: SaveTransactionInput; userId: string }>
   ) {
     let newTransaction
-    const existingTransaction = await this.transactionRepository.findOne(
-      input.id
-    )
 
-    if (existingTransaction) {
-      newTransaction = {
-        ...existingTransaction,
-        ...input,
-      }
-    } else {
-      newTransaction = new Transaction(input)
-      newTransaction.userId = ctx.user.id
-    }
+    newTransaction = new Transaction(input)
+    newTransaction.userId = ctx.user.id
+
+    await publish({ transaction: input, userId: ctx.user.id })
 
     return this.transactionRepository.save(newTransaction)
   }

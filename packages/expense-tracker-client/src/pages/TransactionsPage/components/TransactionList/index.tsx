@@ -15,11 +15,16 @@ import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndi
 import { EmptyState } from '@core-components/EmptyState'
 import Typography from '@material-ui/core/Typography'
 
-interface AccountListProps {
+interface TransactionListProps {
   transactions: GetTransactionListQuery_getTransactionList[]
+  subscribe?: () => void
 }
 
-export class TransactionList extends React.Component<AccountListProps> {
+export class TransactionList extends React.Component<TransactionListProps> {
+  componentDidMount() {
+    this.props.subscribe()
+  }
+
   render() {
     const { transactions } = this.props
     return (

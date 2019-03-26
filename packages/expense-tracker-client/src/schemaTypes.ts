@@ -304,6 +304,47 @@ export interface GetTransactionListQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL subscription operation: TransactionSavedSubscription
+// ====================================================
+
+export interface TransactionSavedSubscription_transactionSaved_account {
+  __typename: 'Account'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface TransactionSavedSubscription_transactionSaved_category {
+  __typename: 'Category'
+  id: string
+  name: string
+  isPersisted: boolean
+}
+
+export interface TransactionSavedSubscription_transactionSaved {
+  __typename: 'Transaction'
+  id: string
+  createdAt: string
+  description: string | null
+  amount: number
+  account: TransactionSavedSubscription_transactionSaved_account
+  category: TransactionSavedSubscription_transactionSaved_category
+  isPersisted: boolean
+}
+
+export interface TransactionSavedSubscription {
+  transactionSaved: TransactionSavedSubscription_transactionSaved
+}
+
+export interface TransactionSavedSubscriptionVariables {
+  userId: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: SaveTransactionMutation
 // ====================================================
 

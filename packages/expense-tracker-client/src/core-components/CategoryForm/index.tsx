@@ -24,7 +24,6 @@ export type CategoryFormValues = SaveCategoryInput
 const getInitialEmptyValues = () => ({
   id: uuid(),
   name: '',
-  amount: 0,
 })
 
 const validate = (values: CategoryFormValues) => {
