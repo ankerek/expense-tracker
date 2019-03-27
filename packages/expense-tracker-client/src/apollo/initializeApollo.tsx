@@ -1,6 +1,5 @@
 import ApolloClient from 'apollo-client'
-import { from as apolloLinkFrom, split } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http'
+import { from as apolloLinkFrom } from 'apollo-link'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { CachePersistor } from 'apollo-cache-persist'
 import { typeDefs } from './clientSchema'
@@ -9,34 +8,7 @@ import { retryLink } from './retryLink'
 import { offlineLink } from './offlineLink'
 import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 import { localOperationsLink } from './localOperationsLink'
-import { WebSocketLink } from 'apollo-link-ws'
-import { getMainDefinition } from 'apollo-utilities'
-
-const API_BASE_URL = '/graphql'
-
-const httpLink = new HttpLink({
-  uri: API_BASE_URL,
-})
-
-// Create a WebSocket link:
-const wsLink = new WebSocketLink({
-  uri:
-    process.env.NODE_ENV === 'production'
-      ? 'wss://expense-tracker-2049.herokuapp.com/'
-      : 'ws://localhost:3000/',
-  options: {
-    reconnect: true,
-  },
-})
-
-const terminatedLink = split(
-  ({ query }) => {
-    const { kind, operation }: any = getMainDefinition(query)
-    return kind === 'OperationDefinition' && operation === 'subscription'
-  },
-  wsLink,
-  httpLink
-)
+import { terminatingLink } from './terminatingLink'
 
 const cache = new InMemoryCache({
   cacheRedirects: {
@@ -56,7 +28,7 @@ const link = apolloLinkFrom([
   retryLink,
   offlineLink,
   localOperationsLink,
-  terminatedLink,
+  terminatingLink,
 ])
 
 export const client = new ApolloClient({
