@@ -56,7 +56,7 @@ const bootstrap = async () => {
       res.header('Pragma', 'no-cache')
     })
 
-    app.use(express.static(BUILD_PATH))
+    app.use('/static', express.static(BUILD_PATH))
 
     app.get('*', (req, res) =>
       res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
