@@ -6,7 +6,7 @@ import { client } from '@apollo/initializeApollo'
 import { restoreLocalOperations } from '@controllers/network/localOperations'
 import { getAccountListQuery } from '@controllers/account/GetAccountList'
 import { getCategoryListQuery } from '@controllers/category/GetCategoryList'
-import { offlineLink } from '@apollo/offlineLink'
+import { offlineLink } from '@apollo/links/offlineLink'
 
 class InitActions extends React.Component {
   componentDidMount() {

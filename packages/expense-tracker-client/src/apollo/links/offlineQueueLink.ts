@@ -1,6 +1,6 @@
 import QueueLink from 'apollo-link-queue'
 import { ApolloLink, Operation } from 'apollo-link'
-import { isMutationOperation } from '@utils/isMutationOperation'
+import { isMutationOperation } from '../../utils/isMutationOperation'
 
 export const offlineQueueLink = new QueueLink()
 

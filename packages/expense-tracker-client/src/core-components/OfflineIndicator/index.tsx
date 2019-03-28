@@ -1,6 +1,6 @@
 import React from 'react'
 import { withApollo, WithApolloClient } from 'react-apollo'
-import { offlineLink } from '@apollo/offlineLink'
+import { offlineLink } from '@apollo/links/offlineLink'
 import { Wrapper } from './elements'
 import { GetIsOnline, getIsOnlineQuery } from '@controllers/network/GetIsOnline'
 

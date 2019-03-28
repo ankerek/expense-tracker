@@ -1,6 +1,6 @@
 import { ApolloLink, Operation, NextLink, Observable } from 'apollo-link'
-import { removeLocalOperation } from '@controllers/network/localOperations'
-import { isMutationOperation } from '@utils/isMutationOperation'
+import { removeLocalOperation } from '../../controllers/network/localOperations'
+import { isMutationOperation } from '../../utils/isMutationOperation'
 
 /*
  * Link that removes pending operations from localStorage on mutation complete

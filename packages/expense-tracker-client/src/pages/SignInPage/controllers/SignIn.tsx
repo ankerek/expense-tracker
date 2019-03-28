@@ -14,7 +14,11 @@ import { compose } from '@utils/compose'
 import { getCurrentUserQuery } from '@controllers/user/GetCurrentUser'
 import { userFragment } from '@controllers/user/fragments'
 import { restoreLocalOperations } from '@controllers/network/localOperations'
-import { client } from '@apollo/initializeApollo'
+import {
+  cachePersistor,
+  client,
+  clearClientStore,
+} from '@apollo/initializeApollo'
 
 const signInMutation = gql`
   mutation SignInMutation($input: SignInInput!) {
@@ -69,6 +73,8 @@ class C extends React.PureComponent<
         } = res
 
         localStorage.setItem('jwtToken', token)
+
+        await clearClientStore()
 
         this.props.client.writeQuery({
           query: getCurrentUserQuery,

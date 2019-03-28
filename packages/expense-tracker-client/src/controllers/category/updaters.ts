@@ -61,7 +61,7 @@ export const deleteCategoryUpdater: CategoryMutationUpdaterFn<
     query: getTransactionListQuery,
   })
   transactionsData.getTransactionList = transactionsData.getTransactionList.filter(
-    t => t.account.id !== prevCategory.id
+    t => t.category.id !== prevCategory.id
   )
   client.writeQuery({
     query: getTransactionListQuery,
