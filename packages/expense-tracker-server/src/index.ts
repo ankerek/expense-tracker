@@ -9,6 +9,7 @@ import { SubscriptionServer } from 'subscriptions-transport-ws'
 import { databaseInitializer } from './databaseInitializer'
 import { buildSchema } from './utils/buildSchema'
 import { getCurrentUser } from './utils/authentification'
+import { errorFormatter } from './utils/errorFormatter'
 
 const BUILD_PATH = path.join(
   __dirname,
@@ -42,6 +43,7 @@ const bootstrap = async () => {
     subscriptions: {
       onConnect: () => console.log('Connected to websocket'),
     },
+    formatError: errorFormatter,
   })
   apolloServer.applyMiddleware({ app, path: '/graphql' })
 
