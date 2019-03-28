@@ -1,6 +1,6 @@
 const path = require('path')
 const merge = require('webpack-merge')
-const { InjectManifest } = require('workbox-webpack-plugin')
+const { InjectManifest, GenerateSW } = require('workbox-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
@@ -10,8 +10,13 @@ module.exports = merge(common, {
   mode: 'production',
   devtool: 'source-map',
   plugins: [
-    new InjectManifest({
-      swSrc: './src/service-worker.js',
+    // new InjectManifest({
+    //   swSrc: './src/service-worker.js',
+    // }),
+    new GenerateSW({
+      clientsClaim: true,
+      navigateFallback: '/static/index.html',
+      navigateFallbackBlacklist: [/^\/static/]
     }),
     new WebpackPwaManifest({
       name: 'Expense tracker 2049',

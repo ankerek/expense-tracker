@@ -7,6 +7,7 @@ self.addEventListener('install', event => {
 })
 
 self.addEventListener('activate', event => {
+  event.waitUntil(precacheController.cleanup())
   event.waitUntil(
     precacheController.activate().then(() => self.clients.claim())
   )
