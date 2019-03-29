@@ -31,7 +31,7 @@ class InitActions extends React.Component {
       }),
     ])
 
-    restoreLocalOperations(client)
+    restoreLocalOperations()
   }
 
   render() {
