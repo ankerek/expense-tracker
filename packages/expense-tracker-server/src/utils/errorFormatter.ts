@@ -4,7 +4,7 @@ import { UnauthorizedError } from 'type-graphql'
 
 export const errorFormatter = (error: GraphQLError) => {
   if (error && error.message === new UnauthorizedError().message) {
-    throw new AuthenticationError(error.message)
+    return new AuthenticationError(error.message)
   }
   return error
 }
