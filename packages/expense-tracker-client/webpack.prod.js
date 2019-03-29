@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 const { InjectManifest, GenerateSW } = require('workbox-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
@@ -38,5 +39,8 @@ module.exports = merge(common, {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     }),
+    new webpack.DefinePlugin({
+      'process.env.COMMIT': JSON.stringify(process.env.HEROKU_SLUG_COMMIT),
+    })
   ],
 })

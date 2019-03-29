@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 
 export class AppVersion extends React.PureComponent {
   render() {
-    const sourceVersion = process.env.SOURCE_VERSION
+    const sourceVersion = process.env.COMMIT
     return sourceVersion ? (
       <Wrapper>
         <Typography color="textSecondary">{sourceVersion}</Typography>
