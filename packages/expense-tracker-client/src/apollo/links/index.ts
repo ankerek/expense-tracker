@@ -7,10 +7,10 @@ import { errorLink } from '@apollo/links/errorLink'
 import { terminatingLink } from '@apollo/links/terminatingLink'
 
 export const links = apolloLinkFrom([
-  authLink,
   retryLink,
   offlineLink,
   localOperationsLink,
+  authLink,
   errorLink,
   terminatingLink,
 ])

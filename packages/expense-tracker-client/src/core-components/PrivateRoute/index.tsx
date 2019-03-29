@@ -6,26 +6,32 @@ import { client } from '@apollo/initializeApollo'
 import { restoreLocalOperations } from '@controllers/network/localOperations'
 import { getAccountListQuery } from '@controllers/account/GetAccountList'
 import { getCategoryListQuery } from '@controllers/category/GetCategoryList'
+import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
 import { offlineLink } from '@apollo/links/offlineLink'
 
 class InitActions extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     const isOnlineData = client.readQuery({ query: getIsOnlineQuery })
     if (!isOnlineData.isOnline) {
       offlineLink.close()
     }
 
+    await Promise.all([
+      client.query({
+        query: getAccountListQuery,
+        fetchPolicy: 'network-only',
+      }),
+      client.query({
+        query: getCategoryListQuery,
+        fetchPolicy: 'network-only',
+      }),
+      client.query({
+        query: getTransactionListQuery,
+        fetchPolicy: 'network-only',
+      }),
+    ])
+
     restoreLocalOperations(client)
-
-    client.query({
-      query: getAccountListQuery,
-      fetchPolicy: 'network-only',
-    })
-
-    client.query({
-      query: getCategoryListQuery,
-      fetchPolicy: 'network-only',
-    })
   }
 
   render() {

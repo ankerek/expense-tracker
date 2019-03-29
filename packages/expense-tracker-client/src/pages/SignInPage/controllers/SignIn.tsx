@@ -83,8 +83,6 @@ class C extends React.PureComponent<
 
         this.setState({ loading: false })
 
-        restoreLocalOperations(client)
-
         this.props.history.push('/')
       }
     } catch (res) {

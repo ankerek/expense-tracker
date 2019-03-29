@@ -1,6 +1,6 @@
 import { ApolloLink, Operation, NextLink, Observable } from 'apollo-link'
-import { removeLocalOperation } from '../../controllers/network/localOperations'
-import { isMutationOperation } from '../../utils/isMutationOperation'
+import { removeLocalOperation } from '@controllers/network/localOperations'
+import { isMutationOperation } from '@utils/isMutationOperation'
 
 /*
  * Link that removes pending operations from localStorage on mutation complete
@@ -10,15 +10,25 @@ export class LocalOperationsLink extends ApolloLink {
     if (isMutationOperation(operation)) {
       return new Observable(observer => {
         const subscription = forward(operation).subscribe({
-          next: observer.next.bind(observer),
-          error: observer.error.bind(observer),
-          complete: () => {
-            const operationId = (operation.getContext() || {}).operationId
-            if (operationId) {
-              removeLocalOperation(operationId)
+          next: response => {
+            // do not remove local operation if user was UNAUTHENTICATED
+            if (
+              !(
+                response.errors &&
+                response.errors.find(
+                  error => error.extensions.code === 'UNAUTHENTICATED'
+                )
+              )
+            ) {
+              const operationId = (operation.getContext() || {}).operationId
+              if (operationId) {
+                removeLocalOperation(operationId)
+              }
             }
-            observer.complete()
+            observer.next(response)
           },
+          error: observer.error.bind(observer),
+          complete: observer.complete.bind(observer),
         })
 
         return () => {
