@@ -18,6 +18,7 @@ import {
   ToolbarLeftIconEmpty,
 } from './elements'
 import { WithWidth } from '@core-components/WithWidth'
+import { AppVersion } from '@core-components/AppVersion'
 
 interface PageLayoutProps {
   title: React.ReactNode
@@ -86,6 +87,7 @@ class C extends React.Component<
           />
         )}
         <MainContent hasSidebar={!!currentUser}>{children}</MainContent>
+        <AppVersion />
       </Wrapper>
     )
   }
