@@ -7,7 +7,9 @@ export class AppVersion extends React.PureComponent {
     const sourceVersion = process.env.COMMIT
     return sourceVersion ? (
       <Wrapper>
-        <Typography color="textSecondary">{sourceVersion}</Typography>
+        <Typography color="textSecondary" variant="caption">
+          {sourceVersion.substring(0, 8)}
+        </Typography>
       </Wrapper>
     ) : null
   }
