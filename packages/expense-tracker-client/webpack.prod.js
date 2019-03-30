@@ -16,6 +16,7 @@ module.exports = merge(common, {
     // }),
     new GenerateSW({
       clientsClaim: true,
+      skipWaiting: true,
       navigateFallback: '/static/index.html',
       navigateFallbackBlacklist: [/^\/static/]
     }),
