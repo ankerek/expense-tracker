@@ -20,7 +20,7 @@ export const getTransactionListQuery = gql`
 `
 
 const transactionSavedSubscription = gql`
-  subscription TransactionSavedSubscription($userId: String!) {
+  subscription TransactionSavedSubscription($userId: ID!) {
     transactionSaved(userId: $userId) {
       ...Transaction
     }
@@ -29,7 +29,7 @@ const transactionSavedSubscription = gql`
 `
 
 const transactionDeletedSubscription = gql`
-  subscription TransactionDeletedSubscription($userId: String!) {
+  subscription TransactionDeletedSubscription($userId: ID!) {
     transactionDeleted(userId: $userId)
   }
 `

@@ -69,7 +69,7 @@ export class TransactionResolver {
     },
   })
   transactionSaved(
-    @Arg('userId') userId: string,
+    @Arg('userId', type => ID) userId: string,
     @Root('transaction') transaction: SaveTransactionInput
   ): Transaction {
     return new Transaction(transaction)
@@ -82,7 +82,7 @@ export class TransactionResolver {
     },
   })
   transactionDeleted(
-    @Arg('userId') userId: string,
+    @Arg('userId', type => ID) userId: string,
     @Root('transactionId') transactionId: string
   ): string {
     return transactionId
