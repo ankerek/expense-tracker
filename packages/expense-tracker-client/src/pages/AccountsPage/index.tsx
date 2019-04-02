@@ -8,9 +8,12 @@ export class AccountsPage extends React.Component {
     return (
       <PageLayout title="Accounts">
         <GetAccountList>
-          {({ data }) =>
+          {({ data, subscribe }) =>
             data && data.getAccountList ? (
-              <AccountList accounts={data.getAccountList} />
+              <AccountList
+                accounts={data.getAccountList}
+                subscribe={subscribe}
+              />
             ) : null
           }
         </GetAccountList>

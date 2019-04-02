@@ -8,12 +8,20 @@ import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
 import { EmptyState } from '@core-components/EmptyState'
 import { GetTransactionList } from '@controllers/transaction/GetTransactionList'
+import { subscribe } from 'graphql'
 
 interface AccountListProps {
   accounts: GetAccountListQuery_getAccountList[]
+  subscribe?: () => void
 }
 
 export class AccountList extends React.PureComponent<AccountListProps> {
+  componentDidMount() {
+    if (this.props.subscribe) {
+      this.props.subscribe()
+    }
+  }
+
   render() {
     const { accounts } = this.props
     return (

@@ -22,7 +22,9 @@ interface TransactionListProps {
 
 export class TransactionList extends React.Component<TransactionListProps> {
   componentDidMount() {
-    this.props.subscribe()
+    if (this.props.subscribe) {
+      this.props.subscribe()
+    }
   }
 
   render() {

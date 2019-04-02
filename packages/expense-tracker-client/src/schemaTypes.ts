@@ -59,6 +59,44 @@ export interface GetAccountListQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL subscription operation: AccountSavedSubscription
+// ====================================================
+
+export interface AccountSavedSubscription_accountSaved {
+  __typename: 'Account'
+  id: string
+  name: string
+  amount: number
+  isPersisted: boolean
+}
+
+export interface AccountSavedSubscription {
+  accountSaved: AccountSavedSubscription_accountSaved
+}
+
+export interface AccountSavedSubscriptionVariables {
+  userId: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL subscription operation: AccountDeletedSubscription
+// ====================================================
+
+export interface AccountDeletedSubscription {
+  accountDeleted: string
+}
+
+export interface AccountDeletedSubscriptionVariables {
+  userId: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: SaveAccountMutation
 // ====================================================
 

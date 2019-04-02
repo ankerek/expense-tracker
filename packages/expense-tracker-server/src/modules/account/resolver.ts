@@ -10,11 +10,14 @@ import {
   FieldResolver,
   Root,
   Float,
+  Subscription,
+  PubSub,
+  Publisher,
 } from 'type-graphql'
 import { Account } from './definitions/Account'
-import { Currency } from '../currency/definitions/Currency'
 import { Transaction } from '../transaction/definitions/Transaction'
 import { SaveAccountInput } from './definitions/SaveAccountInput'
+import { SaveTransactionInput } from '../transaction/definitions/SaveTransactionInput'
 
 @Resolver(of => Account)
 export class AccountResolver {
@@ -61,21 +64,44 @@ export class AccountResolver {
     return this.accountRepository.findOne(id)
   }
 
+  @Subscription({
+    topics: ['ACCOUNT_SAVED'],
+    filter: ({ payload, args }) => {
+      return payload.userId === args.userId
+    },
+  })
+  accountSaved(
+    @Arg('userId', type => ID) userId: string,
+    @Root('account') account: SaveAccountInput
+  ): Account {
+    return new Account(account)
+  }
+
+  @Subscription({
+    topics: ['ACCOUNT_DELETED'],
+    filter: ({ payload, args }) => {
+      return payload.userId === args.userId
+    },
+  })
+  accountDeleted(
+    @Arg('userId', type => ID) userId: string,
+    @Root('accountId') accountId: string
+  ): string {
+    return accountId
+  }
+
   @Authorized()
   @Mutation(returns => Account)
   async saveAccount(
     @Arg('input') input: SaveAccountInput,
-    @Ctx() ctx: Context
+    @Ctx() ctx: Context,
+    @PubSub('ACCOUNT_SAVED')
+    publish: Publisher<{ account: SaveAccountInput; userId: string }>
   ) {
-    let newAccount
-    const existingAccount = await this.accountRepository.findOne(input.id)
+    const newAccount = new Account(input)
+    newAccount.userId = ctx.user.id
 
-    if (existingAccount) {
-      newAccount = { ...existingAccount, ...input }
-    } else {
-      newAccount = new Account(input)
-      newAccount.userId = ctx.user.id
-    }
+    await publish({ account: input, userId: ctx.user.id })
 
     return this.accountRepository.save(newAccount)
   }
@@ -94,8 +120,16 @@ export class AccountResolver {
 
   @Authorized()
   @Mutation(returns => Boolean)
-  async deleteAccount(@Arg('id', type => ID) id: string) {
+  async deleteAccount(
+    @Arg('id', type => ID) id: string,
+    @Ctx() ctx: Context,
+    @PubSub('ACCOUNT_DELETED')
+    publish: Publisher<{ accountId: string; userId: string }>
+  ) {
     await this.accountRepository.delete(id)
+
+    await publish({ accountId: id, userId: ctx.user.id })
+
     return true
   }
 }
