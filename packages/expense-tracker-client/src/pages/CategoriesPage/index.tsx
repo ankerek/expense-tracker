@@ -8,9 +8,12 @@ export class CategoriesPage extends React.Component {
     return (
       <PageLayout title="Categories">
         <GetCategoryList>
-          {({ data }) =>
+          {({ data, subscribe }) =>
             data && data.getCategoryList ? (
-              <CategoryList categories={data.getCategoryList} />
+              <CategoryList
+                categories={data.getCategoryList}
+                subscribe={subscribe}
+              />
             ) : null
           }
         </GetCategoryList>

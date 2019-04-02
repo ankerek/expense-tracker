@@ -8,6 +8,10 @@ import {
   Authorized,
   ID,
   FieldResolver,
+  Subscription,
+  Root,
+  PubSub,
+  Publisher,
 } from 'type-graphql'
 import { Transaction } from '../transaction/definitions/Transaction'
 import { SaveCategoryInput } from './definitions/SaveCategoryInput'
@@ -42,29 +46,60 @@ export class AccountResolver {
     return this.categoryRepository.findOne(id)
   }
 
+  @Subscription({
+    topics: ['CATEGORY_SAVED'],
+    filter: ({ payload, args }) => {
+      return payload.userId === args.userId
+    },
+  })
+  categorySaved(
+    @Arg('userId', type => ID) userId: string,
+    @Root('category') category: SaveCategoryInput
+  ): Category {
+    return new Category(category)
+  }
+
+  @Subscription({
+    topics: ['CATEGORY_DELETED'],
+    filter: ({ payload, args }) => {
+      return payload.userId === args.userId
+    },
+  })
+  categoryDeleted(
+    @Arg('userId', type => ID) userId: string,
+    @Root('categoryId') categoryId: string
+  ): string {
+    return categoryId
+  }
+
   @Authorized()
   @Mutation(returns => Category)
   async saveCategory(
     @Arg('input') input: SaveCategoryInput,
-    @Ctx() ctx: Context
+    @Ctx() ctx: Context,
+    @PubSub('CATEGORY_SAVED')
+    publish: Publisher<{ category: SaveCategoryInput; userId: string }>
   ) {
-    let newCategory
-    const existingCategory = await this.categoryRepository.findOne(input.id)
+    const newCategory = new Category(input)
+    newCategory.userId = ctx.user.id
 
-    if (existingCategory) {
-      newCategory = { ...existingCategory, ...input }
-    } else {
-      newCategory = new Category(input)
-      newCategory.userId = ctx.user.id
-    }
+    await publish({ category: input, userId: ctx.user.id })
 
     return this.categoryRepository.save(newCategory)
   }
 
   @Authorized()
   @Mutation(returns => Boolean)
-  async deleteCategory(@Arg('id', type => ID) id: string) {
+  async deleteCategory(
+    @Arg('id', type => ID) id: string,
+    @Ctx() ctx: Context,
+    @PubSub('CATEGORY_DELETED')
+    publish: Publisher<{ categoryId: string; userId: string }>
+  ) {
     await this.categoryRepository.delete(id)
+
+    await publish({ categoryId: id, userId: ctx.user.id })
+
     return true
   }
 }

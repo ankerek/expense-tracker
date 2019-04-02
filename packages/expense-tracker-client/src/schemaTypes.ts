@@ -199,6 +199,43 @@ export interface GetCategoryListQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL subscription operation: CategorySavedSubscription
+// ====================================================
+
+export interface CategorySavedSubscription_categorySaved {
+  __typename: 'Category'
+  id: string
+  name: string
+  isPersisted: boolean
+}
+
+export interface CategorySavedSubscription {
+  categorySaved: CategorySavedSubscription_categorySaved
+}
+
+export interface CategorySavedSubscriptionVariables {
+  userId: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL subscription operation: CategoryDeletedSubscription
+// ====================================================
+
+export interface CategoryDeletedSubscription {
+  categoryDeleted: string
+}
+
+export interface CategoryDeletedSubscriptionVariables {
+  userId: string
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: SaveCategoryMutation
 // ====================================================
 

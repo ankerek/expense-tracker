@@ -9,9 +9,16 @@ import { EmptyState } from '@core-components/EmptyState'
 
 interface CategoryListProps {
   categories: GetCategoryListQuery_getCategoryList[]
+  subscribe?: () => void
 }
 
 export class CategoryList extends React.PureComponent<CategoryListProps> {
+  componentDidMount() {
+    if (this.props.subscribe) {
+      this.props.subscribe()
+    }
+  }
+
   render() {
     const { categories } = this.props
     return (
