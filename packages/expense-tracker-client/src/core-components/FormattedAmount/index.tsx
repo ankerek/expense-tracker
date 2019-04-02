@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
+import { GetCurrentUser } from '@modules/user/GetCurrentUser'
 
 interface FormattedAmountProps {
   currency?: string

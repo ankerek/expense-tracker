@@ -1,6 +1,5 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const srcPath = subdir => path.join(__dirname, 'src', subdir)
 
@@ -22,7 +21,7 @@ module.exports = {
     alias: {
       '@pages': srcPath('pages'),
       '@core-components': srcPath('core-components'),
-      '@controllers': srcPath('controllers'),
+      '@modules': srcPath('modules'),
       '@apollo': srcPath('apollo'),
       '@utils': srcPath('utils'),
     },

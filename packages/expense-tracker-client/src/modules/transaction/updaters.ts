@@ -8,10 +8,10 @@ import {
   DeleteTransactionMutation,
   Category,
 } from '@schema-types'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
-import { accountFragment } from '@controllers/account/fragments'
+import { getTransactionListQuery } from '@modules/transaction/GetTransactionList'
+import { accountFragment } from '@modules/account/fragments'
 import { sum } from '@utils/math'
-import { categoryFragment } from '@controllers/category/fragments'
+import { categoryFragment } from '@modules/category/fragments'
 
 export type SaveTransactionMutationUpdaterFn<
   T = {

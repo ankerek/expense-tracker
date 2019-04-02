@@ -8,7 +8,7 @@ import {
 } from '@schema-types'
 import { transactionFragment } from './fragments'
 import { FetchPolicy } from 'apollo-client'
-import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
+import { GetCurrentUser } from '@modules/user/GetCurrentUser'
 
 export const getTransactionListQuery = gql`
   query GetTransactionListQuery {

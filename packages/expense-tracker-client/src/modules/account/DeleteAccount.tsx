@@ -15,10 +15,10 @@ import {
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { accountFragment } from '@controllers/account/fragments'
-import { getUpdater } from '@controllers/getUpdater'
-import { setLocalOperation } from '@controllers/network/localOperations'
+import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
+import { accountFragment } from '@modules/account/fragments'
+import { getUpdater } from '@modules/getUpdater'
+import { setLocalOperation } from '@modules/network/localOperations'
 
 export const DeleteAccountMutationName = 'DeleteAccountMutation'
 

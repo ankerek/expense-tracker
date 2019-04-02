@@ -2,7 +2,7 @@ import React from 'react'
 import { withApollo, WithApolloClient } from 'react-apollo'
 import { offlineLink } from '@apollo/links/offlineLink'
 import { Wrapper } from './elements'
-import { GetIsOnline, getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { GetIsOnline, getIsOnlineQuery } from '@modules/network/GetIsOnline'
 
 const URL = 'https://ipv4.icanhazip.com/'
 const TIMEOUT = 5000

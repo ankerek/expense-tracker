@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetTransactionList } from '@controllers/transaction/GetTransactionList'
+import { GetTransactionList } from '@modules/transaction/GetTransactionList'
 import { TransactionList } from '@pages/TransactionsPage/components/TransactionList'
 import { PageLayout } from '@core-components/PageLayout'
 

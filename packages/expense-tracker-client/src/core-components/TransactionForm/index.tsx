@@ -7,8 +7,8 @@ import {
   SaveTransactionInput,
 } from '@schema-types'
 import { Field, Formik, FormikProps } from 'formik'
-import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
-import { DeleteTransaction } from '@controllers/transaction/DeleteTransaction'
+import { GetCurrentUser } from '@modules/user/GetCurrentUser'
+import { DeleteTransaction } from '@modules/transaction/DeleteTransaction'
 import { Button } from '@core-components/Button'
 import { Form } from '@core-components/Form'
 import MenuItem from '@material-ui/core/MenuItem'

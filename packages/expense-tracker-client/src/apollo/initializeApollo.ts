@@ -2,7 +2,7 @@ import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { CachePersistor } from 'apollo-cache-persist'
 import { typeDefs } from './clientState'
-import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
 import { links } from './links'
 
 const cache = new InMemoryCache({

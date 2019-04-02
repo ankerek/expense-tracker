@@ -7,8 +7,8 @@ import {
   DeleteAccountMutation,
   GetTransactionListQuery,
 } from '@schema-types'
-import { getAccountListQuery } from '@controllers/account/GetAccountList'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
+import { getAccountListQuery } from '@modules/account/GetAccountList'
+import { getTransactionListQuery } from '@modules/transaction/GetTransactionList'
 
 export type SaveAccountMutationUpdaterFn<
   T = {

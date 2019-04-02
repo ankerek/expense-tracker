@@ -1,9 +1,9 @@
 import React from 'react'
 import { PageLayout } from '@core-components/PageLayout'
-import { SaveTransaction } from '@controllers/transaction/SaveTransaction'
+import { SaveTransaction } from '@modules/transaction/SaveTransaction'
 import { TransactionForm } from '@core-components/TransactionForm'
-import { GetAccountList } from '@controllers/account/GetAccountList'
-import { GetCategoryList } from '@controllers/category/GetCategoryList'
+import { GetAccountList } from '@modules/account/GetAccountList'
+import { GetCategoryList } from '@modules/category/GetCategoryList'
 import { EmptyState } from '@core-components/EmptyState'
 
 export class CreateTransactionPage extends React.Component {

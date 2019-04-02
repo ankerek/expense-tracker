@@ -7,11 +7,11 @@ import {
 } from 'apollo-link'
 import { Observer } from 'zen-observable-ts'
 import { isMutationOperation } from '@utils/isMutationOperation'
-import { SaveAccountMutationName } from '@controllers/account/SaveAccount'
-import { SaveCategoryMutationName } from '@controllers/category/SaveCategory'
-import { DeleteAccountMutationName } from '@controllers/account/DeleteAccount'
-import { removeLocalOperation } from '@controllers/network/localOperations'
-import { DeleteCategoryMutationName } from '@controllers/category/DeleteCategory'
+import { SaveAccountMutationName } from '@modules/account/SaveAccount'
+import { SaveCategoryMutationName } from '@modules/category/SaveCategory'
+import { DeleteAccountMutationName } from '@modules/account/DeleteAccount'
+import { removeLocalOperation } from '@modules/network/localOperations'
+import { DeleteCategoryMutationName } from '@modules/category/DeleteCategory'
 
 const DEPENDABLE_MUTATIONS = [SaveAccountMutationName, SaveCategoryMutationName]
 

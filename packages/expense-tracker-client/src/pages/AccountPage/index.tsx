@@ -1,6 +1,6 @@
 import React from 'react'
-import { SaveAccount } from '@controllers/account/SaveAccount'
-import { GetAccount } from '@controllers/account/GetAccount'
+import { SaveAccount } from '@modules/account/SaveAccount'
+import { GetAccount } from '@modules/account/GetAccount'
 import { PageLayout } from '@core-components/PageLayout'
 import { AccountForm } from '@core-components/AccountForm'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'

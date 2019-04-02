@@ -7,7 +7,7 @@ import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
 import { EmptyState } from '@core-components/EmptyState'
-import { GetTransactionList } from '@controllers/transaction/GetTransactionList'
+import { GetTransactionList } from '@modules/transaction/GetTransactionList'
 import { subscribe } from 'graphql'
 
 interface AccountListProps {

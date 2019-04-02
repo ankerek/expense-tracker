@@ -4,12 +4,12 @@ import { FetchResult } from 'react-apollo'
 import {
   saveAccountUpdater,
   deleteAccountUpdater,
-} from '@controllers/account/updaters'
+} from '@modules/account/updaters'
 import { deleteCategoryUpdater, saveCategoryUpdater } from './category/updaters'
 import {
   saveTransactionUpdater,
   deleteTransactionUpdater,
-} from '@controllers/transaction/updaters'
+} from '@modules/transaction/updaters'
 
 export type UpdaterFn<
   T = {

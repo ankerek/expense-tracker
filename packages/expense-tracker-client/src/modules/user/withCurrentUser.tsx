@@ -1,6 +1,6 @@
 import React from 'react'
 import { User } from '@schema-types'
-import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
+import { GetCurrentUser } from '@modules/user/GetCurrentUser'
 
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
 type Subtract<T, K> = Omit<T, keyof K>

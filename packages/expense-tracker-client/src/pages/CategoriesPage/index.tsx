@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetCategoryList } from '@controllers/category/GetCategoryList'
+import { GetCategoryList } from '@modules/category/GetCategoryList'
 import { PageLayout } from '@core-components/PageLayout'
 import { CategoryList } from '@pages/CategoriesPage/components/CategoryList'
 

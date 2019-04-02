@@ -2,34 +2,34 @@ import React from 'react'
 import uuid from 'uuid/v4'
 import gql from 'graphql-tag'
 import {
-  graphql,
   ChildMutateProps,
+  graphql,
+  MutationOptions,
   withApollo,
   WithApolloClient,
-  MutationOptions,
 } from 'react-apollo'
 import {
-  DeleteTransactionMutation,
-  DeleteTransactionMutationVariables,
-  SaveTransactionInput,
+  DeleteCategoryMutation,
+  DeleteCategoryMutationVariables,
+  SaveCategoryInput,
 } from '@schema-types'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { getUpdater } from '@controllers/getUpdater'
-import { setLocalOperation } from '@controllers/network/localOperations'
+import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
+import { getUpdater } from '@modules/getUpdater'
+import { setLocalOperation } from '@modules/network/localOperations'
 
-export const DeleteTransactionMutationName = 'DeleteTransactionMutation'
+export const DeleteCategoryMutationName = 'DeleteCategoryMutation'
 
-const deleteTransactionMutation = gql`
-  mutation DeleteTransactionMutation($id: ID!) {
-    deleteTransaction(id: $id)
+const deleteCategoryMutation = gql`
+  mutation DeleteCategoryMutation($id: ID!) {
+    deleteCategory(id: $id)
   }
 `
 
-interface DeleteTransactionProps {
+interface DeleteCategoryProps {
   children: (
-    deleteTransaction: (values: SaveTransactionInput) => void,
+    deleteCategory: (prevValues: SaveCategoryInput) => void,
     data: {
       loading: boolean
     }
@@ -40,25 +40,23 @@ const initialState = {
   loading: false,
 }
 
-type State = Readonly<typeof initialState>
-
 class C extends React.Component<
   RouteComponentProps<{ id: string }> &
     ChildMutateProps<
-      WithApolloClient<DeleteTransactionProps>,
-      DeleteTransactionMutation,
-      DeleteTransactionMutationVariables
+      WithApolloClient<DeleteCategoryProps>,
+      DeleteCategoryMutation,
+      DeleteCategoryMutationVariables
     >
 > {
-  readonly state: State = initialState
+  readonly state: Readonly<typeof initialState> = initialState
 
   render() {
-    return this.props.children(this.deleteTransaction, {
+    return this.props.children(this.deleteCategory, {
       loading: this.state.loading,
     })
   }
 
-  private deleteTransaction = async (prevValues: SaveTransactionInput) => {
+  private deleteCategory = async (prevValues: SaveCategoryInput) => {
     const {
       client,
       mutate,
@@ -73,22 +71,21 @@ class C extends React.Component<
     this.setState({ loading: true })
 
     const updaterOtherOptions: any = {
-      prevTransaction: prevValues,
+      prevCategory: prevValues,
     }
 
     const mutationOptions: MutationOptions<
-      DeleteTransactionMutation,
-      DeleteTransactionMutationVariables
+      DeleteCategoryMutation,
+      DeleteCategoryMutationVariables
     > = {
       variables: { id },
       optimisticResponse: {
-        deleteTransaction: true,
+        deleteCategory: true,
       },
       update: (proxy, response) =>
         getUpdater(response)(proxy, response, updaterOtherOptions),
       context: {
         operationId,
-        account: prevValues.account,
       },
     }
 
@@ -104,7 +101,7 @@ class C extends React.Component<
       setLocalOperation({
         mutationOptions: {
           ...mutationOptions,
-          mutation: deleteTransactionMutation,
+          mutation: deleteCategoryMutation,
         },
         updaterOtherOptions,
       })
@@ -120,12 +117,12 @@ class C extends React.Component<
   }
 }
 
-export const DeleteTransaction = compose(
+export const DeleteCategory = compose(
   withRouter,
   withApollo,
   graphql<
-    DeleteTransactionProps,
-    DeleteTransactionMutation,
-    DeleteTransactionMutationVariables
-  >(deleteTransactionMutation)
+    DeleteCategoryProps,
+    DeleteCategoryMutation,
+    DeleteCategoryMutationVariables
+  >(deleteCategoryMutation)
 )(C)

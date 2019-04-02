@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetAccountList } from '@controllers/account/GetAccountList'
+import { GetAccountList } from '@modules/account/GetAccountList'
 import { AccountList } from '@pages/AccountsPage/components/AccountList'
 import { PageLayout } from '@core-components/PageLayout'
 

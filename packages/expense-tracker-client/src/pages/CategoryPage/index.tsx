@@ -1,6 +1,6 @@
 import React from 'react'
-import { SaveCategory } from '@controllers/category/SaveCategory'
-import { GetCategory } from '@controllers/category/GetCategory'
+import { SaveCategory } from '@modules/category/SaveCategory'
+import { GetCategory } from '@modules/category/GetCategory'
 import { PageLayout } from '@core-components/PageLayout'
 import { CategoryForm } from '@core-components/CategoryForm'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { PageLayout } from '@core-components/PageLayout'
-import { SaveCategory } from '@controllers/category/SaveCategory'
+import { SaveCategory } from '@modules/category/SaveCategory'
 import { CategoryForm } from '@core-components/CategoryForm'
 
 export class CreateCategoryPage extends React.Component {

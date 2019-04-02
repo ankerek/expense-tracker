@@ -1,12 +1,12 @@
 import React from 'react'
 import { Redirect, Route, RouteProps } from 'react-router'
-import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
-import { GetIsOnline, getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { GetCurrentUser } from '@modules/user/GetCurrentUser'
+import { GetIsOnline, getIsOnlineQuery } from '@modules/network/GetIsOnline'
 import { client } from '@apollo/initializeApollo'
-import { restoreLocalOperations } from '@controllers/network/localOperations'
-import { getAccountListQuery } from '@controllers/account/GetAccountList'
-import { getCategoryListQuery } from '@controllers/category/GetCategoryList'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
+import { restoreLocalOperations } from '@modules/network/localOperations'
+import { getAccountListQuery } from '@modules/account/GetAccountList'
+import { getCategoryListQuery } from '@modules/category/GetCategoryList'
+import { getTransactionListQuery } from '@modules/transaction/GetTransactionList'
 import { offlineLink } from '@apollo/links/offlineLink'
 
 class InitActions extends React.Component {

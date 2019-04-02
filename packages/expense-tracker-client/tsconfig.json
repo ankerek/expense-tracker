@@ -11,7 +11,7 @@
       "@schema-types": ["schemaTypes.ts"],
       "@pages/*": ["pages/*"],
       "@core-components/*": ["core-components/*"],
-      "@controllers/*": ["controllers/*"],
+      "@modules/*": ["modules/*"],
       "@apollo/*": ["apollo/*"],
       "@utils/*": ["utils/*"]
     }

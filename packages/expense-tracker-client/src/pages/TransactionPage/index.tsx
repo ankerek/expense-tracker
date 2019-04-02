@@ -1,11 +1,11 @@
 import React from 'react'
-import { SaveTransaction } from '@controllers/transaction/SaveTransaction'
+import { SaveTransaction } from '@modules/transaction/SaveTransaction'
 import { PageLayout } from '@core-components/PageLayout'
-import { GetTransaction } from '@controllers/transaction/GetTransaction'
+import { GetTransaction } from '@modules/transaction/GetTransaction'
 import { TransactionForm } from '@core-components/TransactionForm'
-import { GetAccountList } from '@controllers/account/GetAccountList'
+import { GetAccountList } from '@modules/account/GetAccountList'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
-import { GetCategoryList } from '@controllers/category/GetCategoryList'
+import { GetCategoryList } from '@modules/category/GetCategoryList'
 
 export class TransactionPage extends React.Component {
   render() {

@@ -15,13 +15,13 @@ import {
   SaveAccountInput,
 } from '@schema-types'
 import gql from 'graphql-tag'
-import { accountFragment } from '@controllers/account/fragments'
+import { accountFragment } from '@modules/account/fragments'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { getUpdater } from '@controllers/getUpdater'
-import { setLocalOperation } from '@controllers/network/localOperations'
+import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
+import { getUpdater } from '@modules/getUpdater'
+import { setLocalOperation } from '@modules/network/localOperations'
 
 export const SaveAccountMutationName = 'SaveAccountMutation'
 

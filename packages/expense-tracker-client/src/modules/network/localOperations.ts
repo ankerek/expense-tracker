@@ -1,6 +1,6 @@
 import ApolloClient, { MutationOptions } from 'apollo-client'
 import { NormalizedCacheObject } from 'apollo-cache-inmemory'
-import { getUpdater } from '@controllers/getUpdater'
+import { getUpdater } from '@modules/getUpdater'
 import { client } from '@apollo/initializeApollo'
 import { getCurrentUserData } from '@apollo/state'
 

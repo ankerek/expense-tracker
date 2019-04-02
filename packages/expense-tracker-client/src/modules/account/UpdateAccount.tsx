@@ -14,11 +14,11 @@ import {
   UpdateAccountMutationVariables,
 } from '@schema-types'
 import gql from 'graphql-tag'
-import { accountFragment } from '@controllers/account/fragments'
+import { accountFragment } from '@modules/account/fragments'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
 
 export const UpdateAccountMutationName = 'UpdateAccountMutation'
 

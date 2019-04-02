@@ -18,9 +18,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
 import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { accountFragment } from '@controllers/account/fragments'
+import { accountFragment } from '@modules/account/fragments'
 import { sum } from '@utils/math'
-import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
+import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
 
 export const UpdateTransactionMutationName = 'UpdateTransactionMutation'
 

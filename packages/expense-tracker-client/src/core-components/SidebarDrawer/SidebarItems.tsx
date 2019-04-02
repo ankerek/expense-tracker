@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
+import { GetCurrentUser } from '@modules/user/GetCurrentUser'
 import { NavLink } from '@core-components/NavLink'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -9,7 +9,7 @@ import AllInboxIcon from '@material-ui/icons/AllInbox'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { SidebarItemText } from './elements'
-import { SignOut } from '@controllers/user/SignOut'
+import { SignOut } from '@modules/user/SignOut'
 
 export class SidebarItems extends React.PureComponent {
   render() {

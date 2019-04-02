@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
-import { accountFragment } from '@controllers/account/fragments'
-import { categoryFragment } from '@controllers/category/fragments'
+import { accountFragment } from '@modules/account/fragments'
+import { categoryFragment } from '@modules/category/fragments'
 
 export const transactionFragment = gql`
   fragment Transaction on Transaction {

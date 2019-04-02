@@ -1,8 +1,8 @@
 import React from 'react'
 import { PageLayout } from '@core-components/PageLayout'
-import { CreateUser } from './controllers/CreateUser'
 import { SignUpForm } from './components/SignUpForm'
-import { GetCurrencyList } from '@controllers/currency/GetCurrencyList'
+import { CreateUser } from '@modules/user/CreateUser'
+import { GetCurrencyList } from '@modules/currency/GetCurrencyList'
 
 export const SignUpPage = () => (
   <PageLayout title="Sign up">

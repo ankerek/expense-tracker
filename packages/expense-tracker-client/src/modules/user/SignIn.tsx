@@ -1,23 +1,28 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import {
-  withApollo,
-  ChildMutateProps,
   graphql,
   MutationFn,
+  ChildMutateProps,
+  withApollo,
   WithApolloClient,
 } from 'react-apollo'
-import { CreateUserMutation, CreateUserMutationVariables } from '@schema-types'
-import { NormalizedErrorsMap, normalizeErrors } from '@utils/normalizeErrors'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { SignInMutation, SignInMutationVariables } from '@schema-types'
+import { normalizeErrors, NormalizedErrorsMap } from '@utils/normalizeErrors'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
-import { getCurrentUserQuery } from '@controllers/user/GetCurrentUser'
-import { userFragment } from '@controllers/user/fragments'
-import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
+import { getCurrentUserQuery } from '@modules/user/GetCurrentUser'
+import { userFragment } from '@modules/user/fragments'
+import { restoreLocalOperations } from '@modules/network/localOperations'
+import {
+  cachePersistor,
+  client,
+  clearClientStore,
+} from '@apollo/initializeApollo'
 
-const createUserMutation = gql`
-  mutation CreateUserMutation($input: UserCreateInput!) {
-    createUser(input: $input) {
+const signInMutation = gql`
+  mutation SignInMutation($input: SignInInput!) {
+    signIn(input: $input) {
       token
       user {
         ...User
@@ -27,10 +32,10 @@ const createUserMutation = gql`
   ${userFragment}
 `
 
-interface CreateUserProps {
+interface SignInProps {
   children: (
     submit: (
-      values: CreateUserMutationVariables
+      values: SignInMutationVariables
     ) => Promise<NormalizedErrorsMap | null>,
     data: {
       loading: boolean
@@ -45,29 +50,31 @@ const initialState = {
 class C extends React.PureComponent<
   RouteComponentProps &
     ChildMutateProps<
-      WithApolloClient<CreateUserProps>,
-      CreateUserMutation,
-      CreateUserMutationVariables
+      WithApolloClient<SignInProps>,
+      SignInMutation,
+      SignInMutationVariables
     >
 > {
   readonly state: Readonly<typeof initialState> = initialState
 
-  handleCreateUser = async (values: CreateUserMutationVariables) => {
+  handleSignIn = async (values: SignInMutationVariables) => {
     try {
       this.setState({ loading: true })
 
       const res = await this.props.mutate({
-        variables: cleanPropertiesBeforeMutation(values),
+        variables: values,
       })
 
       if (res) {
         const {
           data: {
-            createUser: { token, user },
+            signIn: { token, user },
           },
         } = res
 
         localStorage.setItem('jwtToken', token)
+
+        await clearClientStore()
 
         this.props.client.writeQuery({
           query: getCurrentUserQuery,
@@ -85,19 +92,19 @@ class C extends React.PureComponent<
 
       return { errors }
     }
+
+    return null
   }
 
   render() {
-    return this.props.children(this.handleCreateUser, {
+    return this.props.children(this.handleSignIn, {
       loading: this.state.loading,
     })
   }
 }
 
-export const CreateUser = compose(
+export const SignIn = compose(
   withRouter,
   withApollo,
-  graphql<CreateUserProps, CreateUserMutation, CreateUserMutationVariables>(
-    createUserMutation
-  )
+  graphql<SignInProps, SignInMutation, SignInMutationVariables>(signInMutation)
 )(C)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetIsOnline } from '@controllers/network/GetIsOnline'
+import { GetIsOnline } from '@modules/network/GetIsOnline'
 import OfflineIcon from '@material-ui/icons/OfflineBolt'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'

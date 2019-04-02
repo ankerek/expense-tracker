@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import {
   withCurrentUser,
   WithCurrentUserInjectedProps,
-} from '@controllers/user/withCurrentUser'
+} from '@modules/user/withCurrentUser'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'

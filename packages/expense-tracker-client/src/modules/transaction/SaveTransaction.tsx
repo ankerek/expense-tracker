@@ -18,9 +18,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { compose } from '@utils/compose'
 import { transactionFragment } from './fragments'
 import { cleanPropertiesBeforeMutation } from '@utils/cleanPropertiesBeforeMutation'
-import { getIsOnlineQuery } from '@controllers/network/GetIsOnline'
-import { getUpdater } from '@controllers/getUpdater'
-import { setLocalOperation } from '@controllers/network/localOperations'
+import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
+import { getUpdater } from '@modules/getUpdater'
+import { setLocalOperation } from '@modules/network/localOperations'
 
 export const SaveTransactionMutationName = 'SaveTransactionMutation'
 

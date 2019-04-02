@@ -9,8 +9,8 @@ import {
 } from '@schema-types'
 import { categoryFragment } from './fragments'
 import { client } from '@apollo/initializeApollo'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
-import { GetCurrentUser } from '@controllers/user/GetCurrentUser'
+import { getTransactionListQuery } from '@modules/transaction/GetTransactionList'
+import { GetCurrentUser } from '@modules/user/GetCurrentUser'
 
 export const getCategoryListQuery = gql`
   query GetCategoryListQuery {

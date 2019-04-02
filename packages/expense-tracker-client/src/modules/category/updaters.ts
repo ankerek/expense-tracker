@@ -7,8 +7,8 @@ import {
   DeleteCategoryMutation,
   GetTransactionListQuery,
 } from '@schema-types'
-import { getCategoryListQuery } from '@controllers/category/GetCategoryList'
-import { getTransactionListQuery } from '@controllers/transaction/GetTransactionList'
+import { getCategoryListQuery } from '@modules/category/GetCategoryList'
+import { getTransactionListQuery } from '@modules/transaction/GetTransactionList'
 
 export type CategoryMutationUpdaterFn<
   T = {

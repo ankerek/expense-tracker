@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { currencyFragment } from '@controllers/currency/fragments'
+import { currencyFragment } from '@modules/currency/fragments'
 
 export const userFragment = gql`
   fragment User on User {
