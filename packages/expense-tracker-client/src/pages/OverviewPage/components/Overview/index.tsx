@@ -8,7 +8,7 @@ import { Query } from 'react-apollo'
 import isWithinInterval from 'date-fns/isWithinInterval'
 import { EmptyState } from '@core-components/EmptyState'
 import { CategoriesExpenses } from '../CategoriesExpenses'
-import { AccountsExpenses } from '../AccountsExpenses'
+import { AccountsBalance } from '../AccountsBalance'
 import { PeriodFilter } from '../PeriodFilter'
 import { ExpenseBoxes, ExpenseBox } from './elements'
 
@@ -54,10 +54,14 @@ export class Overview extends React.Component<OverviewProps> {
                 {filteredTransactions.length ? (
                   <ExpenseBoxes>
                     <ExpenseBox>
-                      <AccountsExpenses transactions={filteredTransactions} />
+                      <AccountsBalance transactions={filteredTransactions} />
                     </ExpenseBox>
                     <ExpenseBox>
-                      <CategoriesExpenses transactions={filteredTransactions} />
+                      <CategoriesExpenses
+                        transactions={filteredTransactions.filter(
+                          transaction => transaction.amount < 0
+                        )}
+                      />
                     </ExpenseBox>
                   </ExpenseBoxes>
                 ) : (

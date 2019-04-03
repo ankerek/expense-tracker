@@ -2,12 +2,13 @@ import React from 'react'
 import values from 'lodash/values'
 import { Account, Transaction } from '@schema-types'
 import { sum } from '@utils/math'
+import { sortByAmount } from '@utils/sortByAmount'
 import { List } from '@core-components/List'
 import { Box } from '@core-components/Box'
 import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Typography } from '@material-ui/core'
 
-interface AccountsExpensesProps {
+interface AccountsBalanceProps {
   transactions: Transaction[]
 }
 
@@ -15,7 +16,7 @@ interface AccountWithAmount extends Account {
   amount: number
 }
 
-export class AccountsExpenses extends React.Component<AccountsExpensesProps> {
+export class AccountsBalance extends React.Component<AccountsBalanceProps> {
   render() {
     const { transactions } = this.props
 
@@ -37,12 +38,12 @@ export class AccountsExpenses extends React.Component<AccountsExpensesProps> {
       }
     )
 
-    const accounts = values(accountsById)
+    const accounts = values(accountsById).sort(sortByAmount('desc'))
 
     return (
       <>
         <Box marginLeft="20px">
-          <Typography variant="h5">Expenses by accounts</Typography>
+          <Typography variant="h5">Accounts balance</Typography>
         </Box>
         <List>
           {accounts.map(account => (

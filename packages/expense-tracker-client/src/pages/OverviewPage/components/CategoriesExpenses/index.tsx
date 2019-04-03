@@ -2,10 +2,13 @@ import React from 'react'
 import values from 'lodash/values'
 import { Category, Transaction } from '@schema-types'
 import { sum } from '@utils/math'
+import { sortByAmount } from '@utils/sortByAmount'
 import { List } from '@core-components/List'
 import { Box } from '@core-components/Box'
 import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Typography } from '@material-ui/core'
+import { Chart } from './Chart'
+import { ChartWrapper } from './elements'
 
 interface CategoriesExpensesProps {
   transactions: Transaction[]
@@ -39,13 +42,21 @@ export class CategoriesExpenses extends React.Component<
       }
     )
 
-    const categories = values(categoriesById)
+    const categories = values(categoriesById).sort(sortByAmount('asc'))
 
     return (
       <>
         <Box marginLeft="20px">
           <Typography variant="h5">Expenses by categories</Typography>
         </Box>
+        <ChartWrapper>
+          <Chart
+            data={categories.map(category => ({
+              name: category.name,
+              value: category.amount * -1,
+            }))}
+          />
+        </ChartWrapper>
         <List>
           {categories.map(category => (
             <List.Item key={category.id}>

@@ -2,13 +2,12 @@ import React from 'react'
 import { GetCurrentUser } from '@modules/user/GetCurrentUser'
 
 interface FormattedAmountProps {
-  currency?: string
   children: React.ReactNode
 }
 
 export class FormattedAmount extends React.PureComponent<FormattedAmountProps> {
   render() {
-    const { currency, children } = this.props
+    const { children } = this.props
     return (
       <>
         {children}
