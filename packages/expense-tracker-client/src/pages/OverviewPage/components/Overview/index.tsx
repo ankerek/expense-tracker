@@ -4,10 +4,12 @@ import {
   GetOverviewFilterQuery,
   GetTransactionListQuery_getTransactionList,
 } from '@schema-types'
-import isWithinInterval from 'date-fns/isWithinInterval'
-import { CategoriesExpenses } from '@pages/OverviewPage/components/CategoriesExpenses'
-import { PeriodFilter } from '../PeriodFilter'
 import { Query } from 'react-apollo'
+import isWithinInterval from 'date-fns/isWithinInterval'
+import { CategoriesExpenses } from '../CategoriesExpenses'
+import { AccountsExpenses } from '../AccountsExpenses'
+import { PeriodFilter } from '../PeriodFilter'
+import { ExpenseBoxes, ExpenseBox } from './elements'
 
 const getOverviewFilterQuery = gql`
   query GetOverviewFilterQuery {
@@ -48,7 +50,14 @@ export class Overview extends React.Component<OverviewProps> {
             return (
               <>
                 <PeriodFilter period={data.overviewFilter.period} />
-                <CategoriesExpenses transactions={filteredTransactions} />
+                <ExpenseBoxes>
+                  <ExpenseBox>
+                    <AccountsExpenses transactions={filteredTransactions} />
+                  </ExpenseBox>
+                  <ExpenseBox>
+                    <CategoriesExpenses transactions={filteredTransactions} />
+                  </ExpenseBox>
+                </ExpenseBoxes>
               </>
             )
           }
