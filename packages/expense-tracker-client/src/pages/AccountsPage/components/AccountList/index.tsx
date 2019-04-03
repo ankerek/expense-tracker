@@ -1,29 +1,33 @@
 import React from 'react'
-import { GetAccountListQuery_getAccountList, Transaction } from '@schema-types'
-import { Amount, Wrapper, Item, OutsideActionsWrapper } from './elements'
+import { Account, Transaction } from '@schema-types'
+import { sum } from '@utils/math'
 import Divider from '@material-ui/core/Divider'
 import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
 import { FormattedAmount } from '@core-components/FormattedAmount'
 import { Button } from '@core-components/Button'
 import { NavLink } from '@core-components/NavLink'
 import { EmptyState } from '@core-components/EmptyState'
-import { GetTransactionList } from '@modules/transaction/GetTransactionList'
-import { subscribe } from 'graphql'
+import { Amount, Wrapper, Item, OutsideActionsWrapper } from './elements'
 
 interface AccountListProps {
-  accounts: GetAccountListQuery_getAccountList[]
-  subscribe?: () => void
+  accounts: Account[]
+  transactions: Transaction[]
+  subscribeAccounts?: () => void
+  subscribeTransactions?: () => void
 }
 
 export class AccountList extends React.PureComponent<AccountListProps> {
   componentDidMount() {
-    if (this.props.subscribe) {
-      this.props.subscribe()
+    if (this.props.subscribeAccounts) {
+      this.props.subscribeAccounts()
+    }
+    if (this.props.subscribeTransactions) {
+      this.props.subscribeTransactions()
     }
   }
 
   render() {
-    const { accounts } = this.props
+    const { accounts, transactions } = this.props
     return (
       <>
         <Wrapper>
@@ -43,7 +47,14 @@ export class AccountList extends React.PureComponent<AccountListProps> {
                     <ItemNotPersistedIndicator compact={true} />
                   )}
                   <Amount>
-                    <FormattedAmount>{account.amount}</FormattedAmount>
+                    <FormattedAmount>
+                      {transactions.reduce((acc, curr) => {
+                        if (curr.account.id === account.id) {
+                          acc = sum(acc, curr.amount)
+                        }
+                        return acc
+                      }, 0)}
+                    </FormattedAmount>
                   </Amount>
                 </Item>
                 <Divider light />
