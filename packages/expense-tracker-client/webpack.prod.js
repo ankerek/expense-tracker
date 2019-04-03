@@ -41,7 +41,7 @@ module.exports = merge(common, {
       analyzerMode: 'static',
     }),
     new webpack.DefinePlugin({
-      'process.env.COMMIT': JSON.stringify(process.env.HEROKU_SLUG_COMMIT),
+      'process.env.COMMIT': JSON.stringify(process.env.SOURCE_VERSION),
     })
   ],
 })
