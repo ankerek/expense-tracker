@@ -6,10 +6,10 @@ export const sortByAmount = (direction: 'asc' | 'desc') => (
     return a.amount - b.amount
   }
 
-  if (a.amount < b.amount) {
+  if (a.amount > b.amount) {
     return -1
   }
-  if (a.amount > b.amount) {
+  if (a.amount < b.amount) {
     return 1
   }
 
