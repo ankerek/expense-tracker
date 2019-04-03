@@ -6,6 +6,7 @@ import {
 } from '@schema-types'
 import { Query } from 'react-apollo'
 import isWithinInterval from 'date-fns/isWithinInterval'
+import { EmptyState } from '@core-components/EmptyState'
 import { CategoriesExpenses } from '../CategoriesExpenses'
 import { AccountsExpenses } from '../AccountsExpenses'
 import { PeriodFilter } from '../PeriodFilter'
@@ -50,14 +51,18 @@ export class Overview extends React.Component<OverviewProps> {
             return (
               <>
                 <PeriodFilter period={data.overviewFilter.period} />
-                <ExpenseBoxes>
-                  <ExpenseBox>
-                    <AccountsExpenses transactions={filteredTransactions} />
-                  </ExpenseBox>
-                  <ExpenseBox>
-                    <CategoriesExpenses transactions={filteredTransactions} />
-                  </ExpenseBox>
-                </ExpenseBoxes>
+                {filteredTransactions.length ? (
+                  <ExpenseBoxes>
+                    <ExpenseBox>
+                      <AccountsExpenses transactions={filteredTransactions} />
+                    </ExpenseBox>
+                    <ExpenseBox>
+                      <CategoriesExpenses transactions={filteredTransactions} />
+                    </ExpenseBox>
+                  </ExpenseBoxes>
+                ) : (
+                  <EmptyState title="There is no data in this period" />
+                )}
               </>
             )
           }
