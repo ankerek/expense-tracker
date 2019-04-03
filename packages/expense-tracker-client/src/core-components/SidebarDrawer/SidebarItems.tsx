@@ -15,11 +15,14 @@ export class SidebarItems extends React.PureComponent {
   render() {
     return (
       <>
-        <ListItem button>
+        <ListItem
+          button
+          component={({ innerRef, ...props }) => <NavLink {...props} to="/" />}
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <SidebarItemText primary="Inbox" />
+          <SidebarItemText primary="Overview" />
         </ListItem>
         <ListItem
           button

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { PrivateRoute } from '@core-components/PrivateRoute'
-import { HomePage } from '@pages/HomePage'
+import { OverviewPage } from '@pages/OverviewPage'
 import { SignInPage } from '@pages/SignInPage'
 import { SignUpPage } from '@pages/SignUpPage'
 import { SignOutPage } from '@pages/SignOutPage'
@@ -22,7 +22,7 @@ export const Routes = () => (
     <Route path="/signup" component={SignUpPage} />
 
     <PrivateRoute path="/signout" exact component={SignOutPage} />
-    <PrivateRoute path="/" exact component={HomePage} />
+    <PrivateRoute path="/" exact component={OverviewPage} />
     <PrivateRoute path="/accounts" exact component={AccountsPage} />
     <PrivateRoute path="/accounts/create" exact component={CreateAccountPage} />
     <PrivateRoute path="/accounts/:id" exact component={AccountPage} />
