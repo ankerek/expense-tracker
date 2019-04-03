@@ -1,9 +1,10 @@
 import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { CachePersistor } from 'apollo-cache-persist'
-import { typeDefs } from './clientState'
+import { initialState, typeDefs } from './clientState'
 import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
 import { links } from './links'
+import { getPeriod } from '@utils/date'
 
 const cache = new InMemoryCache({
   cacheRedirects: {
@@ -41,11 +42,8 @@ export const waitForCache = cachePersistor.restore()
 // })
 
 export const initClientState = () => {
-  client.writeQuery({
-    query: getIsOnlineQuery,
-    data: {
-      isOnline: true,
-    },
+  client.writeData({
+    data: initialState,
   })
 }
 

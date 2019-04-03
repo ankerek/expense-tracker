@@ -1,12 +1,24 @@
 import React from 'react'
-import { GetTransactionListQuery_getTransactionList } from '@schema-types'
+import gql from 'graphql-tag'
+import {
+  GetOverviewFilterQuery,
+  GetTransactionListQuery_getTransactionList,
+} from '@schema-types'
 import isWithinInterval from 'date-fns/isWithinInterval'
 import { CategoriesExpenses } from '@pages/OverviewPage/components/CategoriesExpenses'
+import { PeriodFilter } from '../PeriodFilter'
+import { Query } from 'react-apollo'
 
-const interval = {
-  start: '2019-04-01',
-  end: '2019-04-03',
-}
+const getOverviewFilterQuery = gql`
+  query GetOverviewFilterQuery {
+    overviewFilter @client {
+      period {
+        start
+        end
+      }
+    }
+  }
+`
 
 interface OverviewProps {
   transactions: GetTransactionListQuery_getTransactionList[]
@@ -23,14 +35,27 @@ export class Overview extends React.Component<OverviewProps> {
   render() {
     const { transactions } = this.props
 
-    const filteredTransactions = transactions.filter(transaction =>
-      isWithinInterval(transaction.createdAt, interval)
-    )
-
     return (
-      <>
-        <CategoriesExpenses transactions={filteredTransactions} />
-      </>
+      <Query<GetOverviewFilterQuery> query={getOverviewFilterQuery}>
+        {({ data }) => {
+          if (data && data.overviewFilter) {
+            const filteredTransactions = transactions.filter(transaction =>
+              isWithinInterval(
+                transaction.createdAt,
+                data.overviewFilter.period
+              )
+            )
+            return (
+              <>
+                <PeriodFilter period={data.overviewFilter.period} />
+                <CategoriesExpenses transactions={filteredTransactions} />
+              </>
+            )
+          }
+
+          return null
+        }}
+      </Query>
     )
   }
 }

@@ -2,8 +2,7 @@ import React from 'react'
 import format from 'date-fns/format'
 import { FieldProps } from 'formik'
 import DatePicker, { DatePickerProps } from 'material-ui-pickers/DatePicker'
-
-export const DATE_FORMAT = 'YYYY-MM-dd'
+import { DATE_FORMAT } from '@utils/date'
 
 export type DatePickerFieldProps = FieldProps & DatePickerProps
 

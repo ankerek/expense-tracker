@@ -7,6 +7,7 @@ import {
   SaveTransactionInput,
 } from '@schema-types'
 import { Field, Formik, FormikProps } from 'formik'
+import { DATE_FORMAT } from '@utils/date'
 import { GetCurrentUser } from '@modules/user/GetCurrentUser'
 import { DeleteTransaction } from '@modules/transaction/DeleteTransaction'
 import { Button } from '@core-components/Button'
@@ -14,7 +15,7 @@ import { Form } from '@core-components/Form'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { TextField } from '../TextField'
-import { DATE_FORMAT, DatePickerField } from '@core-components/DatePickerField'
+import { DatePickerField } from '@core-components/DatePickerField'
 import { ActionsWrapper } from './elements'
 
 type TransactionFormValues = SaveTransactionInput

@@ -518,6 +518,40 @@ export interface UpdateTransactionMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateUserMutation
+// ====================================================
+
+export interface CreateUserMutation_createUser_user_currency {
+  __typename: 'Currency'
+  id: string
+  symbol: string
+}
+
+export interface CreateUserMutation_createUser_user {
+  __typename: 'User'
+  id: string
+  email: string
+  currency: CreateUserMutation_createUser_user_currency
+}
+
+export interface CreateUserMutation_createUser {
+  __typename: 'SignInResponse'
+  token: string
+  user: CreateUserMutation_createUser_user
+}
+
+export interface CreateUserMutation {
+  createUser: CreateUserMutation_createUser
+}
+
+export interface CreateUserMutationVariables {
+  input: UserCreateInput
+}
+
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetCurrentUserQuery
 // ====================================================
 
@@ -576,34 +610,22 @@ export interface SignInMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: CreateUserMutation
+// GraphQL query operation: GetOverviewFilterQuery
 // ====================================================
 
-export interface CreateUserMutation_createUser_user_currency {
-  __typename: 'Currency'
-  id: string
-  symbol: string
+export interface GetOverviewFilterQuery_overviewFilter_period {
+  __typename: 'TimePeriod'
+  start: string | null
+  end: string | null
 }
 
-export interface CreateUserMutation_createUser_user {
-  __typename: 'User'
-  id: string
-  email: string
-  currency: CreateUserMutation_createUser_user_currency
+export interface GetOverviewFilterQuery_overviewFilter {
+  __typename: 'OverviewFilter'
+  period: GetOverviewFilterQuery_overviewFilter_period | null
 }
 
-export interface CreateUserMutation_createUser {
-  __typename: 'SignInResponse'
-  token: string
-  user: CreateUserMutation_createUser_user
-}
-
-export interface CreateUserMutation {
-  createUser: CreateUserMutation_createUser
-}
-
-export interface CreateUserMutationVariables {
-  input: UserCreateInput
+export interface GetOverviewFilterQuery {
+  overviewFilter: GetOverviewFilterQuery_overviewFilter | null
 }
 
 /* tslint:disable */
