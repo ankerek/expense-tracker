@@ -21,7 +21,7 @@ import { WithWidth } from '@core-components/WithWidth'
 import { AppVersion } from '@core-components/AppVersion'
 
 interface PageLayoutProps {
-  title: React.ReactNode
+  title?: React.ReactNode
   hasGoBack?: boolean
 }
 
@@ -75,9 +75,11 @@ class C extends React.Component<
               </>
             )}
 
-            <Typography variant="h6" color="inherit">
-              {title}
-            </Typography>
+            {!!title && (
+              <Typography variant="h6" color="inherit">
+                {title}
+              </Typography>
+            )}
           </Toolbar>
         </AppBar>
         {currentUser && (

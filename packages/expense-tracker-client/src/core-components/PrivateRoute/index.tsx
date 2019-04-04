@@ -8,6 +8,9 @@ import { getAccountListQuery } from '@modules/account/GetAccountList'
 import { getCategoryListQuery } from '@modules/category/GetCategoryList'
 import { getTransactionListQuery } from '@modules/transaction/GetTransactionList'
 import { offlineLink } from '@apollo/links/offlineLink'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { PageLayout } from '@core-components/PageLayout'
+import { Box } from '@core-components/Box'
 
 class InitActions extends React.Component {
   async componentDidMount() {
@@ -61,7 +64,13 @@ export class PrivateRoute extends React.Component<RouteProps> {
                   }
 
                   if (loading) {
-                    return <span>loading...</span>
+                    return (
+                      <PageLayout title="Expense tracker 2049">
+                        <Box width="100%" height="100%" centerAll={true}>
+                          <CircularProgress color="secondary" />
+                        </Box>
+                      </PageLayout>
+                    )
                   }
 
                   return <Redirect to="/signin" />
