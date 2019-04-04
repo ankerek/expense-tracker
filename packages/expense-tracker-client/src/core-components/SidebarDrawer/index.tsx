@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Drawer from '@material-ui/core/Drawer/Drawer'
 import Hidden from '@material-ui/core/Hidden'
 import { SidebarItems } from './SidebarItems'
+import { AppVersion } from '@core-components/AppVersion'
 
 interface SidebarDrawerProps {
   drawerOpen: boolean
@@ -41,6 +42,7 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
             }}
           >
             <SidebarItems />
+            <AppVersion />
           </DrawerSidebar>
         </Hidden>
         <Hidden smDown implementation="css">
@@ -52,6 +54,7 @@ export class SidebarDrawer extends React.PureComponent<SidebarDrawerProps> {
             open
           >
             <SidebarItems />
+            <AppVersion />
           </DrawerSidebar>
         </Hidden>
       </>

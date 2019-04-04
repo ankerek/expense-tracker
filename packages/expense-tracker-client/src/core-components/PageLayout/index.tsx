@@ -87,7 +87,6 @@ class C extends React.Component<
           />
         )}
         <MainContent hasSidebar={!!currentUser}>{children}</MainContent>
-        <AppVersion />
       </Wrapper>
     )
   }

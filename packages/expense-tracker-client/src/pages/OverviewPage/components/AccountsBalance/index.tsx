@@ -43,7 +43,7 @@ export class AccountsBalance extends React.Component<AccountsBalanceProps> {
     return (
       <>
         <Box marginLeft="20px">
-          <Typography variant="h5">Accounts balance</Typography>
+          <Typography variant="h5">Accounts balance change</Typography>
         </Box>
         <List>
           {accounts.map(account => (

@@ -10,7 +10,7 @@ import { EmptyState } from '@core-components/EmptyState'
 import { CategoriesExpenses } from '../CategoriesExpenses'
 import { AccountsBalance } from '../AccountsBalance'
 import { PeriodFilter } from '../PeriodFilter'
-import { ExpenseBoxes, ExpenseBox } from './elements'
+import { OverviewBoxes, OverviewBox } from './elements'
 
 const getOverviewFilterQuery = gql`
   query GetOverviewFilterQuery {
@@ -52,18 +52,18 @@ export class Overview extends React.Component<OverviewProps> {
               <>
                 <PeriodFilter period={data.overviewFilter.period} />
                 {filteredTransactions.length ? (
-                  <ExpenseBoxes>
-                    <ExpenseBox>
+                  <OverviewBoxes>
+                    <OverviewBox>
                       <AccountsBalance transactions={filteredTransactions} />
-                    </ExpenseBox>
-                    <ExpenseBox>
+                    </OverviewBox>
+                    <OverviewBox>
                       <CategoriesExpenses
                         transactions={filteredTransactions.filter(
                           transaction => transaction.amount < 0
                         )}
                       />
-                    </ExpenseBox>
-                  </ExpenseBoxes>
+                    </OverviewBox>
+                  </OverviewBoxes>
                 ) : (
                   <EmptyState title="There is no data in this period" />
                 )}

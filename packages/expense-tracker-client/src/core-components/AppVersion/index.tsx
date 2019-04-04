@@ -8,7 +8,7 @@ export class AppVersion extends React.PureComponent {
     return sourceVersion ? (
       <Wrapper>
         <Typography color="textSecondary" variant="caption">
-          {sourceVersion.substring(0, 8)}
+          App version: {sourceVersion.substring(0, 8)}
         </Typography>
       </Wrapper>
     ) : null
