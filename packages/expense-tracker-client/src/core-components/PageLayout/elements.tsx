@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 
 export const Wrapper = styled.div`
   display: flex;
-  height: 100vh;
+  height: 100%;
 `
 
 export const AppBar = styled((({ drawerOpen, ...rest }) => (

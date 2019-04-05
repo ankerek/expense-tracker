@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: Roboto;
     color: ${textPrimaryColor};
   }
+  
+  html, body, #root {
+    height: 100%;
+  }
 `
 
 const themeOptions: ThemeOptions = {
