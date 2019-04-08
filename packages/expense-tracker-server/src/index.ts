@@ -60,6 +60,15 @@ const bootstrap = async () => {
 
     app.use('/static', express.static(BUILD_PATH))
 
+    // redirect http to https
+    app.use((req, res, next) => {
+      if (req.header('x-forwarded-proto') !== 'https') {
+        res.redirect('https://' + req.headers.host + req.url)
+      } else {
+        next()
+      }
+    })
+
     app.get('*', (req, res) =>
       res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
     )
