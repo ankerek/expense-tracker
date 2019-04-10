@@ -18,6 +18,7 @@ import {
   ToolbarLeftIconEmpty,
 } from './elements'
 import { WithWidth } from '@components/WithWidth'
+import { OfflineIndicator } from '@components/OfflineIndicator'
 
 interface PageLayoutProps {
   title?: React.ReactNode
@@ -50,6 +51,7 @@ class C extends React.Component<
 
     return (
       <Wrapper>
+        <OfflineIndicator />
         <AppBar drawerOpen={drawerOpen}>
           <Toolbar>
             {currentUser && (

@@ -43,6 +43,11 @@ class C extends React.Component<WithApolloClient<any>, State> {
   pollingId?: any
 
   componentDidMount() {
+    window.addEventListener('online', this.handleOnline)
+    window.addEventListener('offline', this.handleOffline)
+
+    // there is a case when device is connected to network without internet
+    // online/offline events count recognize it, so we need to fallback to polling
     this.pollingId = setInterval(() => {
       ping().then(online => {
         online ? this.handleOnline() : this.handleOffline()
@@ -51,6 +56,9 @@ class C extends React.Component<WithApolloClient<any>, State> {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('online', this.handleOnline)
+    window.removeEventListener('offline', this.handleOffline)
+
     clearInterval(this.pollingId)
   }
 

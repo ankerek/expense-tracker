@@ -14,7 +14,6 @@ const App = () => (
   <ApolloProvider client={client}>
     <Router>
       <ThemeProvider>
-        <OfflineIndicator />
         <Routes />
       </ThemeProvider>
     </Router>
