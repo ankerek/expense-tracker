@@ -6,7 +6,7 @@ interface GetIsOnlineQuery {
   isOnline: boolean
 }
 
-interface GetIsOnlineProps {
+export interface GetIsOnlineProps {
   children: (result: QueryResult<GetIsOnlineQuery>) => React.ReactNode | null
 }
 
