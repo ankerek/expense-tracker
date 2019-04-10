@@ -47,14 +47,14 @@ export class AccountList extends React.PureComponent<AccountListProps> {
                     <ItemNotPersistedIndicator compact={true} />
                   )}
                   <Amount>
-                    <FormattedAmount>
-                      {transactions.reduce((acc, curr) => {
+                    <FormattedAmount
+                      amount={transactions.reduce((acc, curr) => {
                         if (curr.account.id === account.id) {
                           acc = sum(acc, curr.amount)
                         }
                         return acc
                       }, 0)}
-                    </FormattedAmount>
+                    />
                   </Amount>
                 </Item>
                 <Divider light />

@@ -63,7 +63,7 @@ export class CategoriesExpenses extends React.Component<
               <List.ItemRow>
                 {category.name}
                 <Box marginLeft="auto">
-                  <FormattedAmount>{category.amount}</FormattedAmount>
+                  <FormattedAmount amount={category.amount} />
                 </Box>
               </List.ItemRow>
             </List.Item>

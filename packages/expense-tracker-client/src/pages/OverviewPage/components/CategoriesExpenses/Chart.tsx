@@ -8,7 +8,7 @@ interface ChartProps {
 
 export class Chart extends PureComponent<ChartProps> {
   tooltipFormatter = (value: number) => {
-    return <FormattedAmount>{value * -1}</FormattedAmount>
+    return <FormattedAmount amount={value * -1} />
   }
 
   render() {

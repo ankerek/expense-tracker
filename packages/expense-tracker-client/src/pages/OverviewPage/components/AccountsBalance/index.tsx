@@ -51,7 +51,7 @@ export class AccountsBalance extends React.Component<AccountsBalanceProps> {
               <List.ItemRow>
                 {account.name}
                 <Box marginLeft="auto">
-                  <FormattedAmount>{account.amount}</FormattedAmount>
+                  <FormattedAmount amount={account.amount} />
                 </Box>
               </List.ItemRow>
             </List.Item>

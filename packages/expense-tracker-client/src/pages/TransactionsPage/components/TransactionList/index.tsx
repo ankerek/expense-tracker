@@ -43,7 +43,7 @@ export class TransactionList extends React.Component<TransactionListProps> {
                     <ItemNotPersistedIndicator compact={true} />
                   )}
                   <Box marginLeft="auto">
-                    <FormattedAmount>{transaction.amount}</FormattedAmount>
+                    <FormattedAmount amount={transaction.amount} />
                   </Box>
                 </List.ItemRow>
                 <List.ItemRow>
