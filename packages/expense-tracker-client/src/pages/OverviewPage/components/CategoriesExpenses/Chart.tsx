@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { PieChart, Pie, Legend, Tooltip } from 'recharts'
-import { FormattedAmount } from '@core-components/FormattedAmount'
+import { FormattedAmount } from '@components/FormattedAmount'
 
 interface ChartProps {
   data?: object[]

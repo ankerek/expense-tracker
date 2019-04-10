@@ -10,7 +10,7 @@
       "*": ["node_modules/*", "src/types/*"],
       "@schema-types": ["schemaTypes.ts"],
       "@pages/*": ["pages/*"],
-      "@core-components/*": ["core-components/*"],
+      "@components/*": ["components/*"],
       "@modules/*": ["modules/*"],
       "@apollo/*": ["apollo/*"],
       "@utils/*": ["utils/*"]

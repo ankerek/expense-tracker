@@ -1,7 +1,7 @@
 import React from 'react'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { SaveAccount } from '@modules/account/SaveAccount'
-import { AccountForm } from '@core-components/AccountForm'
+import { AccountForm } from '@components/AccountForm'
 
 export class CreateAccountPage extends React.Component {
   render() {

@@ -1,10 +1,10 @@
 import React from 'react'
 import { SaveTransaction } from '@modules/transaction/SaveTransaction'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { GetTransaction } from '@modules/transaction/GetTransaction'
-import { TransactionForm } from '@core-components/TransactionForm'
+import { TransactionForm } from '@components/TransactionForm'
 import { GetAccountList } from '@modules/account/GetAccountList'
-import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
+import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 import { GetCategoryList } from '@modules/category/GetCategoryList'
 
 export class TransactionPage extends React.Component {

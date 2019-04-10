@@ -3,9 +3,9 @@ import values from 'lodash/values'
 import { Account, Transaction } from '@schema-types'
 import { sum } from '@utils/math'
 import { sortByAmount } from '@utils/sortByAmount'
-import { List } from '@core-components/List'
-import { Box } from '@core-components/Box'
-import { FormattedAmount } from '@core-components/FormattedAmount'
+import { List } from '@components/List'
+import { Box } from '@components/Box'
+import { FormattedAmount } from '@components/FormattedAmount'
 import { Typography } from '@material-ui/core'
 
 interface AccountsBalanceProps {

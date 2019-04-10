@@ -2,9 +2,7 @@ import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { CachePersistor } from 'apollo-cache-persist'
 import { initialState, typeDefs } from './clientState'
-import { getIsOnlineQuery } from '@modules/network/GetIsOnline'
 import { links } from './links'
-import { getPeriod } from '@utils/date'
 
 const cache = new InMemoryCache({
   cacheRedirects: {
@@ -33,13 +31,6 @@ export const cachePersistor = new CachePersistor({
 
 // promise restoring cache from local storage
 export const waitForCache = cachePersistor.restore()
-
-// purge local storage cache on store reset
-// client.onClearStore(async () => {
-//   console.log('purge')
-//   await cachePersistor.purge()
-//   initClientState()
-// })
 
 export const initClientState = () => {
   client.writeData({

@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { SignUpForm } from './components/SignUpForm'
 import { CreateUser } from '@modules/user/CreateUser'
 import { GetCurrencyList } from '@modules/currency/GetCurrencyList'

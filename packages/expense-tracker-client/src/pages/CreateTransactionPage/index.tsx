@@ -1,10 +1,10 @@
 import React from 'react'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { SaveTransaction } from '@modules/transaction/SaveTransaction'
-import { TransactionForm } from '@core-components/TransactionForm'
+import { TransactionForm } from '@components/TransactionForm'
 import { GetAccountList } from '@modules/account/GetAccountList'
 import { GetCategoryList } from '@modules/category/GetCategoryList'
-import { EmptyState } from '@core-components/EmptyState'
+import { EmptyState } from '@components/EmptyState'
 
 export class CreateTransactionPage extends React.Component {
   render() {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetCategoryList } from '@modules/category/GetCategoryList'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { CategoryList } from '@pages/CategoriesPage/components/CategoryList'
 
 export class CategoriesPage extends React.Component {

@@ -1,9 +1,9 @@
 import React from 'react'
 import { SaveCategory } from '@modules/category/SaveCategory'
 import { GetCategory } from '@modules/category/GetCategory'
-import { PageLayout } from '@core-components/PageLayout'
-import { CategoryForm } from '@core-components/CategoryForm'
-import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
+import { PageLayout } from '@components/PageLayout'
+import { CategoryForm } from '@components/CategoryForm'
+import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 
 export class CategoryPage extends React.Component {
   render() {

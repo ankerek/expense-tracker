@@ -1,14 +1,14 @@
 import React from 'react'
 import { GetTransactionListQuery_getTransactionList } from '@schema-types'
 import { OutsideActionsWrapper } from './elements'
-import { FormattedAmount } from '@core-components/FormattedAmount'
-import { Button } from '@core-components/Button'
-import { NavLink } from '@core-components/NavLink'
-import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
-import { EmptyState } from '@core-components/EmptyState'
+import { FormattedAmount } from '@components/FormattedAmount'
+import { Button } from '@components/Button'
+import { NavLink } from '@components/NavLink'
+import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
+import { EmptyState } from '@components/EmptyState'
 import Typography from '@material-ui/core/Typography'
-import { List } from '@core-components/List'
-import { Box } from '@core-components/Box'
+import { List } from '@components/List'
+import { Box } from '@components/Box'
 
 interface TransactionListProps {
   transactions: GetTransactionListQuery_getTransactionList[]

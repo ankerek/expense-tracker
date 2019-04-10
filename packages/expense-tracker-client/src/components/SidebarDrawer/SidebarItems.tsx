@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetCurrentUser } from '@modules/user/GetCurrentUser'
-import { NavLink } from '@core-components/NavLink'
+import { NavLink } from '@components/NavLink'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import InboxIcon from '@material-ui/icons/Inbox'

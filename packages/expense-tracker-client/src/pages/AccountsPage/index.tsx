@@ -1,7 +1,7 @@
 import React from 'react'
 import { GetAccountList } from '@modules/account/GetAccountList'
 import { AccountList } from '@pages/AccountsPage/components/AccountList'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { GetTransactionList } from '@modules/transaction/GetTransactionList'
 
 export class AccountsPage extends React.Component {

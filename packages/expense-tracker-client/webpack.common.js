@@ -20,7 +20,7 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.json'],
     alias: {
       '@pages': srcPath('pages'),
-      '@core-components': srcPath('core-components'),
+      '@components': srcPath('components'),
       '@modules': srcPath('modules'),
       '@apollo': srcPath('apollo'),
       '@utils': srcPath('utils'),

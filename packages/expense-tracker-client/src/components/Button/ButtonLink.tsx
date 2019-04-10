@@ -1,6 +1,6 @@
 import React from 'react'
 import MuiButton, { ButtonProps } from '@material-ui/core/Button'
-import { NavLink } from '@core-components/NavLink'
+import { NavLink } from '@components/NavLink'
 import { LocationDescriptor } from 'history'
 
 interface Props extends ButtonProps {

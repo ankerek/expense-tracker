@@ -14,5 +14,8 @@
     "no-floating-promises": false,
     "max-classes-per-file": false,
     "interface-name": [true, "never-prefix"]
+  },
+  "jsRules": {
+    "object-literal-sort-keys": false
   }
 }

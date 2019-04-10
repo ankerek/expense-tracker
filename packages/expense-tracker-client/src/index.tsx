@@ -6,8 +6,8 @@ import { client, waitForCache } from '@apollo/initializeApollo'
 import { registerServiceWorker } from './registerServiceWorker'
 import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { ThemeProvider } from '@core-components/ThemeProvider'
-import { OfflineIndicator } from '@core-components/OfflineIndicator'
+import { ThemeProvider } from '@components/ThemeProvider'
+import { OfflineIndicator } from '@components/OfflineIndicator'
 import { Routes } from '@pages/Routes'
 
 const App = () => (

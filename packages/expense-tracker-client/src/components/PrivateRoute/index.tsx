@@ -9,8 +9,8 @@ import { getCategoryListQuery } from '@modules/category/GetCategoryList'
 import { getTransactionListQuery } from '@modules/transaction/GetTransactionList'
 import { offlineLink } from '@apollo/links/offlineLink'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { PageLayout } from '@core-components/PageLayout'
-import { Box } from '@core-components/Box'
+import { PageLayout } from '@components/PageLayout'
+import { Box } from '@components/Box'
 
 class InitActions extends React.Component {
   async componentDidMount() {

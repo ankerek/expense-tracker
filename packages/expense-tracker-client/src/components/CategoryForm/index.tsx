@@ -1,33 +1,32 @@
 import React from 'react'
 import uuid from 'uuid/v4'
 import { NormalizedErrorsMap } from '@utils/normalizeErrors'
-import { SaveAccountInput } from '@schema-types'
-import { DeleteAccount } from '@modules/account/DeleteAccount'
+import { SaveCategoryInput } from '@schema-types'
+import { DeleteCategory } from '@modules/category/DeleteCategory'
 import { Field, Formik, FormikProps, FormikErrors } from 'formik'
-import { Button } from '@core-components/Button'
-import { Form } from '@core-components/Form'
+import { Button } from '@components/Button'
+import { Form } from '@components/Form'
 import { TextField } from '../TextField'
 import { ActionsWrapper } from './elements'
 
-export interface AccountFormProps {
-  initialValues?: AccountFormValues
+export interface CategoryFormProps {
+  initialValues?: CategoryFormValues
   submit: (
-    values: AccountFormValues,
-    prevValues?: AccountFormValues
+    values: CategoryFormValues,
+    prevValues?: CategoryFormValues
   ) => Promise<NormalizedErrorsMap | null>
   hasDelete?: boolean
   loading?: boolean
 }
 
-export type AccountFormValues = SaveAccountInput
+export type CategoryFormValues = SaveCategoryInput
 
 const getInitialEmptyValues = () => ({
   id: uuid(),
   name: '',
-  amount: 0,
 })
 
-const validate = (values: AccountFormValues) => {
+const validate = (values: CategoryFormValues) => {
   const errors: any = {}
 
   if (!values.name) {
@@ -37,17 +36,17 @@ const validate = (values: AccountFormValues) => {
   return errors
 }
 
-export class AccountForm<MutationVariables> extends React.PureComponent<
-  AccountFormProps
+export class CategoryForm<MutationVariables> extends React.PureComponent<
+  CategoryFormProps
 > {
   handleSubmit = async (
-    values: AccountFormValues,
-    formikBag: FormikProps<AccountFormValues>
+    values: CategoryFormValues,
+    formikBag: FormikProps<CategoryFormValues>
   ) => {
     const response = await this.props.submit(values, this.props.initialValues)
 
     if (response && response.errors) {
-      formikBag.setErrors(response.errors as FormikErrors<AccountFormValues>)
+      formikBag.setErrors(response.errors as FormikErrors<CategoryFormValues>)
       formikBag.setSubmitting(false)
     }
   }
@@ -59,7 +58,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
         initialValues={initialValues || getInitialEmptyValues()}
         validate={validate}
         onSubmit={this.handleSubmit}
-        render={({ isValid }: FormikProps<AccountFormValues>) => (
+        render={({ isValid }: FormikProps<CategoryFormValues>) => (
           <Form>
             <Field
               name="name"
@@ -78,22 +77,22 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
                 disabled={!isValid}
                 progress={loading}
               >
-                Save account
+                Save category
               </Button>
               {hasDelete && (
-                <DeleteAccount>
-                  {(deleteAccount, { loading: deleteLoading }) => (
+                <DeleteCategory>
+                  {(deleteCategory, { loading: deleteLoading }) => (
                     <Button
                       fullWidth
                       variant="contained"
                       color="secondary"
-                      onClick={() => deleteAccount(initialValues)}
+                      onClick={() => deleteCategory(initialValues)}
                       progress={deleteLoading}
                     >
-                      Delete account
+                      Delete category
                     </Button>
                   )}
-                </DeleteAccount>
+                </DeleteCategory>
               )}
             </ActionsWrapper>
           </Form>

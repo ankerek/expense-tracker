@@ -2,10 +2,10 @@ import React from 'react'
 import { GetCategoryListQuery_getCategoryList } from '@schema-types'
 import { Wrapper, Item, OutsideActionsWrapper } from './elements'
 import Divider from '@material-ui/core/Divider'
-import { ItemNotPersistedIndicator } from '@core-components/ItemNotPersistedIndicator'
-import { Button } from '@core-components/Button'
-import { NavLink } from '@core-components/NavLink'
-import { EmptyState } from '@core-components/EmptyState'
+import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
+import { Button } from '@components/Button'
+import { NavLink } from '@components/NavLink'
+import { EmptyState } from '@components/EmptyState'
 
 interface CategoryListProps {
   categories: GetCategoryListQuery_getCategoryList[]

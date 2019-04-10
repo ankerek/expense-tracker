@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { SignIn } from '@modules/user/SignIn'
 import { SignInForm } from '@pages/SignInPage/components/SignInForm'
 

@@ -8,7 +8,7 @@ import {
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import { SidebarDrawer } from '@core-components/SidebarDrawer'
+import { SidebarDrawer } from '@components/SidebarDrawer'
 import {
   AppBar,
   Toolbar,
@@ -17,8 +17,7 @@ import {
   Wrapper,
   ToolbarLeftIconEmpty,
 } from './elements'
-import { WithWidth } from '@core-components/WithWidth'
-import { AppVersion } from '@core-components/AppVersion'
+import { WithWidth } from '@components/WithWidth'
 
 interface PageLayoutProps {
   title?: React.ReactNode

@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import Typography from '@material-ui/core/Typography'
 
 export const NotFoundPage = () => (

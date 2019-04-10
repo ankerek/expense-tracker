@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageLayout } from '@core-components/PageLayout'
+import { PageLayout } from '@components/PageLayout'
 import { GetTransactionList } from '@modules/transaction/GetTransactionList'
 import { Overview } from '@pages/OverviewPage/components/Overview'
 

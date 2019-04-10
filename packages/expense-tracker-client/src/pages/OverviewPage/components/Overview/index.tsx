@@ -6,7 +6,7 @@ import {
 } from '@schema-types'
 import { Query } from 'react-apollo'
 import isWithinInterval from 'date-fns/isWithinInterval'
-import { EmptyState } from '@core-components/EmptyState'
+import { EmptyState } from '@components/EmptyState'
 import { CategoriesExpenses } from '../CategoriesExpenses'
 import { AccountsBalance } from '../AccountsBalance'
 import { PeriodFilter } from '../PeriodFilter'
