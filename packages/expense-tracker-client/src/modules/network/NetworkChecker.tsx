@@ -1,5 +1,5 @@
 import React from 'react'
-import { withApollo, WithApolloClient } from 'react-apollo'
+import { QueryResult, withApollo, WithApolloClient } from 'react-apollo'
 import { offlineLink } from '@apollo/links/offlineLink'
 import {
   GetIsOnline,
@@ -36,12 +36,14 @@ const ping = () => {
 }
 
 const initialState = {
-  online: true,
+  isOnline: true,
 }
 
 type State = Readonly<typeof initialState>
 
-type NetworkCheckerProps = GetIsOnlineProps
+export interface NetworkCheckerProps {
+  children: (data: { isOnline: boolean }) => React.ReactNode
+}
 
 class C extends React.Component<WithApolloClient<NetworkCheckerProps>, State> {
   readonly state = initialState
@@ -68,7 +70,7 @@ class C extends React.Component<WithApolloClient<NetworkCheckerProps>, State> {
   }
 
   render() {
-    return <GetIsOnline>{this.props.children}</GetIsOnline>
+    return this.props.children({ isOnline: this.state.isOnline })
   }
 
   private handleUpdateOnline = (isOnline: boolean) => {
@@ -82,6 +84,12 @@ class C extends React.Component<WithApolloClient<NetworkCheckerProps>, State> {
         data: {
           isOnline,
         },
+      })
+    }
+
+    if (this.state.isOnline !== isOnline) {
+      this.setState({
+        isOnline,
       })
     }
   }

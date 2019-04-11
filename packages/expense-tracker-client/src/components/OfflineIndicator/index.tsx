@@ -7,9 +7,7 @@ export class OfflineIndicator extends React.Component {
     return (
       <Wrapper>
         <NetworkChecker>
-          {({ data: { isOnline } }) =>
-            isOnline ? null : 'Your network is unavailable.'
-          }
+          {({ isOnline }) => (isOnline ? null : 'Your network is unavailable.')}
         </NetworkChecker>
       </Wrapper>
     )
