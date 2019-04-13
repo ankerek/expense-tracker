@@ -15,7 +15,7 @@ const textPrimaryColor = 'rgba(0, 0, 0, 0.87)'
 
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     color: ${textPrimaryColor};
   }
   
