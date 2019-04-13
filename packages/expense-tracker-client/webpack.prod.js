@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
+const CopyPlugin = require('copy-webpack-plugin')
 const { InjectManifest, GenerateSW } = require('workbox-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
@@ -18,7 +19,7 @@ module.exports = merge(common, {
       clientsClaim: true,
       skipWaiting: true,
       navigateFallback: '/static/index.html',
-      navigateFallbackBlacklist: [/^\/static/]
+      navigateFallbackBlacklist: [/^\/static/, /^\/robots.txt/],
     }),
     new WebpackPwaManifest({
       name: 'Expense tracker 2049',
@@ -37,11 +38,12 @@ module.exports = merge(common, {
         },
       ],
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-    }),
+    new CopyPlugin([{ from: 'src/assets' }]),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    // }),
     new webpack.DefinePlugin({
       'process.env.COMMIT': JSON.stringify(process.env.SOURCE_VERSION),
-    })
+    }),
   ],
 })

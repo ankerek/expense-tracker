@@ -58,6 +58,10 @@ const bootstrap = async () => {
       res.header('Pragma', 'no-cache')
     })
 
+    app.get('/robots.txt', (req, res) => {
+      res.sendFile(path.join(BUILD_PATH, 'robots.txt'))
+    })
+
     app.use('/static', express.static(BUILD_PATH))
 
     // redirect http to https
