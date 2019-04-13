@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import { NavLink as BaseNavLink, NavLinkProps } from 'react-router-dom'
 
 const StyledLink = styled(BaseNavLink)`
-  color: ${props => props.theme.palette.primary.main};
+  color: rgba(0, 0, 0, 0.87);
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+  }
 `
 
 export class NavLink extends React.PureComponent<NavLinkProps> {
