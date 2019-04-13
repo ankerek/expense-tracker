@@ -69,6 +69,7 @@ export class SignInForm extends React.PureComponent<SignInFormProps> {
           <Form>
             <Field
               name="email"
+              id="sign-in-form-email"
               label="E-mail"
               required
               fullWidth
@@ -77,6 +78,7 @@ export class SignInForm extends React.PureComponent<SignInFormProps> {
             />
             <Field
               name="password"
+              id="sign-in-form-password"
               type="password"
               label="Password"
               required

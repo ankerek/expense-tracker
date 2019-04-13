@@ -62,6 +62,7 @@ export class CategoryForm<MutationVariables> extends React.PureComponent<
           <Form>
             <Field
               name="name"
+              id="category-form-name"
               label="Name"
               required
               fullWidth

@@ -63,6 +63,7 @@ export class AccountForm<MutationVariables> extends React.PureComponent<
           <Form>
             <Field
               name="name"
+              id="account-form-name"
               label="Name"
               required
               fullWidth

@@ -75,6 +75,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
           <Form>
             <Field
               name="email"
+              id="sign-up-form-email"
               label="E-mail"
               required
               fullWidth
@@ -83,6 +84,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
             />
             <Field
               name="password"
+              id="sign-up-form-password"
               type="password"
               label="Password"
               required
@@ -93,6 +95,7 @@ export class SignUpForm extends React.PureComponent<SignUpFormProps> {
 
             <Field
               name="currency"
+              id="sign-up-form-currency"
               label="Currency"
               select
               required

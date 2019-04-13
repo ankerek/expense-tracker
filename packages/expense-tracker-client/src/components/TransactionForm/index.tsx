@@ -92,6 +92,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
           <Form>
             <Field
               name="createdAt"
+              id="transaction-form-created-at"
               label="Created"
               required
               fullWidth
@@ -100,6 +101,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
             />
             <Field
               name="description"
+              id="transaction-form-description"
               label="Description"
               fullWidth
               margin="normal"
@@ -107,6 +109,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
             />
             <Field
               name="amount"
+              id="transaction-form-amount"
               label="Amount"
               type="number"
               required
@@ -130,6 +133,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
 
             <Field
               name="account"
+              id="transaction-form-account"
               label="Account"
               select
               required
@@ -155,6 +159,7 @@ export class TransactionForm<MutationVariables> extends React.PureComponent<
 
             <Field
               name="category"
+              id="transaction-form-category"
               label="Category"
               select
               required
