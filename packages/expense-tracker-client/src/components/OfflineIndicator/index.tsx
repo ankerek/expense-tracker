@@ -5,11 +5,11 @@ import { Wrapper } from './elements'
 export class OfflineIndicator extends React.Component {
   render() {
     return (
-      <Wrapper>
-        <NetworkChecker>
-          {({ isOnline }) => (isOnline ? null : 'Your network is unavailable.')}
-        </NetworkChecker>
-      </Wrapper>
+      <NetworkChecker>
+        {({ isOnline }) =>
+          isOnline ? null : <Wrapper>Your network is unavailable.</Wrapper>
+        }
+      </NetworkChecker>
     )
   }
 }

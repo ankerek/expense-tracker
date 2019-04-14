@@ -51,7 +51,6 @@ class C extends React.Component<
 
     return (
       <Wrapper>
-        <OfflineIndicator />
         <AppBar drawerOpen={drawerOpen}>
           <Toolbar>
             {currentUser && (
