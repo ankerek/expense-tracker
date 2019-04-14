@@ -10,12 +10,31 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import blue from '@material-ui/core/colors/blue'
 import pink from '@material-ui/core/colors/pink'
 import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme'
+import robotoEot from '@assets/fonts/roboto-v19-latin-regular.eot'
+import robotoWoff from '@assets/fonts/roboto-v19-latin-regular.woff'
+import robotoWoff2 from '@assets/fonts/roboto-v19-latin-regular.woff2'
+import robotoTtf from '@assets/fonts/roboto-v19-latin-regular.ttf'
+import robotoSvg from '@assets/fonts/roboto-v19-latin-regular.svg'
 
 const textPrimaryColor = 'rgba(0, 0, 0, 0.87)'
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-display: swap;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url('${robotoEot}'); /* IE9 Compat Modes */
+    src: local('Roboto'), local('Roboto-Regular'),
+         url('${robotoEot}?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('${robotoWoff2}') format('woff2'), /* Super Modern Browsers */
+         url('${robotoWoff}') format('woff'), /* Modern Browsers */
+         url('${robotoTtf}') format('truetype'), /* Safari, Android, iOS */
+         url('${robotoSvg}#Roboto') format('svg'); /* Legacy iOS */
+  }
+
   body {
-    font-family: Roboto, sans-serif;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
     color: ${textPrimaryColor};
   }
   
@@ -55,8 +74,8 @@ export class ThemeProvider extends React.Component {
         <StyledThemeProvider theme={themeOptions}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <>
-              <CssBaseline />
               <GlobalStyle />
+              <CssBaseline />
               {this.props.children}
             </>
           </MuiPickersUtilsProvider>

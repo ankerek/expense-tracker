@@ -14,7 +14,8 @@
       "@components/*": ["components/*"],
       "@modules/*": ["modules/*"],
       "@apollo/*": ["apollo/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@assets/*": ["assets/*"]
     }
   },
   "include": ["src/**/*"],

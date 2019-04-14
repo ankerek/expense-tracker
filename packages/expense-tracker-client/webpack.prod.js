@@ -38,7 +38,7 @@ module.exports = merge(common, {
         },
       ],
     }),
-    new CopyPlugin([{ from: 'src/assets' }]),
+    new CopyPlugin([{ from: 'src/static' }]),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     }),
