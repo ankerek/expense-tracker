@@ -25,59 +25,59 @@ function lazyRouteFactory<C extends React.ComponentType>(
 }
 
 const SignInPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'SignInPage', webpackPrefetch: true */ '@pages/SignInPage')
+  import(/* webpackChunkName: 'SignInPage' */ '@pages/SignInPage')
 )
 
 const SignUpPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'SignUpPage', webpackPrefetch: true */ '@pages/SignUpPage')
+  import(/* webpackChunkName: 'SignUpPage' */ '@pages/SignUpPage')
 )
 
 const OverviewPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'OverviewPage', webpackPrefetch: true */ '@pages/OverviewPage')
+  import(/* webpackChunkName: 'OverviewPage' */ '@pages/OverviewPage')
 )
 
 const SignOutPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'SignOutPage', webpackPrefetch: true */ '@pages/SignOutPage')
+  import(/* webpackChunkName: 'SignOutPage' */ '@pages/SignOutPage')
 )
 
 const AccountsPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'AccountsPage', webpackPrefetch: true */ '@pages/AccountsPage')
+  import(/* webpackChunkName: 'AccountsPage' */ '@pages/AccountsPage')
 )
 
 const CreateAccountPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'CreateAccountPage', webpackPrefetch: true */ '@pages/CreateAccountPage')
+  import(/* webpackChunkName: 'CreateAccountPage' */ '@pages/CreateAccountPage')
 )
 
 const AccountPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'AccountPage', webpackPrefetch: true */ '@pages/AccountPage')
+  import(/* webpackChunkName: 'AccountPage' */ '@pages/AccountPage')
 )
 
 const CategoriesPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'CategoriesPage', webpackPrefetch: true */ '@pages/CategoriesPage')
+  import(/* webpackChunkName: 'CategoriesPage' */ '@pages/CategoriesPage')
 )
 
 const CreateCategoryPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'CreateCategoryPage', webpackPrefetch: true */ '@pages/CreateCategoryPage')
+  import(/* webpackChunkName: 'CreateCategoryPage' */ '@pages/CreateCategoryPage')
 )
 
 const CategoryPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'CategoryPage', webpackPrefetch: true */ '@pages/CategoryPage')
+  import(/* webpackChunkName: 'CategoryPage' */ '@pages/CategoryPage')
 )
 
 const TransactionsPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'TransactionsPage', webpackPrefetch: true */ '@pages/TransactionsPage')
+  import(/* webpackChunkName: 'TransactionsPage' */ '@pages/TransactionsPage')
 )
 
 const CreateTransactionPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'CreateTransactionPage', webpackPrefetch: true */ '@pages/CreateTransactionPage')
+  import(/* webpackChunkName: 'CreateTransactionPage' */ '@pages/CreateTransactionPage')
 )
 
 const TransactionPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'TransactionPage', webpackPrefetch: true */ '@pages/TransactionPage')
+  import(/* webpackChunkName: 'TransactionPage' */ '@pages/TransactionPage')
 )
 
 const NotFoundPage = lazyRouteFactory(() =>
-  import(/* webpackChunkName: 'NotFoundPage', webpackPrefetch: true */ '@pages/NotFoundPage')
+  import(/* webpackChunkName: 'NotFoundPage' */ '@pages/NotFoundPage')
 )
 
 export const Routes = () => (
