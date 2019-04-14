@@ -107,7 +107,7 @@ export class UserResolver {
       )
     }
 
-    return { token: createToken(user, '2h'), user }
+    return { token: createToken(user, '7 days'), user }
   }
 }
 
