@@ -3,7 +3,7 @@ import { GetTransactionList } from '@modules/transaction/GetTransactionList'
 import { TransactionList } from '@pages/TransactionsPage/components/TransactionList'
 import { PageLayout } from '@components/PageLayout'
 
-export class TransactionsPage extends React.Component {
+export default class TransactionsPage extends React.Component {
   render() {
     return (
       <PageLayout title="Transactions">

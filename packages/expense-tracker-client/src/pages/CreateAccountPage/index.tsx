@@ -3,7 +3,7 @@ import { PageLayout } from '@components/PageLayout'
 import { SaveAccount } from '@modules/account/SaveAccount'
 import { AccountForm } from '@components/AccountForm'
 
-export class CreateAccountPage extends React.Component {
+export default class CreateAccountPage extends React.Component {
   render() {
     return (
       <PageLayout title="Create new account" hasGoBack>

@@ -4,7 +4,7 @@ import { SignUpForm } from './components/SignUpForm'
 import { CreateUser } from '@modules/user/CreateUser'
 import { GetCurrencyList } from '@modules/currency/GetCurrencyList'
 
-export const SignUpPage = () => (
+export default () => (
   <PageLayout title="Sign up">
     <GetCurrencyList>
       {({ data }) =>

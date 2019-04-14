@@ -13,4 +13,4 @@ class C extends React.Component<WithApolloClient<{}>> {
   }
 }
 
-export const SignOutPage = withApollo(C)
+export default withApollo(C)

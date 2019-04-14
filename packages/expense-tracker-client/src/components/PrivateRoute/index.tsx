@@ -11,6 +11,7 @@ import { offlineLink } from '@apollo/links/offlineLink'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { PageLayout } from '@components/PageLayout'
 import { Box } from '@components/Box'
+import { importAllPages } from '@pages/importAllPages'
 
 class InitActions extends React.Component {
   async componentDidMount() {
@@ -35,6 +36,10 @@ class InitActions extends React.Component {
     ])
 
     restoreLocalOperations()
+
+    setTimeout(() => {
+      importAllPages()
+    }, 1000)
   }
 
   render() {

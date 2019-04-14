@@ -3,7 +3,7 @@ import { PageLayout } from '@components/PageLayout'
 import { SaveCategory } from '@modules/category/SaveCategory'
 import { CategoryForm } from '@components/CategoryForm'
 
-export class CreateCategoryPage extends React.Component {
+export default class CreateCategoryPage extends React.Component {
   render() {
     return (
       <PageLayout title="Create new category" hasGoBack>

@@ -11,7 +11,8 @@ const htmlPlugin = new HtmlWebPackPlugin({
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
     path: path.join(__dirname, 'dist'),
     publicPath: '/static/',
   },
@@ -47,8 +48,8 @@ module.exports = {
       {
         test: /\.mjs$/,
         include: /node_modules/,
-        type: 'javascript/auto'
-      }
+        type: 'javascript/auto',
+      },
 
       // {
       //   test: /\.css$/,

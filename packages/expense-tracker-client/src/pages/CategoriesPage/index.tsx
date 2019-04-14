@@ -3,7 +3,7 @@ import { GetCategoryList } from '@modules/category/GetCategoryList'
 import { PageLayout } from '@components/PageLayout'
 import { CategoryList } from '@pages/CategoriesPage/components/CategoryList'
 
-export class CategoriesPage extends React.Component {
+export default class CategoriesPage extends React.Component {
   render() {
     return (
       <PageLayout title="Categories">

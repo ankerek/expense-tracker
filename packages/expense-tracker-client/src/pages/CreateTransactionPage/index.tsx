@@ -6,7 +6,7 @@ import { GetAccountList } from '@modules/account/GetAccountList'
 import { GetCategoryList } from '@modules/category/GetCategoryList'
 import { EmptyState } from '@components/EmptyState'
 
-export class CreateTransactionPage extends React.Component {
+export default class CreateTransactionPage extends React.Component {
   render() {
     return (
       <PageLayout title="Create new transaction" hasGoBack>

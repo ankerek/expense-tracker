@@ -3,7 +3,7 @@ import { PageLayout } from '@components/PageLayout'
 import { GetTransactionList } from '@modules/transaction/GetTransactionList'
 import { Overview } from '@pages/OverviewPage/components/Overview'
 
-export const OverviewPage = () => (
+export default () => (
   <PageLayout title="Overview">
     <GetTransactionList>
       {({ data, subscribe }) =>

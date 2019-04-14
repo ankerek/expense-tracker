@@ -7,7 +7,7 @@ import { GetAccountList } from '@modules/account/GetAccountList'
 import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 import { GetCategoryList } from '@modules/category/GetCategoryList'
 
-export class TransactionPage extends React.Component {
+export default class TransactionPage extends React.Component {
   render() {
     return (
       <PageLayout title="Transaction" hasGoBack>

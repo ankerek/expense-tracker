@@ -39,9 +39,9 @@ module.exports = merge(common, {
       ],
     }),
     new CopyPlugin([{ from: 'src/assets' }]),
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static',
-    // }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+    }),
     new webpack.DefinePlugin({
       'process.env.COMMIT': JSON.stringify(process.env.SOURCE_VERSION),
     }),

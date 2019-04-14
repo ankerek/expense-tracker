@@ -1,0 +1,16 @@
+export const importAllPages = (pageId?: string) => {
+  import(/* webpackChunkName: 'SignUpPage' */ '@pages/SignUpPage')
+  import(/* webpackChunkName: 'SignInPage' */ '@pages/SignInPage')
+  import(/* webpackChunkName: 'OverviewPage' */ '@pages/OverviewPage')
+  import(/* webpackChunkName: 'SignOutPage' */ '@pages/SignOutPage')
+  import(/* webpackChunkName: 'AccountsPage' */ '@pages/AccountsPage')
+  import(/* webpackChunkName: 'CreateAccountPage' */ '@pages/CreateAccountPage')
+  import(/* webpackChunkName: 'AccountPage' */ '@pages/AccountPage')
+  import(/* webpackChunkName: 'CategoriesPage' */ '@pages/CategoriesPage')
+  import(/* webpackChunkName: 'CreateCategoryPage' */ '@pages/CreateCategoryPage')
+  import(/* webpackChunkName: 'CategoryPage' */ '@pages/CategoryPage')
+  import(/* webpackChunkName: 'TransactionsPage' */ '@pages/TransactionsPage')
+  import(/* webpackChunkName: 'CreateTransactionPage' */ '@pages/CreateTransactionPage')
+  import(/* webpackChunkName: 'TransactionPage' */ '@pages/TransactionPage')
+  import(/* webpackChunkName: 'NotFoundPage' */ '@pages/NotFoundPage')
+}

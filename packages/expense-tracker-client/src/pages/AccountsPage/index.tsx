@@ -4,7 +4,7 @@ import { AccountList } from '@pages/AccountsPage/components/AccountList'
 import { PageLayout } from '@components/PageLayout'
 import { GetTransactionList } from '@modules/transaction/GetTransactionList'
 
-export class AccountsPage extends React.Component {
+export default class AccountsPage extends React.Component {
   render() {
     return (
       <PageLayout title="Accounts">

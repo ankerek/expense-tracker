@@ -5,7 +5,7 @@ import { PageLayout } from '@components/PageLayout'
 import { CategoryForm } from '@components/CategoryForm'
 import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 
-export class CategoryPage extends React.Component {
+export default class CategoryPage extends React.Component {
   render() {
     return (
       <PageLayout title="Category" hasGoBack>

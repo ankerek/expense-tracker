@@ -5,7 +5,7 @@ import { PageLayout } from '@components/PageLayout'
 import { AccountForm } from '@components/AccountForm'
 import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 
-export class AccountPage extends React.Component {
+export default class AccountPage extends React.Component {
   render() {
     return (
       <PageLayout title="Account" hasGoBack>
