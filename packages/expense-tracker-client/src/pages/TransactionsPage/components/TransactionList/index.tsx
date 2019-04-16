@@ -1,9 +1,9 @@
 import React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { GetTransactionListQuery_getTransactionList } from '@schema-types'
 import { OutsideActionsWrapper } from './elements'
 import { FormattedAmount } from '@components/FormattedAmount'
 import { Button } from '@components/Button'
-import { NavLink } from '@components/NavLink'
 import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 import { EmptyState } from '@components/EmptyState'
 import Typography from '@material-ui/core/Typography'
@@ -15,7 +15,9 @@ interface TransactionListProps {
   subscribe?: () => void
 }
 
-export class TransactionList extends React.Component<TransactionListProps> {
+export class C extends React.Component<
+  TransactionListProps & RouteComponentProps
+> {
   componentDidMount() {
     if (this.props.subscribe) {
       this.props.subscribe()
@@ -23,22 +25,24 @@ export class TransactionList extends React.Component<TransactionListProps> {
   }
 
   render() {
-    const { transactions } = this.props
+    const { transactions, history } = this.props
     return (
       <>
         <List>
           {transactions.length ? (
             transactions.map(transaction => (
-              <List.Item gray={!transaction.isPersisted} key={transaction.id}>
+              <List.Item
+                key={transaction.id}
+                gray={!transaction.isPersisted}
+                onClick={() =>
+                  history.push({
+                    pathname: `/transactions/${transaction.id}`,
+                    state: { next: '/transactions' },
+                  })
+                }
+              >
                 <List.ItemRow>
-                  <NavLink
-                    to={{
-                      pathname: `/transactions/${transaction.id}`,
-                      state: { next: '/transactions' },
-                    }}
-                  >
-                    {transaction.category.name}
-                  </NavLink>
+                  {transaction.category.name}
                   {!transaction.isPersisted && (
                     <ItemNotPersistedIndicator compact={true} />
                   )}
@@ -76,4 +80,4 @@ export class TransactionList extends React.Component<TransactionListProps> {
   }
 }
 
-// TODO: create and use FormattedAmount component
+export const TransactionList = withRouter(C)

@@ -1,18 +1,19 @@
 import React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { GetCategoryListQuery_getCategoryList } from '@schema-types'
-import { Wrapper, Item, OutsideActionsWrapper } from './elements'
-import Divider from '@material-ui/core/Divider'
+import { OutsideActionsWrapper } from './elements'
 import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 import { Button } from '@components/Button'
 import { NavLink } from '@components/NavLink'
 import { EmptyState } from '@components/EmptyState'
+import { List } from '@components/List'
 
 interface CategoryListProps {
   categories: GetCategoryListQuery_getCategoryList[]
   subscribe?: () => void
 }
 
-export class CategoryList extends React.PureComponent<CategoryListProps> {
+class C extends React.PureComponent<CategoryListProps & RouteComponentProps> {
   componentDidMount() {
     if (this.props.subscribe) {
       this.props.subscribe()
@@ -20,33 +21,34 @@ export class CategoryList extends React.PureComponent<CategoryListProps> {
   }
 
   render() {
-    const { categories } = this.props
+    const { categories, history } = this.props
     return (
       <>
-        <Wrapper>
+        <List>
           {categories.length ? (
             categories.map(category => (
-              <div key={category.id}>
-                <Item isNotPersisted={!category.isPersisted}>
-                  <NavLink
-                    to={{
-                      pathname: `/categories/${category.id}`,
-                      state: { next: '/categories' },
-                    }}
-                  >
-                    {category.name}
-                  </NavLink>
+              <List.Item
+                key={category.id}
+                gray={!category.isPersisted}
+                onClick={() =>
+                  history.push({
+                    pathname: `/categories/${category.id}`,
+                    state: { next: '/categories' },
+                  })
+                }
+              >
+                <List.ItemRow>
+                  {category.name}
                   {!category.isPersisted && (
                     <ItemNotPersistedIndicator compact={true} />
                   )}
-                </Item>
-                <Divider light />
-              </div>
+                </List.ItemRow>
+              </List.Item>
             ))
           ) : (
             <EmptyState title="There are no categories" />
           )}
-        </Wrapper>
+        </List>
         <OutsideActionsWrapper>
           <Button.Link
             to={{
@@ -64,4 +66,4 @@ export class CategoryList extends React.PureComponent<CategoryListProps> {
   }
 }
 
-// TODO: create and use FormattedAmount component
+export const CategoryList = withRouter(C)

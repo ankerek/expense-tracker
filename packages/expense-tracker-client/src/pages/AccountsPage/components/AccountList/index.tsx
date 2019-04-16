@@ -1,13 +1,14 @@
 import React from 'react'
 import { Account, Transaction } from '@schema-types'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { sum } from '@utils/math'
-import Divider from '@material-ui/core/Divider'
 import { ItemNotPersistedIndicator } from '@components/ItemNotPersistedIndicator'
 import { FormattedAmount } from '@components/FormattedAmount'
 import { Button } from '@components/Button'
-import { NavLink } from '@components/NavLink'
 import { EmptyState } from '@components/EmptyState'
-import { Amount, Wrapper, Item, OutsideActionsWrapper } from './elements'
+import { OutsideActionsWrapper } from './elements'
+import { List } from '@components/List'
+import { Box } from '@components/Box'
 
 interface AccountListProps {
   accounts: Account[]
@@ -16,7 +17,7 @@ interface AccountListProps {
   subscribeTransactions?: () => void
 }
 
-export class AccountList extends React.PureComponent<AccountListProps> {
+class C extends React.PureComponent<AccountListProps & RouteComponentProps> {
   componentDidMount() {
     if (this.props.subscribeAccounts) {
       this.props.subscribeAccounts()
@@ -27,26 +28,28 @@ export class AccountList extends React.PureComponent<AccountListProps> {
   }
 
   render() {
-    const { accounts, transactions } = this.props
+    const { accounts, transactions, history } = this.props
     return (
       <>
-        <Wrapper>
+        <List>
           {accounts.length ? (
             accounts.map(account => (
-              <div key={account.id}>
-                <Item isNotPersisted={!account.isPersisted}>
-                  <NavLink
-                    to={{
-                      pathname: `/accounts/${account.id}`,
-                      state: { next: '/accounts' },
-                    }}
-                  >
-                    {account.name}
-                  </NavLink>
+              <List.Item
+                key={account.id}
+                gray={!account.isPersisted}
+                onClick={() =>
+                  history.push({
+                    pathname: `/accounts/${account.id}`,
+                    state: { next: '/accounts' },
+                  })
+                }
+              >
+                <List.ItemRow>
+                  {account.name}
                   {!account.isPersisted && (
                     <ItemNotPersistedIndicator compact={true} />
                   )}
-                  <Amount>
+                  <Box marginLeft="auto">
                     <FormattedAmount
                       amount={transactions.reduce((acc, curr) => {
                         if (curr.account.id === account.id) {
@@ -55,15 +58,14 @@ export class AccountList extends React.PureComponent<AccountListProps> {
                         return acc
                       }, 0)}
                     />
-                  </Amount>
-                </Item>
-                <Divider light />
-              </div>
+                  </Box>
+                </List.ItemRow>
+              </List.Item>
             ))
           ) : (
             <EmptyState title="There are no accounts" />
           )}
-        </Wrapper>
+        </List>
         <OutsideActionsWrapper>
           <Button.Link
             to={{
@@ -81,4 +83,4 @@ export class AccountList extends React.PureComponent<AccountListProps> {
   }
 }
 
-// TODO: create and use FormattedAmount component
+export const AccountList = withRouter(C)
