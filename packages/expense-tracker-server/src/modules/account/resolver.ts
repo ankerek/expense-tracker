@@ -124,11 +124,29 @@ export class AccountResolver {
     @Arg('id', type => ID) id: string,
     @Ctx() ctx: Context,
     @PubSub('ACCOUNT_DELETED')
-    publish: Publisher<{ accountId: string; userId: string }>
+    publishDeleteAccount: Publisher<{ accountId: string; userId: string }>,
+    @PubSub('TRANSACTION_DELETED')
+    publishDeleteTransaction: Publisher<{
+      transactionId: string
+      userId: string
+    }>
   ) {
+    const transactions = await this.transactionRepository.find({
+      where: { categoryId: id },
+    })
+
     await this.accountRepository.delete(id)
 
-    await publish({ accountId: id, userId: ctx.user.id })
+    await publishDeleteAccount({ accountId: id, userId: ctx.user.id })
+
+    if (transactions.length) {
+      for (let i = 0; i < transactions.length; i++) {
+        await publishDeleteTransaction({
+          transactionId: transactions[i].id,
+          userId: ctx.user.id,
+        })
+      }
+    }
 
     return true
   }

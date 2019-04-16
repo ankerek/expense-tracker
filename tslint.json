@@ -13,6 +13,7 @@
     "ban-types": false,
     "no-floating-promises": false,
     "max-classes-per-file": false,
+    "prefer-for-of": false,
     "interface-name": [true, "never-prefix"]
   },
   "jsRules": {
