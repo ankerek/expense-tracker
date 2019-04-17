@@ -49,7 +49,7 @@ const bootstrap = async () => {
 
   if (process.env.NODE_ENV === 'production') {
     app.get('/service-worker.js', (req, res) => {
-      res.sendFile(path.join(BUILD_PATH, 'service-worker.js'))
+      res.sendFile(path.join(BUILD_PATH, 'static', 'service-worker.js'))
       res.header(
         'Cache-Control',
         'private, max-age=0, no-cache, no-store, must-revalidate'
@@ -58,11 +58,7 @@ const bootstrap = async () => {
       res.header('Pragma', 'no-cache')
     })
 
-    app.get('/robots.txt', (req, res) => {
-      res.sendFile(path.join(BUILD_PATH, 'robots.txt'))
-    })
-
-    app.use('/static', express.static(BUILD_PATH))
+    app.use(express.static(BUILD_PATH))
 
     if (!process.env.DISABLE_HTTPS_REDIRECT) {
       // redirect http to https
@@ -76,7 +72,7 @@ const bootstrap = async () => {
     }
 
     app.get('*', (req, res) =>
-      res.sendFile(path.resolve(path.join(BUILD_PATH, 'index.html')))
+      res.sendFile(path.resolve(path.join(BUILD_PATH, 'static', 'index.html')))
     )
   }
 
@@ -95,21 +91,9 @@ const bootstrap = async () => {
       },
       {
         server,
-        // path: '/subscriptions',
       }
     )
   })
-
-  // app.get(
-  //   '/test',
-  //   asyncMiddleware(async (req, res, next) => {
-  //     /*
-  //     if there is an error thrown in getUserFromDb, asyncMiddleware
-  //     will pass it to next() and express will handle the error;
-  //   */
-  //     res.send('hello world')
-  //   })
-  // )
 }
 
 bootstrap().catch(err => console.log(err))

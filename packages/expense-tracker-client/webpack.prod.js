@@ -38,7 +38,7 @@ module.exports = merge(common, {
         },
       ],
     }),
-    new CopyPlugin([{ from: 'src/static' }]),
+    new CopyPlugin([{ from: 'src/static', to: path.join(__dirname, 'dist') }]),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
     }),
