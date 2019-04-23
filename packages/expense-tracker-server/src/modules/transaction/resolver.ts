@@ -59,6 +59,7 @@ export class TransactionResolver {
   ) {
     return this.transactionRepository.find({
       where: { userId: ctx.user.id },
+      order: { createdAt: 'DESC' },
     })
   }
 
