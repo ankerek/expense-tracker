@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const getEntities = () => {
+export const getEntities = () => {
   let entities: EntitySchema[] = []
   fs.readdirSync(path.join(__dirname, 'modules')).forEach(folder => {
     const currentEntities = require(`./modules/${folder}/entities`).default
