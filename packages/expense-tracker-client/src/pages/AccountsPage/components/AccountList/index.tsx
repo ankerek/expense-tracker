@@ -29,8 +29,24 @@ class C extends React.PureComponent<AccountListProps & RouteComponentProps> {
 
   render() {
     const { accounts, transactions, history } = this.props
+    const createButton = (
+      <Button.Link
+        to={{
+          pathname: '/accounts/create',
+          state: { next: '/accounts' },
+        }}
+        variant="contained"
+        color="primary"
+      >
+        Create new account
+      </Button.Link>
+    )
+
     return (
       <>
+        {!!accounts.length && (
+          <OutsideActionsWrapper>{createButton}</OutsideActionsWrapper>
+        )}
         <List>
           {accounts.length ? (
             accounts.map(account => (
@@ -63,21 +79,9 @@ class C extends React.PureComponent<AccountListProps & RouteComponentProps> {
               </List.Item>
             ))
           ) : (
-            <EmptyState title="There are no accounts" />
+            <EmptyState title="There are no accounts" body={createButton} />
           )}
         </List>
-        <OutsideActionsWrapper>
-          <Button.Link
-            to={{
-              pathname: '/accounts/create',
-              state: { next: '/accounts' },
-            }}
-            variant="contained"
-            color="primary"
-          >
-            Create new account
-          </Button.Link>
-        </OutsideActionsWrapper>
       </>
     )
   }

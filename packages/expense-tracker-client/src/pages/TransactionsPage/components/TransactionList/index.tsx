@@ -1,6 +1,7 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { GetTransactionListQuery_getTransactionList } from '@schema-types'
+import { formatDateString } from '@utils/date'
 import { OutsideActionsWrapper } from './elements'
 import { FormattedAmount } from '@components/FormattedAmount'
 import { Button } from '@components/Button'
@@ -26,8 +27,23 @@ export class C extends React.Component<
 
   render() {
     const { transactions, history } = this.props
+    const createButton = (
+      <Button.Link
+        to={{
+          pathname: '/transactions/create',
+          state: { next: '/transactions' },
+        }}
+        variant="contained"
+        color="primary"
+      >
+        Create new transaction
+      </Button.Link>
+    )
     return (
       <>
+        {!!transactions.length && (
+          <OutsideActionsWrapper>{createButton}</OutsideActionsWrapper>
+        )}
         <List>
           {transactions.length ? (
             transactions.map(transaction => (
@@ -53,6 +69,7 @@ export class C extends React.Component<
                 <List.ItemRow>
                   {transaction.description !== '' && (
                     <Typography color="textSecondary">
+                      {formatDateString(transaction.createdAt, 'PP')}&nbsp;
                       {transaction.description}
                     </Typography>
                   )}
@@ -60,21 +77,9 @@ export class C extends React.Component<
               </List.Item>
             ))
           ) : (
-            <EmptyState title="There are no transactions" />
+            <EmptyState title="There are no transactions" body={createButton} />
           )}
         </List>
-        <OutsideActionsWrapper>
-          <Button.Link
-            to={{
-              pathname: '/transactions/create',
-              state: { next: '/transactions' },
-            }}
-            variant="contained"
-            color="primary"
-          >
-            Create new transaction
-          </Button.Link>
-        </OutsideActionsWrapper>
       </>
     )
   }

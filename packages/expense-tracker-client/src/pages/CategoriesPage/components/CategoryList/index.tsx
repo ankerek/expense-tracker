@@ -22,8 +22,24 @@ class C extends React.PureComponent<CategoryListProps & RouteComponentProps> {
 
   render() {
     const { categories, history } = this.props
+    const createButton = (
+      <Button.Link
+        to={{
+          pathname: '/categories/create',
+          state: { next: '/categories' },
+        }}
+        variant="contained"
+        color="primary"
+      >
+        Create new category
+      </Button.Link>
+    )
+
     return (
       <>
+        {!!categories.length && (
+          <OutsideActionsWrapper>{createButton}</OutsideActionsWrapper>
+        )}
         <List>
           {categories.length ? (
             categories.map(category => (
@@ -46,21 +62,9 @@ class C extends React.PureComponent<CategoryListProps & RouteComponentProps> {
               </List.Item>
             ))
           ) : (
-            <EmptyState title="There are no categories" />
+            <EmptyState title="There are no categories" body={createButton} />
           )}
         </List>
-        <OutsideActionsWrapper>
-          <Button.Link
-            to={{
-              pathname: '/categories/create',
-              state: { next: '/categories' },
-            }}
-            variant="contained"
-            color="primary"
-          >
-            Create new category
-          </Button.Link>
-        </OutsideActionsWrapper>
       </>
     )
   }
