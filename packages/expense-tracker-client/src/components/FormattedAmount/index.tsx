@@ -4,14 +4,15 @@ import { Amount } from './elements'
 
 interface FormattedAmountProps {
   amount: number
+  color?: string
 }
 
 export class FormattedAmount extends React.PureComponent<FormattedAmountProps> {
   render() {
-    const { amount } = this.props
+    const { amount, color } = this.props
     return (
       <>
-        <Amount>{amount}</Amount>
+        <Amount color={color}>{amount}</Amount>
         <GetCurrentUser>
           {({ data }) =>
             data && data.getCurrentUser ? (

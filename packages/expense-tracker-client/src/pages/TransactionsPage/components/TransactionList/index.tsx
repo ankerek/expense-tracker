@@ -37,7 +37,7 @@ export class C extends React.Component<
         variant="contained"
         color="primary"
       >
-        Create new transaction
+        Add new transaction
       </Button.Link>
     )
     return (

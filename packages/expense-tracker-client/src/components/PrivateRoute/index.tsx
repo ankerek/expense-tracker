@@ -70,7 +70,7 @@ export class PrivateRoute extends React.Component<RouteProps> {
 
                   if (loading) {
                     return (
-                      <PageLayout title="Expense tracker 2049">
+                      <PageLayout title="Expense tracker">
                         <Box width="100%" height="100%" centerAll={true}>
                           <CircularProgress color="secondary" />
                         </Box>

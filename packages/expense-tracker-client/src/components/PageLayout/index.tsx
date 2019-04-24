@@ -18,7 +18,8 @@ import {
   ToolbarLeftIconEmpty,
 } from './elements'
 import { WithWidth } from '@components/WithWidth'
-import { OfflineIndicator } from '@components/OfflineIndicator'
+import { GetTransactionList } from '@modules/transaction/GetTransactionList'
+import { TotalBalance } from './TotalBalance'
 
 interface PageLayoutProps {
   title?: React.ReactNode
@@ -79,6 +80,18 @@ class C extends React.Component<
               <Typography variant="h5" color="inherit">
                 {title}
               </Typography>
+            )}
+            {currentUser && (
+              <GetTransactionList>
+                {({ data, subscribe }) =>
+                  data && data.getTransactionList ? (
+                    <TotalBalance
+                      transactions={data.getTransactionList}
+                      subscribe={subscribe}
+                    />
+                  ) : null
+                }
+              </GetTransactionList>
             )}
           </Toolbar>
         </AppBar>

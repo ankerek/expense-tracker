@@ -47,3 +47,13 @@ export const ToolbarLeftIconEmpty = styled.div`
   width: 28px;
   height: 28px;
 `
+
+export const TotalBalanceWrapper = styled.div`
+  margin-left: auto;
+  text-align: right;
+  font-size: 14px;
+`
+
+export const TotalBalanceLabel = styled.div`
+  font-size: 12px;
+`

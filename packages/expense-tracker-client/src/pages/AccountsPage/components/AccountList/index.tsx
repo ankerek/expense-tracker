@@ -38,7 +38,7 @@ class C extends React.PureComponent<AccountListProps & RouteComponentProps> {
         variant="contained"
         color="primary"
       >
-        Create new account
+        Add new account
       </Button.Link>
     )
 

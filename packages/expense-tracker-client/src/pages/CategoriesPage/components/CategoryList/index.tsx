@@ -31,7 +31,7 @@ class C extends React.PureComponent<CategoryListProps & RouteComponentProps> {
         variant="contained"
         color="primary"
       >
-        Create new category
+        Add new category
       </Button.Link>
     )
 

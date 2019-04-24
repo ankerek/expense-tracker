@@ -9,7 +9,7 @@ import { EmptyState } from '@components/EmptyState'
 export default class CreateTransactionPage extends React.Component {
   render() {
     return (
-      <PageLayout title="Create new transaction" hasGoBack>
+      <PageLayout title="Add transaction" hasGoBack>
         <GetAccountList>
           {({ data: accountListData }) => (
             <GetCategoryList>

@@ -6,7 +6,7 @@ import { CategoryForm } from '@components/CategoryForm'
 export default class CreateCategoryPage extends React.Component {
   render() {
     return (
-      <PageLayout title="Create new category" hasGoBack>
+      <PageLayout title="Add category" hasGoBack>
         <SaveCategory>
           {(submit, { loading }) => (
             <CategoryForm submit={submit} loading={loading} />

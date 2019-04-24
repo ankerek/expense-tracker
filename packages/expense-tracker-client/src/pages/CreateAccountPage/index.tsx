@@ -6,7 +6,7 @@ import { AccountForm } from '@components/AccountForm'
 export default class CreateAccountPage extends React.Component {
   render() {
     return (
-      <PageLayout title="Create new account" hasGoBack>
+      <PageLayout title="Add account" hasGoBack>
         <SaveAccount>
           {(submit, { loading }) => (
             <AccountForm submit={submit} loading={loading} />
