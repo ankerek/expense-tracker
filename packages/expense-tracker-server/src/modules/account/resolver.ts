@@ -132,7 +132,7 @@ export class AccountResolver {
     }>
   ) {
     const transactions = await this.transactionRepository.find({
-      where: { categoryId: id },
+      where: { accountId: id },
     })
 
     await this.accountRepository.delete(id)
