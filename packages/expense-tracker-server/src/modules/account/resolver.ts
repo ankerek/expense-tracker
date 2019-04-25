@@ -101,9 +101,11 @@ export class AccountResolver {
     const newAccount = new Account(input)
     newAccount.userId = ctx.user.id
 
+    const savedAccount = await this.accountRepository.save(newAccount)
+
     await publish({ account: input, userId: ctx.user.id })
 
-    return this.accountRepository.save(newAccount)
+    return savedAccount
   }
 
   // @deprecated

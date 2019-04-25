@@ -83,9 +83,11 @@ export class AccountResolver {
     const newCategory = new Category(input)
     newCategory.userId = ctx.user.id
 
+    const savedCategory = await this.categoryRepository.save(newCategory)
+
     await publish({ category: input, userId: ctx.user.id })
 
-    return this.categoryRepository.save(newCategory)
+    return savedCategory
   }
 
   @Authorized()

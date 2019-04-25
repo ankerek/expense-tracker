@@ -24,10 +24,11 @@ export class Account {
   @JoinColumn({ name: 'user_id' })
   userId: string
 
-  constructor(input?: SaveAccountInput) {
+  constructor(input?: SaveAccountInput & { userId?: string }) {
     if (input) {
       this.id = input.id
       this.name = input.name
+      this.userId = input.userId
     }
   }
 }

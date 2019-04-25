@@ -20,12 +20,6 @@ interface TransactionListProps {
 export class C extends React.Component<
   TransactionListProps & RouteComponentProps
 > {
-  componentDidMount() {
-    if (this.props.subscribe) {
-      this.props.subscribe()
-    }
-  }
-
   render() {
     const { transactions, history } = this.props
     const createButton = (

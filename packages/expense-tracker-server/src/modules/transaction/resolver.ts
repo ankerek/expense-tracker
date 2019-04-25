@@ -73,7 +73,7 @@ export class TransactionResolver {
     @Arg('userId', type => ID) userId: string,
     @Root('transaction') transaction: SaveTransactionInput
   ): Transaction {
-    return new Transaction(transaction)
+    return new Transaction({ ...transaction, userId })
   }
 
   @Subscription({
@@ -99,12 +99,18 @@ export class TransactionResolver {
   ) {
     let newTransaction
 
-    newTransaction = new Transaction(input)
-    newTransaction.userId = ctx.user.id
+    newTransaction = new Transaction({
+      ...input,
+      userId: ctx.user.id,
+    })
+
+    const savedTransaction = await this.transactionRepository.save(
+      newTransaction
+    )
 
     await publish({ transaction: input, userId: ctx.user.id })
 
-    return this.transactionRepository.save(newTransaction)
+    return savedTransaction
   }
 
   // @deprecated

@@ -39,30 +39,35 @@ export class Transaction {
   @JoinColumn({ name: 'user_id' })
   userId?: string
 
-  @ManyToOne(type => Account, { onDelete: 'CASCADE' })
+  @ManyToOne(type => Account, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'account_id' })
   @Field(type => Account)
   account: Account
   @Column({ name: 'account_id' })
   accountId?: string
 
-  @ManyToOne(type => Category, { onDelete: 'CASCADE' })
+  @ManyToOne(type => Category, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'category_id' })
   @Field(type => Category)
   category: Category
   @Column({ name: 'category_id' })
   categoryId?: string
 
-  constructor(input?: SaveTransactionInput) {
+  constructor(input?: SaveTransactionInput & { userId?: string }) {
     if (input) {
       this.id = input.id
       this.createdAt = input.createdAt
       this.description = input.description
       this.amount = input.amount
-      this.account = new Account(input.account)
+      this.account = new Account({
+        ...input.account,
+        userId: input.userId,
+      })
       this.accountId = input.account.id
-      this.category = new Category(input.category)
+      this.category = new Category({ ...input.category, userId: input.userId })
       this.categoryId = input.category.id
+
+      this.userId = input.userId
     }
   }
 }

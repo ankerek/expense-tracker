@@ -29,12 +29,6 @@ interface OverviewProps {
 }
 
 export class Overview extends React.Component<OverviewProps> {
-  componentDidMount() {
-    if (this.props.subscribe) {
-      this.props.subscribe()
-    }
-  }
-
   render() {
     const { transactions } = this.props
 
