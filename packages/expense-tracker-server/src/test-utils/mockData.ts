@@ -4,6 +4,7 @@ import uuid from 'uuid'
 import { User } from '../modules/user/definitions/User'
 import { Currency } from '../modules/currency/definitions/Currency'
 import { Account } from '../modules/account/definitions/Account'
+import { Category } from '../modules/category/definitions/Category'
 
 export const createMockUser = async () => {
   const user = new User()
@@ -17,6 +18,12 @@ export const createMockUser = async () => {
 }
 
 export const createMockAccount = (data: Partial<Account> = {}) => ({
+  id: uuid(),
+  name: faker.internet.domainName(),
+  ...data,
+})
+
+export const createMockCategory = (data: Partial<Category> = {}) => ({
   id: uuid(),
   name: faker.internet.domainName(),
   ...data,
