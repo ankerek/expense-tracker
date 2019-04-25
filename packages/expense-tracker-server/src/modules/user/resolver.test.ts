@@ -2,7 +2,7 @@ import { Connection, getRepository, Repository } from 'typeorm'
 import faker from 'faker'
 import { testConnection } from '../../test-utils/testConnection'
 import { gCall } from '../../test-utils/gCall'
-import { createUser } from '../../test-utils/mockData'
+import { createMockUser } from '../../test-utils/mockData'
 import { User } from './definitions/User'
 
 describe('UserResolver', () => {
@@ -13,7 +13,7 @@ describe('UserResolver', () => {
   beforeAll(async () => {
     conn = await testConnection()
     userRepository = getRepository(User)
-    defaultUser = await createUser()
+    defaultUser = await createMockUser()
   })
 
   afterAll(async () => {
